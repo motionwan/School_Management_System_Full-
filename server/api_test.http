@@ -1,0 +1,407 @@
+@hostname = http://localhost:3001
+
+
+///........................... school api.................... ///
+get {{hostname}}/schools
+###
+
+###
+post {{hostname}}/schools
+Content-Type: application/json
+
+{
+    "label":"BMB Senior High School",
+      "phone":"876556",
+      "address":"No. 17 Guava Street Tema",
+      "email":"bmb@gmail.com",
+      "enrollmentPrefix":"BMB",
+      "admins":1,
+      "lastEnrollmentCount":0,
+      "lastInvoiceCount":0
+}
+
+###
+
+###
+put {{hostname}}/schools/63d3f621e530b0f1ac77c56a
+Content-Type: application/json
+
+{
+    "label":"BMB Senior High School wan",
+      "phone":"876556",
+      "address":"No. 17 Guava Street Tema",
+      "email":"bmb@gmail.com",
+      "status":true
+}
+
+###
+delete {{hostname}}/schools/63d3f621e530b0f1ac77c56a
+
+###
+// ....................CLASS API........................
+get {{hostname}}/classes
+
+###
+post {{hostname}}/classes
+Content-Type: application/json
+
+{
+    "label":"Form 1"
+}
+
+
+### 
+delete {{hostname}}/classes/63d3f8660841080ef320b42a
+
+###
+put {{hostname}}/classes/63d3f8660841080ef320b42a
+Content-Type: application/json
+
+{
+    "label":"Form Four"
+}
+
+
+///............ TERMS API.........................
+###
+post {{hostname}}/term
+Content-Type: application/json
+
+{
+    "label":"Class One",
+    "startDate":"27th December 2022",
+    "endDate":"27th December 2022"
+}
+
+###
+put {{hostname}}/term/63d3fa168902bdd95379bcd9
+Content-Type: application/json
+
+{
+    "label":"New Term",
+    "startDate":"27th December 2042",
+    "endDate":"27th December 2052"
+}
+
+###
+get {{hostname}}/term
+
+###
+
+delete {{hostname}}/term/63d3fa168902bdd95379bcd9
+
+###
+put {{hostname}}/term/63d3f9e98902bdd95379bcd7
+Content-Type: application/json
+
+{
+    "label":"First Term",
+    "startDate":"27th December 2042",
+    "endDate":"27th December 2052"
+}
+
+###
+/// ..............class School api .................///
+###
+post {{hostname}}/class_school
+Content-Type: application/json
+
+{
+    "classId":"63d3f86c0841080ef320b42c",
+    "schoolId":"63d3f780ec909c32c262c5b2"
+}
+
+###
+get {{hostname}}/class_school
+
+
+###
+get {{hostname}}/class_school/classes/63d3f86c0841080ef320b42c
+
+
+###
+get {{hostname}}/class_school/class/63d3f780ec909c32c262c5b2
+
+
+###
+get {{hostname}}/class_school/school/class/63d3f780ec909c32c262c5b2
+
+
+###
+DELETE {{hostname}}/class_school/63d4026d817e833cbd0c6ac8
+
+
+
+###
+
+/// .......................HOMEWORK API ......................///
+get {{hostname}}/homework
+
+###
+put {{hostname}}/homework
+
+
+###
+
+/// .......................HOMEWORK SECTION API ......................///
+post {{hostname}}/homework_section
+Content-Type: application/json
+
+{
+    "title":"homework 1",
+    "description":"submit your homework",
+    "setBy":"63d4026d817e833cbd0c6ac8",
+    "sessionId":"63d4026d817e833cbd0c6ac8",
+    "schoolId":"63d4026d817e833cbd0c6ac8",
+    "subjectId":"63d4026d817e833cbd0c6ac8",
+    "sectionId":"63d4026d817e833cbd0c6ac8"
+}
+###
+put {{hostname}}/homework_section
+
+
+###
+
+###
+/// homework section router ////
+get {{hostname}}/homework_section
+###
+post {{hostname}}/homework_section
+Content-Type: application/json
+
+{
+    "title":"My Homework",
+    "description":"Submit by tomorrow",
+    "session:":"631142782638c3a53911a201",
+    "school:":"63111b101aa048a013171e25",
+    "section":"63111b101aa048a013171e25"
+}
+###
+delete {{hostname}}/homework_section/63d409f9d6f3ea07f0471148
+###
+put  {{hostname}}/homework_section/631143712638c3a53911a20d
+Content-Type: application/json
+
+{
+    "section":"63111b101aa048a013171e25"
+}
+
+
+###
+
+/// .......................CLASS SCHOOL STUDY MATERIALS API ......................///
+post {{hostname}}/class_school_study_materials
+Content-Type: application/json
+
+{
+    "label":"Study 1",
+    "url":"https://www.chat.openai/chat",
+    "description":"submit your homework",
+    "schoolId":"63d4026d817e833cbd0c6ac8",
+    "addedBy":"63d4026d817e833cbd0c6ac8",
+    "classSchoolId":"63d4026d817e833cbd0c6ac8",
+    "studyMaterialId":"63d4026d817e833cbd0c6ac8",
+    "subjectId":"63d4026d817e833cbd0c6ac8",
+    "sectionId":"63d4026d817e833cbd0c6ac8"
+}
+
+
+###
+get {{hostname}}/class_school_study_materials
+
+###
+delete {{hostname}}/class_school_study_materials/63d90b0422d7b1250ad1dd65
+
+/// .......................STUDENTS ATTENDANCE API ......................///
+###
+post {{hostname}}/student_attendance
+Content-Type: application/json
+
+{
+    "attendanceDate":"31-01-2022",
+    "status":"p",
+    "studentRecordId":"63d4026d817e833cbd0c6ac8"
+}
+
+
+###
+put {{hostname}}/student_attendance/63d9122ac759e654d1284765
+Content-Type: application/json
+
+{
+    "status":"a"
+}
+
+###
+get {{hostname}}/student_attendance
+
+###
+delete {{hostname}}/student_attendance/63d90b0422d7b1250ad1dd65
+
+###
+
+/// .......................STUDENTS ATTENDANCE API ......................///
+###
+post {{hostname}}/subject
+Content-Type: application/json
+
+{
+    "label":"English language",
+    "code":"eng",
+    "type":"theory",
+    "classSchoolId":"63d4026d817e833cbd0c6ac8"
+}
+
+
+###
+put {{hostname}}/subject/63d9203df7998ab93630a906
+Content-Type: application/json
+
+{
+    "label":"Mathematics",
+    "code":"Math101",
+    "type":"theory"
+
+}
+
+###
+get {{hostname}}/subject
+
+###
+delete {{hostname}}/subject/63d9203df7998ab93630a906
+
+
+/// .......................STUDENTS RECORD API ......................///
+###
+post {{hostname}}/student_record
+Content-Type: application/json
+
+{
+"admissionNumber":"001",
+"rollNumber":"002",
+ "fullName":"Benjamin Smith",
+"gender":"male",
+"dateOfBirth":"22-05-2010",
+"phoneNumber":"555-555-5555",
+"email":"benjamin@example.com",
+"address":"Heaven way hills",
+"admissionDate":"22-05-2020",
+"bloodGroup":"O+",
+"fatherName":"John Smith",
+"motherName":"Emilia Smith",
+"fatherPhoneNumber":"555-555-454",
+"motherPhoneNumber":"555-555-454",
+"status":true,
+"fatherOccupation":"Fisherman",
+"motherOccupation":"Trader",
+"photoId":"67890",
+"sectionId":"63d9122ac759e654d1284765",
+"sessionId":"63d9122ac759e654d1284765",
+"userId":"63d9122ac759e654d1284765"
+}
+
+
+###
+put {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
+Content-Type: application/json
+
+{
+    "fullName":"Benjamin Mathematics"
+   
+
+}
+
+###
+get {{hostname}}/student_record
+
+###
+delete {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
+
+
+/// .......................STAFF RECORD API ......................///
+###
+###
+get {{hostname}}/staff
+
+###
+post {{hostname}}/staff
+Content-Type: application/json
+
+{
+ "fullName":"Benjamin Smith",
+ "username":"bensmith",
+"gender":"male",
+"password":"123456",
+"dateOfBirth":"22-05-2010",
+"phoneNumber":"555-555-5555",
+"email":"benjamin@example.com",
+"address":"Heaven way hills",
+"status":true,
+"photoId":"67890",
+"schoolId":"63d9122ac759e654d1284765",
+"role":"63d430f00ffc6973e14893b6"
+}
+
+
+###
+put {{hostname}}/staff/63d3ec322ca6dd2e2835fb51
+Content-Type: application/json
+
+{
+    "fullName":"Benjamin Mathematics"
+}
+
+###
+post {{hostname}}/staff/login
+Content-Type: application/json
+
+{
+    "login":"bensmith",
+    "password":"123456"
+}
+
+###
+post {{hostname}}/staff/forgot_password
+Content-Type: application/json
+
+{
+    "email":"benjamin@example.com"
+}
+
+
+###
+delete {{hostname}}/staff/63d4318526ef737ca13da605
+
+
+
+/// .......................Roles API ......................///
+###
+post {{hostname}}/role
+Content-Type: application/json
+
+{
+ "name": "admin",
+  "schoolId": "5f2f7a8044b0a50d66dc0f9e",
+   "permissions": [
+    { "title": "read", "path": "/read" },
+    { "title": "write", "path": "/write" },
+    { "title": "delete", "path": "/delete" }
+  ]
+}
+
+
+###
+put {{hostname}}/role/63d3ec322ca6dd2e2835fb51
+Content-Type: application/json
+
+{
+    "fullName":"Benjamin Mathematics"
+   
+
+}
+
+###
+get {{hostname}}/role
+
+###
+delete {{hostname}}/role/63d3ec322ca6dd2e2835fb51
