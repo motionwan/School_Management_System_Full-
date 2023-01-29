@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   background: #3483eb;
-  border: 0.5px solid #3483eb;
+  border: 1px solid #3483eb;
   font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
@@ -16,6 +16,11 @@ const Button = styled.button`
     background: #34deeb;
     color: #000;
     transform: translateY(-3px);
+  }
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 70px;
+    font-size: 18px;
   }
 `;
 
@@ -34,6 +39,11 @@ const ButtonOutline = styled.button`
     background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text};
     transform: translateY(-3px);
+  }
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 70px;
+    font-size: 18px;
   }
 `;
 const Icon = styled.span`

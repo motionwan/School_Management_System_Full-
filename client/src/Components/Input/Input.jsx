@@ -9,10 +9,12 @@ const InputContainer = styled.div`
 const Label = styled.label`
   transition: all 0.2s ease-in-out;
   font-size: 18px;
-  padding-left: 10px;
   font-weight: 500;
   color: ${({ theme }) => theme.text};
   pointer-events: none;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const Input = styled.input`
@@ -28,9 +30,14 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+  }
 `;
 
-const TextInput = ({ name, id, type, onChange, value, label }) => (
+const TextInput = ({ name, id, type, onChange, value, label, placeholder }) => (
   <InputContainer>
     <Label>{label}</Label>
     <Input
@@ -38,8 +45,8 @@ const TextInput = ({ name, id, type, onChange, value, label }) => (
       id={id}
       type={type}
       onChange={onChange}
+      placeholder={placeholder}
       value={value}
-      placeholder=' '
     />
   </InputContainer>
 );

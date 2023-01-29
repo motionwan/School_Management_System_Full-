@@ -17,6 +17,11 @@ const Button = styled.button`
     color: #000;
     transform: translateY(-2px);
   }
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 70px;
+    font-size: 18px;
+  }
 `;
 
 const ButtonOutline = styled.button`
@@ -34,6 +39,11 @@ const ButtonOutline = styled.button`
     background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text};
     transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 70px;
+    font-size: 18px;
   }
 `;
 const Icon = styled.span`

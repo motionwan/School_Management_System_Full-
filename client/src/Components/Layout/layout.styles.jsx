@@ -12,13 +12,12 @@ export const MainPageContainer = styled.div`
 
 export const SMain = styled.main`
   padding: calc(${v.smSpacing} * 10);
-  height: 100vh;
   width: 100%;
-  margin-top: 90px;
   h1 {
     font-size: 14px;
   }
   @media (max-width: 767px) {
+    margin-top: 90px;
     padding: 5px;
     width: 100%;
   }

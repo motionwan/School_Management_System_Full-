@@ -4,10 +4,11 @@ import Layout from './Components/Layout/Layout';
 import { GlobalStyle } from './Styles/globalStyles';
 import { lightTheme, darkTheme } from './Styles/themes';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+//import HomePage from './pages/HomePage';
 import Diagrams from './pages/Diagrams';
 import Customers from './pages/Customers';
 import Statistics from './pages/Statistics';
+import Login from './pages/Auth/Login';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
         <GlobalStyle />
         <Layout>
           <Routes>
-            <Route path='/' element={<HomePage />} />
+            <Route path='/' element={<Login />} />
             <Route path='/diagrams' element={<Diagrams />} />
             <Route path='/customers' element={<Customers />} />
             <Route path='/Statistics' element={<Statistics />} />
