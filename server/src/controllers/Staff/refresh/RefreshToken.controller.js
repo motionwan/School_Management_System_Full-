@@ -13,7 +13,9 @@ const handleRefreshToken = async (req, res) => {
   // find the current election year id
   //const currentElectionYearId = await Settings.find({});
 
-  const staff = await Staff.findOne({ refreshToken: refreshToken });
+  const staff = await Staff.findOne({ refreshToken: refreshToken }).populate(
+    'role'
+  );
   if (!staff)
     return res.status(403).json({ error: 'Staff not found try again' });
   // evaluate jwt
@@ -67,11 +69,11 @@ const handleRefreshToken = async (req, res) => {
     // }
     return res.json({
       accessToken: accessToken,
-      role: staff.role,
-      name: staff.fullName,
       username: staff.username,
-      image: staff.image,
-      username: staff._id,
+      image: staff?.image,
+      email: staff.email,
+      role: staff?.role,
+      userId: staff?._id,
     });
   });
 };

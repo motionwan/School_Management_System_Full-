@@ -14,25 +14,29 @@ const useRefreshToken = () => {
       return {
         ...prev,
         accessToken: res.data?.accessToken,
-        roles: res?.data?.roles,
+        permissions: res?.data?.role,
         username: res?.data?.username,
-        constituencyId: res?.data?.constituencyId,
-        regionId: res?.data?.regionId,
-        currentElectionYearId: res?.data?.currentElectionYearId,
         image: res?.data?.image,
         userId: res.data.userId,
+        //currentElectionYearId: res?.data?.currentElectionYearId,
       };
     });
     console.log('refresh token', res?.data?.accessToken);
-    console.log('roles', res?.data?.roles);
-    console.log('username', res?.data?.name);
-    console.log('constituencyId', res?.data?.constituencyId);
-    console.log('regionId', res?.data?.regionId);
+    console.log('permissions', res?.data?.role);
+    console.log('username', res?.data?.username);
     console.log('userId', res?.data?.userId);
-    console.log('currentElectionYear', res?.data?.currentElectionYearId);
+    //console.log('constituencyId', res?.data?.constituencyId);
+    //console.log('regionId', res?.data?.regionId);
+    //console.log('currentElectionYear', res?.data?.currentElectionYearId);
     return res?.data?.accessToken;
   };
   return refresh;
 };
 
 export default useRefreshToken;
+// accessToken: accessToken,
+// username: staff.username,
+// image: staff?.image,
+// email: staff.email,
+// role: staff?.role?.permissions,
+// userId: staff?._id,

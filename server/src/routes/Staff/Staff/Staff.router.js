@@ -8,11 +8,13 @@ const {
   resetPassword,
   forgotPassword,
   signInStaff,
+  logoutStaff,
 } = require('../../../controllers/Staff/Staff/Staff.controller');
 const router = express.Router();
 
 router.post('/', createStaff);
 router.get('/', getAllStaff);
+router.get('/logout', logoutStaff);
 router.put('/:id', updateStaff);
 router.delete('/:id', deleteStaff);
 router.post('/login', signInStaff);

@@ -5,10 +5,11 @@ const RequireAuth = ({ permissions }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  const paths = [];
-  auth?.permissions?.map((perm) => paths.push(perm.path));
+  const path = auth?.permissions?.permissions.map(
+    (permission) => permission.path
+  );
 
-  return paths?.find((permission) => permissions?.includes(permission)) ? (
+  return path?.find((permission) => permissions?.includes(permission)) ? (
     <Outlet />
   ) : auth?.username ? (
     <Navigate to='/unauthorized' state={{ from: location }} replace />

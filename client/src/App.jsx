@@ -4,7 +4,7 @@ import RouteLayout from './Components/Layout';
 import { GlobalStyle } from './Styles/globalStyles';
 import { lightTheme, darkTheme } from './Styles/themes';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Login from './pages/Auth/Login';
 import PersistLogin from './Components/PersistLogin';
 import RequireAuth from './helpers/RequireAuth';
@@ -26,7 +26,7 @@ const App = () => {
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth permissions='/login' />}>
-              <Route path='/mine' element={<HomePage />} />
+              <Route path='/dashboard' element={<Dashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
           </Route>

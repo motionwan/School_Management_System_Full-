@@ -26,11 +26,10 @@ const PersistLogin = () => {
 
   useEffect(() => {
     // console.log(`isLoading: ${isLoading}`);
-    // console.log(`At: ${auth.username}`);
-    // console.log(`roles: ${auth.role}`);
+    // console.log(`username: ${auth.username}`);
+    // console.log(`permissions: ${auth.role}`);
     // console.log(`username: ${auth.name}`);
-    // console.log(`constituencyId: ${auth.constituencyId}`);
-    // console.log(`regionId: ${auth.regionId}`);
+    // console.log(`userId: ${auth.userId}`);
     // console.log(`userImage: ${auth.image}`);
   }, [isLoading, auth]);
 

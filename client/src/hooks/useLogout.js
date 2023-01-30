@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { VscRunAbove } from 'react-icons/vsc';
+import { where } from '../../../server/src/models/Token/Token.mongo';
 import { baseUrl } from '../baseUrl';
 import useAuth from './useAuth';
 
@@ -18,3 +20,9 @@ const useLogout = () => {
   return logout;
 };
 export default useLogout;
+
+// const logout = useLogout();
+//  function that will use logout
+// const Signout = async() => {
+//   await logout();
+//   navigate('/to wherever you want');

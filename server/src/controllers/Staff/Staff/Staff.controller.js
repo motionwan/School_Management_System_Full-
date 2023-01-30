@@ -86,14 +86,16 @@ const activateAccount = async (req, res) => {
 
 const signInStaff = async (req, res) => {
   try {
-    const login = req.body.login.toLowerCase();
+    const login = req.body.login;
     const password = req.body.password;
     // const currentElectionYearId = await Settings.find({});
     const staff = await Staff.findOne({
       $or: [{ username: login }, { email: login }],
-    });
+    }).populate('role');
     if (!staff) {
-      return res.json({ message: 'Invalid username, email or password' });
+      return res
+        .status(401)
+        .json({ message: 'Invalid username, email or password' });
     }
     if (staff && !staff.verified) {
       const token = await Token.updateOne(
@@ -107,11 +109,13 @@ const signInStaff = async (req, res) => {
       const url = `${process.env.CLIENT_URL}/users/${staff._id}/verify/${token.token}`;
 
       await sendEmail(staff.email, 'Verify Email', url);
-      return res.json({
+      return res.status(401).json({
         message: 'Account not verified. Check email and verify account',
       });
     } else if (!(await bcrypt.compare(password, staff.password))) {
-      return res.json({ message: 'Invalid username, email or password' });
+      return res
+        .status(401)
+        .json({ message: 'Invalid username, email or password' });
     } else {
       const accessToken = jwt.sign(
         {
@@ -135,17 +139,14 @@ const signInStaff = async (req, res) => {
         secure: false,
         maxAge: 24 * 60 * 60 * 1000,
       });
-
+      console.log(staff.role);
       // send data via json
-      return res.json({
+      return res.status(200).json({
         accessToken: accessToken,
         username: staff.username,
         image: staff?.image,
         email: staff.email,
         role: staff?.role,
-        pollingStationId: staff?.pollingStationId,
-        constituencyId: staff?.constituencyId,
-        regionId: staff?.regionId,
         userId: staff?._id,
         // we want the current election year id
         // electionYearId: currentElectionYearId[0]?.currentElectionYear,
@@ -153,7 +154,7 @@ const signInStaff = async (req, res) => {
     }
   } catch (err) {
     if (err.code === 11000) {
-      return res.json({
+      return res.status(401).json({
         message:
           'Account not verified please check your email to verify account',
       });
@@ -161,6 +162,30 @@ const signInStaff = async (req, res) => {
     console.log(err);
     return res.json({ error: err.message });
   }
+};
+
+// logout staff
+const logoutStaff = async (req, res) => {
+  // on client side delete access token
+  const cookies = req.cookies;
+  if (!cookies) return res.sendStatus(204); // no content
+  const refreshToken = cookies.jwt;
+
+  // is refresh token in the db
+  const foundStaff = await Staff.findOne({ refreshToken });
+  if (!foundStaff) {
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+    });
+    return res.sendStatus(204);
+  }
+  //delete refresh token from the db
+  foundStaff.refreshToken = '';
+  const result = await foundStaff.save();
+  //console.log(result);
+  return;
 };
 
 const forgotPassword = async (req, res) => {
@@ -284,4 +309,5 @@ module.exports = {
   resetPassword,
   forgotPassword,
   signInStaff,
+  logoutStaff,
 };

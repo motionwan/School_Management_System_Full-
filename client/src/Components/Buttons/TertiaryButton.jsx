@@ -63,10 +63,10 @@ export const TertiaryButton = ({ label, icon, onClick }) => {
     </div>
   );
 };
-export const TertiaryOutlineButton = ({ label, icon, onClick }) => {
+export const TertiaryOutlineButton = ({ label, icon, onClick, type }) => {
   return (
     <div>
-      <ButtonOutline onClick={onClick}>
+      <ButtonOutline onClick={onClick} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </ButtonOutline>

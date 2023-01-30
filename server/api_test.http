@@ -370,7 +370,10 @@ Content-Type: application/json
 
 
 ###
-delete {{hostname}}/staff/63d4318526ef737ca13da605
+delete {{hostname}}/staff/63d445d7412c90bd4b63dc22
+
+###
+get {{hostname}}/staff/logout
 
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TertiaryOutlineButton } from '../../Components/Buttons/TertiaryButton';
 import Input from '../../Components/Input/Input';
 import {
@@ -17,39 +17,53 @@ import {
   ErrorContainer,
   ErrorMessage,
 } from '../../Components/ErrorComponent/Error';
+import Notification from '../../Components/Notification/Notification';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Login = () => {
+  const [pageLoading, setPageLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { setAuth, auth, setPersist, persist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/dashboard';
   const onSubmit = async () => {
+    setPageLoading(true);
     try {
       const res = await axios.post(
-        `${baseUrl}/users/login`,
+        `${baseUrl}/staff/login`,
         {
-          login: values.email,
+          login: values.login.toLowerCase(),
           password: values.password,
         },
         { withCredentials: true }
       );
-      console.log(res.data);
-
       setAuth({
         accessToken: res?.data?.accessToken,
-        roles: [res?.data?.role],
-        errMessage: res?.data?.message,
+        permissions: res?.data?.role,
         username: res?.data?.username,
-        constituencyId: res?.data?.constituencyId,
-        regionId: res?.data?.regionId,
-        currentElectionYearId: res?.data?.electionYearId,
         image: res?.data?.image,
         userId: res?.data?.userId,
       });
+      console.log(res?.data);
+      if (res.status === 401) {
+        setPageLoading(false);
+        console.log('Email, Username or Password is incorrect');
+      }
       navigate(from, { replace: true });
     } catch (err) {
+      setPageLoading(false);
+      handleError(err.response.data.message);
       console.error(err);
     }
+  };
+
+  const handleError = (error) => {
+    setErrorMessage(error);
+
+    setTimeout(() => {
+      setErrorMessage(null);
+    }, 10000);
   };
 
   const togglePersist = () => {
@@ -62,8 +76,8 @@ const Login = () => {
   const { errors, values, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: {
-        login: '',
-        password: '',
+        login: 'bensmith',
+        password: '123456',
       },
       validationSchema: loginSchema,
       onSubmit,
@@ -71,44 +85,56 @@ const Login = () => {
 
   return (
     <div>
-      <PageContainer>
-        <form onSubmit={handleSubmit}>
-          <LoginInputContainer>
-            <InputWrapper>
-              <Input
-                placeholder='Email/username'
-                label='Username/Email'
-                onChange={handleChange}
-                value={values.login}
-                handleBlur={handleBlur}
-              />
-              <ErrorContainer>
-                <ErrorMessage>
-                  {touched.login ? errors.login : null}
-                </ErrorMessage>
-              </ErrorContainer>
-            </InputWrapper>
-            <InputWrapper style={{ marginTop: '-55px' }}>
-              <Input
-                placeholder='Password'
-                label='Password'
-                type='password'
-                onChange={handleChange}
-                value={values.password}
-                handleBlur={handleBlur}
-              />
-              <ErrorContainer>
-                <ErrorMessage>
-                  {touched.password ? errors.password : null}
-                </ErrorMessage>
-              </ErrorContainer>
-            </InputWrapper>
-            <LoginButtonContainer>
-              <TertiaryOutlineButton label='Login' />
-            </LoginButtonContainer>
-          </LoginInputContainer>
-        </form>
-      </PageContainer>
+      {pageLoading ? (
+        <Spinner />
+      ) : (
+        <PageContainer>
+          {errorMessage ? (
+            <Notification message={errorMessage} type='error' />
+          ) : null}
+          <form onSubmit={handleSubmit}>
+            <LoginInputContainer>
+              {/* <ErrorContainer>
+                <ErrorMessage>{errorMessage ? errorMessage : null}</ErrorMessage>
+              </ErrorContainer> */}
+              <InputWrapper>
+                <Input
+                  placeholder='Email/username'
+                  label='Username/Email'
+                  onChange={handleChange}
+                  name='login'
+                  value={values.login}
+                  handleBlur={handleBlur}
+                />
+                <ErrorContainer>
+                  <ErrorMessage>
+                    {touched.login ? errors.login : null}
+                  </ErrorMessage>
+                </ErrorContainer>
+              </InputWrapper>
+              <InputWrapper style={{ marginTop: '-55px' }}>
+                <Input
+                  placeholder='Password'
+                  label='Password'
+                  type='password'
+                  name='password'
+                  onChange={handleChange}
+                  value={values.password}
+                  handleBlur={handleBlur}
+                />
+                <ErrorContainer>
+                  <ErrorMessage>
+                    {touched.password ? errors.password : null}
+                  </ErrorMessage>
+                </ErrorContainer>
+              </InputWrapper>
+              <LoginButtonContainer>
+                <TertiaryOutlineButton type='submit' label='Login' />
+              </LoginButtonContainer>
+            </LoginInputContainer>
+          </form>
+        </PageContainer>
+      )}
     </div>
   );
 };
