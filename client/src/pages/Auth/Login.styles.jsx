@@ -5,12 +5,11 @@ export const PageContainer = styled.div`
   height: 100vh;
   justify-content: center;
   align-items: center;
-  margin-top -40px;
+  margin-top: -40px;
 
-  @media (max-width: 768px){
-    
+  @media (max-width: 768px) {
   }
-  `;
+`;
 export const LoginInputContainer = styled.div`
   display: flex;
   flex-direction: column;
