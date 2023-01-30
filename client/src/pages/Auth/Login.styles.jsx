@@ -7,7 +7,8 @@ export const PageContainer = styled.div`
   align-items: center;
   margin-top: -40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 700px) {
+    justify-content: flex-start;
   }
 `;
 export const LoginInputContainer = styled.div`
@@ -21,21 +22,25 @@ export const LoginInputContainer = styled.div`
   justify-content: center;
   border-radius: 10px;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (max-width: 1024px) {
+    min-width: 100%;
+    height: auto;
+    gap: 30px;
+    padding: 30px;
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 700px) {
+    min-width: 100%;
+    height: auto;
+    gap: 30px;
+    padding: 30px;
+    justify-content: flex-start;
   }
 `;
 export const InputWrapper = styled.div`
   width: 300px;
   padding: 5px;
-
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 120px;
-    width: 500px;
-  }
 `;
 export const LoginButtonContainer = styled.div`
   display: flex;

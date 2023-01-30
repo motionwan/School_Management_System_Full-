@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import Layout from './Components/Layout/Layout';
+import RouteLayout from './Components/Layout';
 import { GlobalStyle } from './Styles/globalStyles';
 import { lightTheme, darkTheme } from './Styles/themes';
 import { Routes, Route } from 'react-router-dom';
-//import HomePage from './pages/HomePage';
-import Diagrams from './pages/Diagrams';
-import Customers from './pages/Customers';
-import Statistics from './pages/Statistics';
+import HomePage from './pages/HomePage';
 import Login from './pages/Auth/Login';
+import PersistLogin from './Components/PersistLogin';
+import RequireAuth from './helpers/RequireAuth';
+import Unauthorized from './pages/Unauthorized/Unauthorized';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -19,14 +19,18 @@ const App = () => {
     <ThemeContext.Provider value={{ setTheme, theme }}>
       <ThemeProvider theme={themeStyle}>
         <GlobalStyle />
-        <Layout>
-          <Routes>
-            <Route path='/' element={<Login />} />
-            <Route path='/diagrams' element={<Diagrams />} />
-            <Route path='/customers' element={<Customers />} />
-            <Route path='/Statistics' element={<Statistics />} />
-          </Routes>
-        </Layout>
+
+        <Routes>
+          <Route path='/' element={<RouteLayout />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/unauthorized' element={<Unauthorized />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth permissions='/login' />}>
+              <Route path='/mine' element={<HomePage />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+          </Route>
+        </Routes>
       </ThemeProvider>
     </ThemeContext.Provider>
   );

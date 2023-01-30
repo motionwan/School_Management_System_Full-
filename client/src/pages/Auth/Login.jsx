@@ -13,6 +13,10 @@ import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import { baseUrl } from '../../helpers/baseUrl';
 import loginSchema from '../../formSchema/Auth/LoginSchema';
+import {
+  ErrorContainer,
+  ErrorMessage,
+} from '../../Components/ErrorComponent/Error';
 
 const Login = () => {
   const { setAuth, auth, setPersist, persist } = useAuth();
@@ -58,7 +62,7 @@ const Login = () => {
   const { errors, values, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: {
-        email: '',
+        login: '',
         password: '',
       },
       validationSchema: loginSchema,
@@ -68,17 +72,42 @@ const Login = () => {
   return (
     <div>
       <PageContainer>
-        <LoginInputContainer>
-          <InputWrapper>
-            <Input placeholder='Email/username' label='Username/Email' />
-          </InputWrapper>
-          <InputWrapper style={{ marginTop: '-15px' }}>
-            <Input placeholder='Password' label='Password' type='password' />
-          </InputWrapper>
-          <LoginButtonContainer>
-            <TertiaryOutlineButton label='Login' />
-          </LoginButtonContainer>
-        </LoginInputContainer>
+        <form onSubmit={handleSubmit}>
+          <LoginInputContainer>
+            <InputWrapper>
+              <Input
+                placeholder='Email/username'
+                label='Username/Email'
+                onChange={handleChange}
+                value={values.login}
+                handleBlur={handleBlur}
+              />
+              <ErrorContainer>
+                <ErrorMessage>
+                  {touched.login ? errors.login : null}
+                </ErrorMessage>
+              </ErrorContainer>
+            </InputWrapper>
+            <InputWrapper style={{ marginTop: '-55px' }}>
+              <Input
+                placeholder='Password'
+                label='Password'
+                type='password'
+                onChange={handleChange}
+                value={values.password}
+                handleBlur={handleBlur}
+              />
+              <ErrorContainer>
+                <ErrorMessage>
+                  {touched.password ? errors.password : null}
+                </ErrorMessage>
+              </ErrorContainer>
+            </InputWrapper>
+            <LoginButtonContainer>
+              <TertiaryOutlineButton label='Login' />
+            </LoginButtonContainer>
+          </LoginInputContainer>
+        </form>
       </PageContainer>
     </div>
   );
