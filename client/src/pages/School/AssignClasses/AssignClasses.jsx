@@ -15,6 +15,7 @@ import {
   ErrorContainer,
   ErrorMessage,
 } from '../../../Components/ErrorComponent/Error';
+import { Store } from 'react-notifications-component';
 
 const PageContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -54,23 +55,86 @@ const AssignClasses = () => {
   const [assignedClasses, setAssignedClasses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { currentData } = useContext(AuthContext);
+
+  console.log(currentData);
 
   const onSubmit = async (values) => {
     setLoading(true);
-
-    values.classId.forEach(async (id) => {
+    const promises = values.classId.forEach(async (id) => {
       try {
         const res = await axios.post(`${baseUrl}/class_school/`, {
           classId: id,
           schoolId: auth.schoolId._id,
         });
+
+        const assignedClass = {
+          _id: res.data._id,
+          label: res.data.classId?.label,
+          value: res.data.classId?._id,
+        };
+        setAssignedClasses([...assignedClasses, assignedClass]);
         setLoading(false);
+        Store.addNotification({
+          title: 'Success!',
+          message: 'Classes assigned successfully',
+          type: 'success',
+          insert: 'top',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__bounceIn'],
+          animationOut: ['animate__animated', 'animate__bounceOut'],
+          dismiss: {
+            duration: 5000,
+          },
+        });
       } catch (err) {
-        console.log(err.response.data.error);
-        handleError('A class in your selection has already been assigned');
+        handleError(err.response.data.error);
         setLoading(false);
       }
     });
+    try {
+      await Promise.all(promises);
+      setLoading(false);
+      Store.addNotification({
+        title: 'Success!',
+        message: 'School added successfully',
+        type: 'success',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__bounceIn'],
+        animationOut: ['animate__animated', 'animate__bounceOut'],
+        dismiss: {
+          duration: 5000,
+        },
+      });
+    } catch (err) {}
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(
+        `${baseUrl}/class_school/${currentData._id}`
+      );
+      if (res.status === 200) {
+        Store.addNotification({
+          title: 'Success!',
+          message: 'Class unassigned successfully',
+          type: 'success',
+          insert: 'top',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__bounceIn'],
+          animationOut: ['animate__animated', 'animate__bounceOut'],
+          dismiss: {
+            duration: 5000,
+          },
+        });
+      }
+      setAssignedClasses(
+        assignedClasses.filter((c) => c._id !== currentData?._id)
+      );
+    } catch (err) {
+      handleError(err.response.data.error);
+    }
   };
 
   useEffect(() => {
@@ -81,15 +145,17 @@ const AssignClasses = () => {
       );
       res.data?.forEach((data) =>
         arr.push({
-          _id: data.classId._id,
-          label: data.classId.label,
-          value: data.classId._id,
+          _id: data._id,
+          label: data.classId?.label,
+          value: data.classId?._id,
         })
       );
       setAssignedClasses(arr);
     };
     getAllClasses();
   }, [auth]);
+
+  console.log(assignedClasses);
 
   const handleError = (error) => {
     setErrorMessage(error);
@@ -166,7 +232,11 @@ const AssignClasses = () => {
         ) : (
           <div>
             {' '}
-            <DataTable data={assignedClasses} columns={columns} />
+            <DataTable
+              data={assignedClasses}
+              columns={columns}
+              onDelete={handleDelete}
+            />
           </div>
         )}
       </PageContainer>

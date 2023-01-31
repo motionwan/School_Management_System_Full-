@@ -107,7 +107,8 @@ const DataTable = ({ data, columns, onDelete, onEdit }) => {
     setCurrentData(row);
     setDialog({
       loading: true,
-      message: 'Are you sure you want to delete? This action is irreversible',
+      message:
+        'Are you sure you want to delete? This action is irreversible and may affect Students and Staff data',
     });
   };
 

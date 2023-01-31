@@ -21,7 +21,9 @@ const createClassSchool = async (req, res) => {
     return res.json(classSchool);
   } catch (err) {
     if (err.code === 11000) {
-      return res.status(409).json({ error: 'Class has been assigned already' });
+      return res
+        .status(409)
+        .json({ error: 'A Class you have selected has been assigned already' });
     }
     return res.status(500).json({ error: err.message });
   }
@@ -52,9 +54,11 @@ const findAllClassSchool = async (req, res) => {
 const deleteClassSchool = async (req, res) => {
   try {
     const { id } = req.params;
-    await Sections.deleteMany({ classSchoolId: id });
+    console.log(id);
+    await Sections.deleteMany({ classSchoolId: ObjectId(id) });
     const deletedClassSchool = await ClassSchool.findByIdAndDelete(id);
-    return res.json(deletedClassSchool);
+    res.json(deletedClassSchool);
+    console.log('deleted');
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
