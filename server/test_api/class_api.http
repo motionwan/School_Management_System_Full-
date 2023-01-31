@@ -1,0 +1,25 @@
+@hostname = http://localhost:3001
+
+###
+// ....................CLASS API........................
+get {{hostname}}/classes
+
+###
+post {{hostname}}/classes
+Content-Type: application/json
+
+{
+    "label":"Form 1"
+}
+
+
+### 
+delete {{hostname}}/classes/63d3f8660841080ef320b42a
+
+###
+put {{hostname}}/classes/63d3f8660841080ef320b42a
+Content-Type: application/json
+
+{
+    "label":"Form Four"
+}

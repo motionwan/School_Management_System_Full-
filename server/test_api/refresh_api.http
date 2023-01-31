@@ -1,0 +1,5 @@
+@hostname = http://localhost:3001
+
+### Refresh Token Router
+get {{hostname}}/refresh
+

@@ -11,7 +11,14 @@ import {
   CardContent,
   CardHeader,
   CardText,
+  Container,
 } from '../../Components/DashboardCard/DashboardCard';
+import styled from 'styled-components';
+
+const MyLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
 
 const SchoolManagement = () => {
   const [schools, setSchools] = useState([]);
@@ -27,13 +34,19 @@ const SchoolManagement = () => {
     }, 10000);
   };
 
+  const overrideActiveSchool = async (id) => {
+    await axios.post(`http://localhost:3000/active`, {
+      label: id,
+      name: 'bmb',
+    });
+  };
+
   useEffect(() => {
     const getAllSchools = async () => {
       setPageLoading(true);
       try {
         const res = await axios.get(`${baseUrl}/schools`);
         setSchools(res.data);
-        console.log(res.data);
         setPageLoading(false);
       } catch (err) {
         console.log(err);
@@ -55,24 +68,29 @@ const SchoolManagement = () => {
           {errorMessage ? (
             <Notification message={errorMessage} type='error' />
           ) : null}
-          <div>
+          <Container>
             {schools.map((school) => {
               return (
                 <CardContainer key={school._id}>
-                  <Card>
-                    <CardContent>
-                      <CardHeader>{`Name: ${school.label.toUpperCase()}`}</CardHeader>
-                      <CardText>{`Phone: ${school.phone}`}</CardText>
-                      <CardText>{`Email: ${school.phone}`}</CardText>
-                      <CardText>{`Status: ${
-                        school.status ? 'ACTIVE' : 'INACTIVE'
-                      }`}</CardText>
-                    </CardContent>
-                  </Card>
+                  <MyLink
+                    key={school._id}
+                    href={`/client_school/${school._id}`}
+                  >
+                    <Card onClick={() => overrideActiveSchool(school._id)}>
+                      <CardContent>
+                        <CardHeader>{`Name: ${school.label.toUpperCase()}`}</CardHeader>
+                        <CardText>{`Phone: ${school.phone}`}</CardText>
+                        <CardText>{`Email: ${school.phone}`}</CardText>
+                        <CardText>{`Status: ${
+                          school.status ? 'ACTIVE' : 'INACTIVE'
+                        }`}</CardText>
+                      </CardContent>
+                    </Card>
+                  </MyLink>
                 </CardContainer>
               );
             })}
-          </div>
+          </Container>
         </Layout>
       )}
     </div>

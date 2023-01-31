@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const jwtRefreshToken = process.env.REFRESH_TOKEN;
 const jwtAccessToken = process.env.ACCESS_TOKEN;
 const sendEmail = require('../../../utils/email');
+const Settings = require('../../../models/School/Settings/settings.mongo');
 
 const createStaff = async (req, res) => {
   try {
@@ -88,10 +89,13 @@ const signInStaff = async (req, res) => {
   try {
     const login = req.body.login;
     const password = req.body.password;
-    // const currentElectionYearId = await Settings.find({});
+    const currentTermId = await Settings.find({}).populate('currentTermId');
     const staff = await Staff.findOne({
       $or: [{ username: login }, { email: login }],
-    }).populate('role');
+    })
+      .populate('role')
+      .populate('schoolId');
+
     if (!staff) {
       return res
         .status(401)
@@ -131,6 +135,7 @@ const signInStaff = async (req, res) => {
       );
 
       staff.refreshToken = refreshToken;
+
       await staff.save();
       // send data via cookie
       res.cookie('jwt', refreshToken, {
@@ -148,8 +153,9 @@ const signInStaff = async (req, res) => {
         email: staff.email,
         role: staff?.role,
         userId: staff?._id,
-        // we want the current election year id
-        // electionYearId: currentElectionYearId[0]?.currentElectionYear,
+        schoolId: staff?.schoolId,
+        // we want the current term id
+        currentTermId: currentTermId[0]?.currentTermId,
       });
     }
   } catch (err) {

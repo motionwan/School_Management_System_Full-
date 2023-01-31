@@ -5,7 +5,6 @@ import {
   SidebarLink,
   SidebarLinkContainer,
   SidebarLinkIcon,
-  SidebarLinkNotification,
   SidebarTheme,
   SidebarThemeLabel,
   SidebarThemeToggler,
@@ -17,14 +16,9 @@ import {
 } from './sidebar.styles';
 
 import { logoPNG } from '../../assets';
-import {
-  AiOutlineHome,
-  AiOutlineApartment,
-  AiOutlineSetting,
-  AiOutlineLeft,
-} from 'react-icons/ai';
-import { BsPeople, BsCalendarEvent } from 'react-icons/bs';
-import { MdOutlineAnalytics, MdLogout, MdSubject } from 'react-icons/md';
+import { AiOutlineSetting, AiOutlineLeft } from 'react-icons/ai';
+import { BsCalendarEvent } from 'react-icons/bs';
+import { MdLogout, MdSubject } from 'react-icons/md';
 import { FaSuitcase, FaQuestion, FaSchool, FaHandPaper } from 'react-icons/fa';
 import { IoMdSettings, IoIosSchool } from 'react-icons/io';
 import { TbNewSection } from 'react-icons/tb';
@@ -48,12 +42,96 @@ import {
   MobileSidebar,
   MobileSidebarSettingsContainer,
 } from './MobileNavBar/MobileNavBar.styles';
+import AuthContext from '../../context/AuthContext/AuthContext';
 
 const Sidebar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const { pathname } = useLocation();
+  const { auth } = useContext(AuthContext);
+  console.log(auth);
+
+  const schoolArray = [
+    {
+      label: 'Dashboard',
+      icon: <FaSchool />,
+      path: `/client_school/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Inquiries',
+      icon: <FaQuestion />,
+      path: `/client_school/${auth?.schoolId?._id}/enquiries`,
+    },
+    {
+      label: 'Settings',
+      icon: <IoMdSettings />,
+      path: `/client_school/${auth?.schoolId?._id}/settings`,
+    },
+    {
+      label: 'Logs',
+      icon: <FaSuitcase />,
+      path: `/client_school/${auth?.schoolId?._id}/logs`,
+    },
+  ];
+
+  const academicArray = [
+    {
+      label: 'Academic Dashboard',
+      icon: <AiOutlineDashboard />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Class Sections',
+      icon: <BiIntersect />,
+      path: `/client_academic/${auth?.schoolId?._id}/class_sections`,
+    },
+    {
+      label: 'Subjects',
+      icon: <MdSubject />,
+      path: `/client_academic/${auth?.schoolId?._id}/subjects`,
+    },
+    {
+      label: 'Timetable',
+      icon: <AiOutlineTable />,
+      path: `#/client_academic/${auth?.schoolId?._id}/timetable`,
+    },
+    {
+      label: 'Attendance',
+      icon: <AiOutlineCheck />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Student Permissions',
+      icon: <FaHandPaper />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Study Materials',
+      icon: <BiBook />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Homework',
+      icon: <BiBookAdd />,
+      path: `/client_school/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Noticeboard',
+      icon: <AiOutlineNotification />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Events',
+      icon: <BsCalendarEvent />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Online Classes',
+      icon: <HiOutlineStatusOnline />,
+      path: `/client_academic/${auth?.schoolId?._id}`,
+    },
+  ];
 
   return (
     <>
@@ -323,78 +401,5 @@ const schoolManagementArray = [
     label: 'Terms/Semester',
     icon: <TbNewSection />,
     path: '/school_management/terms',
-  },
-];
-
-const schoolArray = [
-  { label: 'Dashboard', icon: <FaSchool />, path: `/client_school/id` },
-  {
-    label: 'Inquiries',
-    icon: <FaQuestion />,
-    path: `/client_school/id/enquiries`,
-  },
-  {
-    label: 'Settings',
-    icon: <IoMdSettings />,
-    path: `/client_school/id/settings`,
-  },
-  {
-    label: 'Logs',
-    icon: <FaSuitcase />,
-    path: `/client_school/id/logs`,
-  },
-];
-
-const academicArray = [
-  {
-    label: 'Academic Dashboard',
-    icon: <AiOutlineDashboard />,
-    path: `/client_academic/id`,
-  },
-  {
-    label: 'Class Sections',
-    icon: <BiIntersect />,
-    path: `/client_academic/id/class_sections`,
-  },
-  {
-    label: 'Subjects',
-    icon: <MdSubject />,
-    path: `/client_academic/id/subjects`,
-  },
-  {
-    label: 'Timetable',
-    icon: <AiOutlineTable />,
-    path: `#/client_academic/id/timetable`,
-  },
-  {
-    label: 'Attendance',
-    icon: <AiOutlineCheck />,
-    path: `/client_academic/id`,
-  },
-  {
-    label: 'Student Permissions',
-    icon: <FaHandPaper />,
-    path: `/client_academic/id`,
-  },
-  {
-    label: 'Study Materials',
-    icon: <BiBook />,
-    path: `/client_academic/id`,
-  },
-  { label: 'Homework', icon: <BiBookAdd />, path: `/client_school/id` },
-  {
-    label: 'Noticeboard',
-    icon: <AiOutlineNotification />,
-    path: `/client_academic/id`,
-  },
-  {
-    label: 'Events',
-    icon: <BsCalendarEvent />,
-    path: `/client_academic/id`,
-  },
-  {
-    label: 'Online Classes',
-    icon: <HiOutlineStatusOnline />,
-    path: `/client_academic/id`,
   },
 ];

@@ -78,7 +78,7 @@ const Schools = () => {
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage(err.response.data.error);
+      handleError(err.response.data.error);
       setPageLoading(false);
     }
   };

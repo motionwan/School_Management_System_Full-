@@ -18,16 +18,16 @@ const useRefreshToken = () => {
         username: res?.data?.username,
         image: res?.data?.image,
         userId: res.data.userId,
-        //currentElectionYearId: res?.data?.currentElectionYearId,
+        schoolId: res?.data?.schoolId,
+        currentTermId: res.data?.currentTermId,
       };
     });
     console.log('refresh token', res?.data?.accessToken);
     console.log('permissions', res?.data?.role);
     console.log('username', res?.data?.username);
     console.log('userId', res?.data?.userId);
-    //console.log('constituencyId', res?.data?.constituencyId);
-    //console.log('regionId', res?.data?.regionId);
-    //console.log('currentElectionYear', res?.data?.currentElectionYearId);
+    console.log('schoolId', res?.data?.schoolId);
+    console.log('current Term', res?.data?.currentTermId);
     return res?.data?.accessToken;
   };
   return refresh;

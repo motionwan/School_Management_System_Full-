@@ -37,29 +37,6 @@ Content-Type: application/json
 ###
 delete {{hostname}}/schools/63d3f621e530b0f1ac77c56a
 
-###
-// ....................CLASS API........................
-get {{hostname}}/classes
-
-###
-post {{hostname}}/classes
-Content-Type: application/json
-
-{
-    "label":"Form 1"
-}
-
-
-### 
-delete {{hostname}}/classes/63d3f8660841080ef320b42a
-
-###
-put {{hostname}}/classes/63d3f8660841080ef320b42a
-Content-Type: application/json
-
-{
-    "label":"Form Four"
-}
 
 
 ///............ TERMS API.........................
@@ -318,62 +295,6 @@ get {{hostname}}/student_record
 delete {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
 
 
-/// .......................STAFF RECORD API ......................///
-###
-###
-get {{hostname}}/staff
-
-###
-post {{hostname}}/staff
-Content-Type: application/json
-
-{
- "fullName":"Benjamin Smith",
- "username":"bensmith",
-"gender":"male",
-"password":"123456",
-"dateOfBirth":"22-05-2010",
-"phoneNumber":"555-555-5555",
-"email":"benjamin@example.com",
-"address":"Heaven way hills",
-"status":true,
-"photoId":"67890",
-"schoolId":"63d9122ac759e654d1284765",
-"role":"63d430f00ffc6973e14893b6"
-}
-
-
-###
-put {{hostname}}/staff/63d3ec322ca6dd2e2835fb51
-Content-Type: application/json
-
-{
-    "fullName":"Benjamin Mathematics"
-}
-
-###
-post {{hostname}}/staff/login
-Content-Type: application/json
-
-{
-    "login":"bensmith",
-    "password":"123456"
-}
-
-###
-post {{hostname}}/staff/forgot_password
-Content-Type: application/json
-
-{
-    "email":"benjamin@example.com"
-}
-
-
-###
-delete {{hostname}}/staff/63d445d7412c90bd4b63dc22
-
-###
-get {{hostname}}/staff/logout
 
 
 
@@ -410,5 +331,18 @@ get {{hostname}}/role
 ###
 delete {{hostname}}/role/63d3ec322ca6dd2e2835fb51
 
-### Refresh Token Router
-get {{hostname}}/refresh
+
+/// .......................Settings API ......................///
+###
+post {{hostname}}/settings
+Content-Type: application/json
+
+{
+  "currentTermId": "63d965d1cbdcf350e3fdefcf",
+ "bmb": 1
+   
+}
+
+###
+get {{hostname}}/settings
+

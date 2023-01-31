@@ -48,9 +48,8 @@ const Terms = () => {
 
   const columns = [
     { key: 'label', label: 'Name' },
-    { key: 'email', label: 'Email' },
-    { key: 'phone', label: 'Phone' },
-    { key: 'address', label: 'Address' },
+    { key: 'startDate', label: 'StartDate' },
+    { key: 'endDate', label: 'EndDate' },
   ];
 
   const handleDelete = async () => {

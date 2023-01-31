@@ -1,0 +1,58 @@
+@hostname = http://localhost:3001
+
+/// .......................STAFF RECORD API ......................///
+###
+###
+get {{hostname}}/staff
+
+###
+post {{hostname}}/staff
+Content-Type: application/json
+
+{
+ "fullName":"Benjamin Smith",
+ "username":"bensmith",
+"gender":"male",
+"password":"123456",
+"dateOfBirth":"22-05-2010",
+"phoneNumber":"555-555-5555",
+"email":"benjamin@example.com",
+"address":"Heaven way hills",
+"status":true,
+"photoId":"67890",
+"schoolId":"63d9122ac759e654d1284765",
+"role":"63d430f00ffc6973e14893b6"
+}
+
+
+###
+put {{hostname}}/staff/63d3ec322ca6dd2e2835fb51
+Content-Type: application/json
+
+{
+    "fullName":"Benjamin Mathematics"
+}
+
+###
+post {{hostname}}/staff/login
+Content-Type: application/json
+
+{
+    "login":"bensmith",
+    "password":"123456"
+}
+
+###
+post {{hostname}}/staff/forgot_password
+Content-Type: application/json
+
+{
+    "email":"benjamin@example.com"
+}
+
+
+###
+delete {{hostname}}/staff/63d445d7412c90bd4b63dc22
+
+###
+get {{hostname}}/staff/logout

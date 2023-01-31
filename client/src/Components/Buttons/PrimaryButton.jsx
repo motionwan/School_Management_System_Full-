@@ -18,8 +18,8 @@ const Button = styled.button`
     transform: translateY(-3px);
   }
   @media (max-width: 768px) {
-    width: 200px;
-    height: 50px;
+    max-width: 200px;
+    max-height: 50px;
     font-size: 18px;
   }
 `;
@@ -40,9 +40,10 @@ const ButtonOutline = styled.button`
     color: ${({ theme }) => theme.text};
     transform: translateY(-3px);
   }
+
   @media (max-width: 768px) {
-    width: 200px;
-    height: 70px;
+    max-width: 200px;
+    max-height: 50px;
     font-size: 18px;
   }
 `;

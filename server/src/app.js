@@ -47,6 +47,8 @@ const StudentRecordRouter = require('./routes/Student/StudentRecord/StudentRecor
 const StaffRouter = require('./routes/Staff/Staff/Staff.router');
 const RoleRouter = require('./routes/Staff/Roles/Roles.router');
 const RefreshTokenRouter = require('./routes/Staff/refresh/RefreshToken.router');
+const SettingsRouter = require('./routes/School/Settings/Settings.router');
+const ActiveSchoolRouter = require('./routes/School/ActiveSchool/active.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -63,5 +65,7 @@ app.use('/student_record', StudentRecordRouter);
 app.use('/staff', StaffRouter);
 app.use('/role', RoleRouter);
 app.use('/refresh', RefreshTokenRouter);
+app.use('/settings', SettingsRouter);
+app.use('/active', ActiveSchoolRouter);
 
 module.exports = app;

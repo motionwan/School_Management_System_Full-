@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import TextInput from '../../../Components/Input/Input';
 import Layout from '../../../Components/Layout/Layout';
 import {
@@ -11,7 +10,7 @@ import {
 import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import { FaPlusCircle } from 'react-icons/fa';
 import { useFormik } from 'formik';
-import schoolSchema from '../../../formSchema/Schools/AddSchools';
+import TermSchema from '../../../formSchema/Terms/TermSchema';
 import {
   ErrorContainer,
   ErrorMessage,
@@ -22,21 +21,9 @@ import Notification from '../../../Components/Notification/Notification';
 import Spinner from '../../../Components/Spinner/Spinner';
 import { Store } from 'react-notifications-component';
 import { useNavigate } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
-const Preview = styled.div`
-  width: 100%;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  padding: 0 40px;
-  background-color: ${({ theme }) => theme.bg3};
-`;
-const generateNumber = (prefix, baseNumber, padding) => {
-  const numberString = (baseNumber + 1).toString().padStart(padding, '0');
-  return prefix + numberString;
-};
-
-const AddSchool = () => {
+const AddTerm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -44,21 +31,15 @@ const AddSchool = () => {
   const onSubmit = async (values) => {
     setLoading(true);
     try {
-      const res = await axios.post(`${baseUrl}/schools`, {
+      const res = await axios.post(`${baseUrl}/term`, {
         label: values.label,
-        phone: values.phone,
-        address: values.address,
-        email: values.email,
-        status: values.status,
-        enrollmentBaseNumber: values.enrollmentBaseNumber,
-        enrollmentPrefix: values.enrollmentPrefix,
-        enrollmentPaddingNumber: values.enrollmentPadding,
-        description: values.description,
+        startDate: format(parseISO(values.startDate), 'do-MMMM-yyyy'),
+        endDate: format(parseISO(values.endDate), 'do-MMMM-yyyy'),
       });
       if (res.status === 200) {
         Store.addNotification({
           title: 'Success!',
-          message: 'School added successfully',
+          message: 'Term added successfully',
           type: 'success',
           insert: 'top',
           container: 'top-right',
@@ -68,7 +49,7 @@ const AddSchool = () => {
             duration: 5000,
           },
         });
-        navigate('/school_management/schools');
+        navigate('/school_management/terms');
       }
       setLoading(false);
     } catch (err) {
@@ -82,15 +63,10 @@ const AddSchool = () => {
     useFormik({
       initialValues: {
         label: '',
-        email: '',
-        phone: '',
-        address: '',
-        description: '',
-        enrollmentPrefix: 'BMB',
-        enrollmentBaseNumber: '0',
-        enrollmentPadding: '6',
+        startDate: '',
+        endDate: '',
       },
-      validationSchema: schoolSchema,
+      validationSchema: TermSchema,
       onSubmit: onSubmit,
     });
 
@@ -109,7 +85,8 @@ const AddSchool = () => {
           ) : null}
           <form onSubmit={handleSubmit}>
             <MainContainer>
-              <Label>Add School</Label>
+              <Label>Add Term/Semester/Session</Label>
+
               <FormContainer>
                 <ColumnContainer>
                   <TextInput
@@ -117,7 +94,7 @@ const AddSchool = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.label}
-                    label='School Name'
+                    label='Label'
                   />
                   {touched.label && errors.label ? (
                     <ErrorContainer>
@@ -125,93 +102,21 @@ const AddSchool = () => {
                     </ErrorContainer>
                   ) : null}
                 </ColumnContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='address'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.address}
-                    label='Address(GPS)'
-                  />
-                  {touched.address && errors.address ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.address}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
               </FormContainer>
+
               <FormContainer>
                 <ColumnContainer>
                   <TextInput
-                    name='phone'
+                    type='Date'
+                    name='startDate'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.phone}
-                    label='Phone Number'
+                    value={values.startDate}
+                    label='Start Date'
                   />
-                  {touched.phone && errors.phone ? (
+                  {touched.startDate && errors.startDate ? (
                     <ErrorContainer>
-                      <ErrorMessage>{errors.phone}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='description'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.description}
-                    label='Description'
-                  />
-                  {touched.description && errors.description ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.description}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
-              </FormContainer>
-              <FormContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='email'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.email}
-                    label='Email'
-                  />
-                  {touched.email && errors.email ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.email}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='status'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.status}
-                    label='Status'
-                  />
-                  {touched.status && errors.status ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.status}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
-              </FormContainer>
-              <FormContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='enrollmentPrefix'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.enrollmentPrefix}
-                    label='Enrollment Prefix'
-                  />
-                  {touched.enrollmentPrefix && errors.enrollmentPrefix ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.enrollmentPrefix}</ErrorMessage>
+                      <ErrorMessage>{errors.startDate}</ErrorMessage>
                     </ErrorContainer>
                   ) : null}
                 </ColumnContainer>
@@ -220,51 +125,25 @@ const AddSchool = () => {
               <FormContainer>
                 <ColumnContainer>
                   <TextInput
-                    name='enrollmentBaseNumber'
+                    type='date'
+                    name='endDate'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.enrollmentBaseNumber}
-                    label='Enrollment Base Number'
+                    value={values.endDate}
+                    label='End Date'
                   />
-                  {touched.enrollmentBaseNumber &&
-                  errors.enrollmentBaseNumber ? (
+                  {touched.endDate && errors.endDate ? (
                     <ErrorContainer>
-                      <ErrorMessage>{errors.enrollmentBaseNumber}</ErrorMessage>
+                      <ErrorMessage>{errors.endDate}</ErrorMessage>
                     </ErrorContainer>
                   ) : null}
                 </ColumnContainer>
               </FormContainer>
 
-              <FormContainer>
-                <ColumnContainer>
-                  <TextInput
-                    name='enrollmentPadding'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.enrollmentPadding}
-                    label='Enrollment Padding'
-                  />
-                  {touched.enrollmentPadding && errors.enrollmentPadding ? (
-                    <ErrorContainer>
-                      <ErrorMessage>{errors.enrollmentPadding}</ErrorMessage>
-                    </ErrorContainer>
-                  ) : null}
-                </ColumnContainer>
-              </FormContainer>
-              <Preview>
-                <h4>
-                  Admission Number preview:{' '}
-                  {generateNumber(
-                    values.enrollmentPrefix,
-                    values.enrollmentBaseNumber,
-                    values.enrollmentPadding
-                  )}
-                </h4>
-              </Preview>
               <FormContainer>
                 <PrimaryButton
                   type='submit'
-                  label='Add School'
+                  label='Add Term'
                   icon={<FaPlusCircle />}
                 />
               </FormContainer>
@@ -276,4 +155,4 @@ const AddSchool = () => {
   );
 };
 
-export default AddSchool;
+export default AddTerm;

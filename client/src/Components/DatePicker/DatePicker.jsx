@@ -1,49 +1,31 @@
 import React, { useState } from 'react';
-import { format, isValid, parse } from 'date-fns';
 import styled from 'styled-components';
+import { format } from 'date-fns';
 
-const DatePickerContainer = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 200px;
-  font-size: 16px;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Input = styled.input`
-  width: 100%;
   padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.text};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.text};
-  font-size: 20px;
-  outline: none;
-  background: transparent;
-  transition: all 0.3 ease-in-out;
-  svg {
-    color: white;
-  }
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
 `;
 
 const DatePicker = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  console.log(selectedDate);
-
-  const handleDateChange = (event) => {
-    const date = parse(event.target.value, 'yyyy-MM-dd', new Date());
-    if (isValid(date)) {
-      setSelectedDate(date);
-    }
-  };
+  const [date, setDate] = useState(new Date());
 
   return (
-    <DatePickerContainer>
+    <Container>
       <Input
         type='date'
-        value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
-        onChange={handleDateChange}
+        value={format(date, 'yyyy-MM-dd')}
+        onChange={(e) => setDate(new Date(e.target.value))}
       />
-    </DatePickerContainer>
+    </Container>
   );
 };
 

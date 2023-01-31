@@ -23,7 +23,7 @@ import Spinner from '../../Components/Spinner/Spinner';
 const Login = () => {
   const [pageLoading, setPageLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { setAuth, auth, setPersist, persist } = useAuth();
+  const { setAuth, setPersist, persist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/dashboard';
@@ -44,6 +44,7 @@ const Login = () => {
         username: res?.data?.username,
         image: res?.data?.image,
         userId: res?.data?.userId,
+        schoolId: res?.data?.schoolId,
       });
       //console.log(res?.data);
       if (res.status === 401) {
