@@ -5,8 +5,9 @@ import { v } from '../../../Styles/variables';
 export const MobileSidebarSettingsContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px;
+  height: 80px;
+  justify-content: center;
+  //padding: 20px;
 `;
 export const MobileSidebar = styled.div`
   position: fixed;
@@ -14,6 +15,7 @@ export const MobileSidebar = styled.div`
   height: ${({ smallNavOpen }) => (smallNavOpen ? '100%' : '60px')};
   top: 0;
   left: 0;
+  overflow-y: ${({ smallNavOpen }) => (smallNavOpen ? 'auto' : 'hidden')};
   display: none;
   margin-bottom: 100px;
   background: ${({ theme }) => theme.bg};

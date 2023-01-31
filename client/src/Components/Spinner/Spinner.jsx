@@ -10,7 +10,7 @@ const rotate = keyframes`
   }
 `;
 
-const Spinner = styled.div`
+const SpinningComponent = styled.div`
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -24,6 +24,6 @@ const Spinner = styled.div`
   height: 30px;
 `;
 
-export default function SpinningComponent() {
-  return <Spinner />;
+export default function Spinner() {
+  return <SpinningComponent />;
 }

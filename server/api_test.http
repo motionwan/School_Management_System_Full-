@@ -383,12 +383,13 @@ post {{hostname}}/role
 Content-Type: application/json
 
 {
- "name": "admin",
+ "name": "superadmin",
   "schoolId": "5f2f7a8044b0a50d66dc0f9e",
    "permissions": [
     { "title": "read", "path": "/read" },
-    { "title": "write", "path": "/write" },
-    { "title": "delete", "path": "/delete" }
+    { "title": "School", "path": "/write" },
+    { "title": "delete", "path": "/delete" },
+    { "title": "School-managment", "path": "superadmin" }
   ]
 }
 

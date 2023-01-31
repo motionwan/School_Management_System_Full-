@@ -139,7 +139,7 @@ const signInStaff = async (req, res) => {
         secure: false,
         maxAge: 24 * 60 * 60 * 1000,
       });
-      console.log(staff.role);
+      //console.log(staff.role);
       // send data via json
       return res.status(200).json({
         accessToken: accessToken,

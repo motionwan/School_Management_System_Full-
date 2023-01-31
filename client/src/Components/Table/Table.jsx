@@ -41,7 +41,7 @@ const Table = styled.table`
 `;
 
 const TableRow = styled.tr`
-  background: ${({ index, theme }) => (index % 2 === 0 ? theme.bg3 : theme.bg)}
+  background: ${({ index, theme }) => (index % 2 === 0 ? theme.bg3 : theme.bg)};
   &:hover {
     color: inherit;
   }

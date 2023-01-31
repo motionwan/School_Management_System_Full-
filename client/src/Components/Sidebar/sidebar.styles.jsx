@@ -6,7 +6,7 @@ export const SidebarContainer = styled.div`
   position: relative;
   margin-left: ${({ isOpen }) => (isOpen ? '250px' : '10px')};
   transition: all 0.3s ease-in-out;
-
+  overflow: auto;
   @media (max-width: 767px) {
     margin-left: 0px;
   }
@@ -18,8 +18,17 @@ export const SSidebar = styled.div`
   position: fixed;
   left: 0;
   top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: all 0.3s ease-in-out;
   z-index: 12;
+  /* hide scrollbar for all browsers */
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
   @media (max-width: 767px) {
     display: none;
   }
@@ -29,11 +38,13 @@ export const SidebarButton = styled.button`
   ${btnReset}
   position:absolute;
   top: ${v.xxlSpacing};
-  right: ${({ isOpen }) => (isOpen ? `-16px` : `-40px`)};
+  right: ${({ isOpen }) => (isOpen ? `-6px` : `0px`)};
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: ${({ theme }) => theme.bg};
+  z-index: 4567;
+  background: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.bg};
   box-shadow: 0 0 4px ${({ theme }) => theme.bg3} 0 0 7px
     ${({ theme }) => theme.bg};
   display: flex;
@@ -49,12 +60,11 @@ export const SLogo = styled.div`
   height: 192px;
 
   img: {
-    max-width:100%;
+    max-width: 100%;
     height: 20px;
-
   }
-  cursor: pointer
-  margin-bottom:${v.lgSpacing}
+  cursor: pointer;
+  margin-bottom: ${v.lgSpacing};
 `;
 
 export const SidebarDivider = styled.div`
@@ -69,8 +79,8 @@ export const SidebarLinkContainer = styled.div`
     !isActive ? `transparent` : theme.bg3};
   border-radius: ${v.borderRadius};
   margin: 8px 0;
-  :hover:{
-    box-shadow: inset 0px 0px 0px ${({ theme }) => theme.bg3})}
+  &:hover {
+    box-shadow: inset 0px 0px 0px ${({ theme }) => theme.bg3};
   }
 `;
 
@@ -130,6 +140,7 @@ export const SidebarThemeToggler = styled.button`
   background: ${({ theme, isActive }) =>
     !isActive ? theme.bg3 : theme.primary};
   position: relative;
+  margin-bottom: 50px;
 `;
 
 export const SidebarToggleThumb = styled.div`

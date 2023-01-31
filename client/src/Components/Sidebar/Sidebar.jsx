@@ -23,8 +23,21 @@ import {
   AiOutlineSetting,
   AiOutlineLeft,
 } from 'react-icons/ai';
-import { BsPeople } from 'react-icons/bs';
-import { MdOutlineAnalytics, MdLogout } from 'react-icons/md';
+import { BsPeople, BsCalendarEvent } from 'react-icons/bs';
+import { MdOutlineAnalytics, MdLogout, MdSubject } from 'react-icons/md';
+import { FaSuitcase, FaQuestion, FaSchool, FaHandPaper } from 'react-icons/fa';
+import { IoMdSettings, IoIosSchool } from 'react-icons/io';
+import { TbNewSection } from 'react-icons/tb';
+import { SiGoogleclassroom } from 'react-icons/si';
+import {
+  AiOutlineTable,
+  AiOutlineCheck,
+  AiOutlineNotification,
+  AiOutlineDashboard,
+} from 'react-icons/ai';
+import { BiIntersect, BiBook, BiBookAdd } from 'react-icons/bi';
+import { HiOutlineStatusOnline } from 'react-icons/hi';
+
 import { ThemeContext } from '../../App';
 import { useLocation } from 'react-router-dom';
 import {
@@ -38,7 +51,7 @@ import {
 
 const Sidebar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const { pathname } = useLocation();
 
@@ -61,7 +74,7 @@ const Sidebar = () => {
           </SLogo>
           <SidebarDivider />
 
-          {linksArray.map((links, index) => {
+          {schoolManagementArray.map((links, index) => {
             return (
               <SidebarLinkContainer
                 isActive={pathname === links.path}
@@ -75,7 +88,6 @@ const Sidebar = () => {
                   {sidebarOpen && (
                     <>
                       <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                      <SidebarLinkNotification>0</SidebarLinkNotification>
                     </>
                   )}
                 </SidebarLink>
@@ -83,6 +95,51 @@ const Sidebar = () => {
             );
           })}
           <SidebarDivider />
+          {/* // end of  school management array */}
+          {schoolArray.map((links, index) => {
+            return (
+              <SidebarLinkContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <SidebarLink
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                  {sidebarOpen && (
+                    <>
+                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                    </>
+                  )}
+                </SidebarLink>
+              </SidebarLinkContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* // end of  school management array */}
+          {academicArray.map((links, index) => {
+            return (
+              <SidebarLinkContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <SidebarLink
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                  {sidebarOpen && (
+                    <>
+                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                    </>
+                  )}
+                </SidebarLink>
+              </SidebarLinkContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* // end of  school management array */}
           {secondaryLinkArray.map((links, index) => {
             return (
               <SidebarLinkContainer key={index}>
@@ -146,7 +203,7 @@ const Sidebar = () => {
             </SidebarTheme>
           </MobileSidebarSettingsContainer>
           {/*sidebar links here*/}
-          {linksArray.map((links, index) => {
+          {schoolManagementArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}
@@ -171,38 +228,65 @@ const Sidebar = () => {
               </MobileNavLinksContainer>
             );
           })}
+          <SidebarDivider />
+          {schoolArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {academicArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
         </MobileSidebar>
       </SidebarContainer>
     </>
   );
 };
-
-const linksArray = [
-  {
-    label: 'Home',
-    icon: <AiOutlineHome />,
-    path: '/',
-    notification: 0,
-  },
-  {
-    label: 'Statistics',
-    icon: <MdOutlineAnalytics />,
-    path: '/statistics',
-    notification: 0,
-  },
-  {
-    label: 'Customers',
-    icon: <BsPeople />,
-    path: '/customers',
-    notification: 0,
-  },
-  {
-    label: 'Diagrams',
-    icon: <AiOutlineApartment />,
-    path: '/diagrams',
-    notification: 0,
-  },
-];
 
 const secondaryLinkArray = [
   {
@@ -212,9 +296,105 @@ const secondaryLinkArray = [
   },
   {
     label: 'Logout',
-    path: '/#logout',
+    path: '#/staff/logout',
     icon: <MdLogout />,
   },
 ];
 
 export default Sidebar;
+
+const schoolManagementArray = [
+  {
+    label: 'School Management',
+    icon: <FaSchool />,
+    path: '/school_management',
+  },
+  {
+    label: 'Schools',
+    icon: <IoIosSchool />,
+    path: '/school_management/schools',
+  },
+  {
+    label: 'Classes',
+    icon: <SiGoogleclassroom />,
+    path: '/school_management/classes',
+  },
+  {
+    label: 'Terms/Semester',
+    icon: <TbNewSection />,
+    path: '/school_management/terms',
+  },
+];
+
+const schoolArray = [
+  { label: 'Dashboard', icon: <FaSchool />, path: `/client_school/id` },
+  {
+    label: 'Inquiries',
+    icon: <FaQuestion />,
+    path: `/client_school/id/enquiries`,
+  },
+  {
+    label: 'Settings',
+    icon: <IoMdSettings />,
+    path: `/client_school/id/settings`,
+  },
+  {
+    label: 'Logs',
+    icon: <FaSuitcase />,
+    path: `/client_school/id/logs`,
+  },
+];
+
+const academicArray = [
+  {
+    label: 'Academic Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: `/client_academic/id`,
+  },
+  {
+    label: 'Class Sections',
+    icon: <BiIntersect />,
+    path: `/client_academic/id/class_sections`,
+  },
+  {
+    label: 'Subjects',
+    icon: <MdSubject />,
+    path: `/client_academic/id/subjects`,
+  },
+  {
+    label: 'Timetable',
+    icon: <AiOutlineTable />,
+    path: `#/client_academic/id/timetable`,
+  },
+  {
+    label: 'Attendance',
+    icon: <AiOutlineCheck />,
+    path: `/client_academic/id`,
+  },
+  {
+    label: 'Student Permissions',
+    icon: <FaHandPaper />,
+    path: `/client_academic/id`,
+  },
+  {
+    label: 'Study Materials',
+    icon: <BiBook />,
+    path: `/client_academic/id`,
+  },
+  { label: 'Homework', icon: <BiBookAdd />, path: `/client_school/id` },
+  {
+    label: 'Noticeboard',
+    icon: <AiOutlineNotification />,
+    path: `/client_academic/id`,
+  },
+  {
+    label: 'Events',
+    icon: <BsCalendarEvent />,
+    path: `/client_academic/id`,
+  },
+  {
+    label: 'Online Classes',
+    icon: <HiOutlineStatusOnline />,
+    path: `/client_academic/id`,
+  },
+];

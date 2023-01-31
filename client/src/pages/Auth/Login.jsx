@@ -45,7 +45,7 @@ const Login = () => {
         image: res?.data?.image,
         userId: res?.data?.userId,
       });
-      console.log(res?.data);
+      //console.log(res?.data);
       if (res.status === 401) {
         setPageLoading(false);
         console.log('Email, Username or Password is incorrect');
