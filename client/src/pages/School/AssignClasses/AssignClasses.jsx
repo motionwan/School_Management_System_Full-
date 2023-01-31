@@ -55,7 +55,23 @@ const AssignClasses = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  console.log(classes);
+  const onSubmit = async (values) => {
+    setLoading(true);
+
+    values.classId.forEach(async (id) => {
+      try {
+        const res = await axios.post(`${baseUrl}/class_school/`, {
+          classId: id,
+          schoolId: auth.schoolId._id,
+        });
+        setLoading(false);
+      } catch (err) {
+        console.log(err.response.data.error);
+        handleError('A class in your selection has already been assigned');
+        setLoading(false);
+      }
+    });
+  };
 
   useEffect(() => {
     const getAllClasses = async () => {
@@ -81,23 +97,6 @@ const AssignClasses = () => {
     setTimeout(() => {
       setErrorMessage(null);
     }, 10000);
-  };
-
-  const onSubmit = async (values) => {
-    setLoading(true);
-    try {
-      values.classId.forEach(async (id) => {
-        const res = await axios.post(`${baseUrl}/class_school/`, {
-          classId: id,
-          schoolId: auth.schoolId._id,
-        });
-      });
-      setLoading(false);
-    } catch (err) {
-      console.log(err.response.data.error);
-      handleError(err.response?.data.error);
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
