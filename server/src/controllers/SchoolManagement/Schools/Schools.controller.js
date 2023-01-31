@@ -15,9 +15,12 @@ const createNewSchool = async (req, res) => {
       phone,
       address,
       email,
-      enrollmentPrefix,
       status,
       admins,
+      enrollmentPrefix,
+      description,
+      enrollmentPadding,
+      enrollmentBaseNumber,
       lastEnrollmentCount,
       lastInvoiceCount,
     } = req.body;
@@ -26,13 +29,16 @@ const createNewSchool = async (req, res) => {
       phone,
       address,
       email,
-      enrollmentPrefix,
       status,
       admins,
+      description,
+      enrollmentPadding,
+      enrollmentBaseNumber,
+      enrollmentPrefix,
       lastEnrollmentCount,
       lastInvoiceCount,
     });
-    return res.json(createdSchool);
+    return res.status(200).json(createdSchool);
   } catch (err) {
     if (err.code === 11000) {
       return res.status(401).json({ error: 'School Already Exist' });

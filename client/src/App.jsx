@@ -10,9 +10,18 @@ import PersistLogin from './Components/PersistLogin';
 import RequireAuth from './helpers/RequireAuth';
 import Unauthorized from './pages/Unauthorized/Unauthorized';
 import SchoolManagement from './pages/SchoolManagement/SchoolManagement';
-import Schools from './pages/SchoolManagement/School';
-import Classes from './pages/SchoolManagement/Classes';
-import Terms from './pages/SchoolManagement/Terms';
+import Schools from './pages/SchoolManagement/Schools/School';
+import Classes from './pages/SchoolManagement/Classes/Classes';
+import Terms from './pages/SchoolManagement/Terms/Terms';
+import AddSchool from './pages/SchoolManagement/Schools/AddSchool';
+import UpdateSchool from './pages/SchoolManagement/Schools/UpdateSchool';
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css/animate.min.css';
+import AddClass from './pages/SchoolManagement/Classes/AddClass';
+import UpdateClass from './pages/SchoolManagement/Classes/UpdateClass';
+import AddTerm from './pages/SchoolManagement/Terms/AddTerm';
+import UpdateTerm from './pages/SchoolManagement/Terms/UpdateTerm';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -23,7 +32,7 @@ const App = () => {
     <ThemeContext.Provider value={{ setTheme, theme }}>
       <ThemeProvider theme={themeStyle}>
         <GlobalStyle />
-
+        <ReactNotifications />
         <Routes>
           <Route path='/' element={<RouteLayout />} />
           <Route path='/login' element={<Login />} />
@@ -51,6 +60,58 @@ const App = () => {
             {/* Another route */}
             <Route element={<RequireAuth permissions='/super-admin' />}>
               <Route path='/school_management/terms' element={<Terms />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/terms/add'
+                element={<AddTerm />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/terms/:id/update'
+                element={<UpdateTerm />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}//
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/classes/add'
+                element={<AddClass />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/classes/:id/update'
+                element={<UpdateClass />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route path='/school_management/terms' element={<Terms />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/schools/add'
+                element={<AddSchool />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            <Route element={<RequireAuth permissions='/super-admin' />}>
+              <Route
+                path='/school_management/schools/:id/update'
+                element={<UpdateSchool />}
+              />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

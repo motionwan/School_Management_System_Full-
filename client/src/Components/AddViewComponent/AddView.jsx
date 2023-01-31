@@ -7,6 +7,14 @@ const AddViewContainer = styled.div`
   background: ${({ theme }) => theme.bg3};
   margin-bottom: 20px;
   border-radius: 5px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 70px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const ChildrenContainer = styled.div`
@@ -15,6 +23,7 @@ const ChildrenContainer = styled.div`
   justify-content: flex-start;
   padding-top: 5px;
   gap: 20px;
+  margin: 0 30px;
 `;
 
 const AddView = ({ children }) => {

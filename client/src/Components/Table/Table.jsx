@@ -94,7 +94,7 @@ const Action = styled.button`
   }
 `;
 
-const DataTable = ({ data, columns, onDelete }) => {
+const DataTable = ({ data, columns, onDelete, onEdit }) => {
   const [expandedRowId, setExpandedRowId] = useState(null);
   const { setCurrentData } = useContext(AuthContext);
   const [dialog, setDialog] = useState({
@@ -103,8 +103,8 @@ const DataTable = ({ data, columns, onDelete }) => {
   });
 
   //delete here
-  const handleDelete = (item) => {
-    setCurrentData(item);
+  const handleDelete = (row) => {
+    setCurrentData(row);
     setDialog({
       loading: true,
       message: 'Are you sure you want to delete? This action is irreversible',
@@ -122,6 +122,11 @@ const DataTable = ({ data, columns, onDelete }) => {
 
   const handleRowClick = (id) => {
     setExpandedRowId(id === expandedRowId ? null : id);
+  };
+
+  const handleEdit = (item) => {
+    setCurrentData(item);
+    onEdit();
   };
 
   return (
@@ -143,8 +148,8 @@ const DataTable = ({ data, columns, onDelete }) => {
             <React.Fragment key={row._id}>
               <TableRow index={index}>
                 <TableCell>
-                  <Action onClick={() => handleRowClick(row.id)}>
-                    {expandedRowId === row.id ? 'Hide' : 'Show'}
+                  <Action onClick={() => handleRowClick(row._id)}>
+                    {expandedRowId === row._id ? 'Hide' : 'Show'}
                   </Action>
                 </TableCell>
                 {columns.map((column) => (
@@ -153,9 +158,14 @@ const DataTable = ({ data, columns, onDelete }) => {
                   </TableCell>
                 ))}
               </TableRow>
-              <TableExpandableRow showExpandedRow={expandedRowId === row.id}>
+              <TableExpandableRow showExpandedRow={expandedRowId === row._id}>
                 <TableExpandableCell colSpan={columns.length + 1}>
-                  <DeleteEdit deleteRecord={() => handleDelete(data)} />
+                  <DeleteEdit
+                    deleteRecord={() => handleDelete(row)}
+                    editRecord={() => {
+                      handleEdit(row);
+                    }}
+                  />
                 </TableExpandableCell>
               </TableExpandableRow>
             </React.Fragment>

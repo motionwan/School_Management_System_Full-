@@ -19,7 +19,7 @@ const Button = styled.button`
   }
   @media (max-width: 768px) {
     width: 200px;
-    height: 70px;
+    height: 50px;
     font-size: 18px;
   }
 `;
@@ -53,20 +53,20 @@ const Icon = styled.span`
   }
 `;
 
-export const PrimaryButton = ({ label, icon, onClick }) => {
+export const PrimaryButton = ({ label, icon, type, onClick }) => {
   return (
     <div>
-      <Button onClick={onClick}>
+      <Button onClick={onClick} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </Button>
     </div>
   );
 };
-export const PrimaryOutlineButton = ({ label, icon, onClick }) => {
+export const PrimaryOutlineButton = ({ label, icon, onClick, type }) => {
   return (
     <div>
-      <ButtonOutline onClick={onClick}>
+      <ButtonOutline onClick={onClick} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </ButtonOutline>

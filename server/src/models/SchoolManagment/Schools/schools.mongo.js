@@ -7,6 +7,7 @@ const schoolSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   phone: {
     type: String,
@@ -19,6 +20,7 @@ const schoolSchema = new Schema({
   email: {
     type: String,
     default: '',
+    lowercase: true,
   },
   enrollmentPrefix: {
     type: String,
@@ -36,6 +38,16 @@ const schoolSchema = new Schema({
   lastEnrollmentCount: {
     type: Number,
     default: 0,
+  },
+  enrollmentPrefix: {
+    type: String,
+  },
+  enrollmentBaseNumber: {
+    type: Number,
+  },
+  enrollmentPadding: {
+    type: Number,
+    default: 6,
   },
   lastInvoiceCount: {
     type: Number,

@@ -9,6 +9,7 @@ export const CardContainer = styled.div`
 export const Card = styled.div`
   width: 30%;
   margin: 10px;
+  background-color: ${({ theme }) => theme.bg3};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 5px;

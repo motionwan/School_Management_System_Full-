@@ -58,20 +58,18 @@ const SchoolManagement = () => {
           <div>
             {schools.map((school) => {
               return (
-                <div key={school._id}>
-                  <CardContainer>
-                    <Card>
-                      <CardContent>
-                        <CardHeader>{`Name: ${school.label}`}</CardHeader>
-                        <CardText>{`Phone: ${school.phone}`}</CardText>
-                        <CardText>{`Email: ${school.phone}`}</CardText>
-                        <CardText>{`Status: ${
-                          school.status ? 'Active' : 'Inactive'
-                        }`}</CardText>
-                      </CardContent>
-                    </Card>
-                  </CardContainer>
-                </div>
+                <CardContainer key={school._id}>
+                  <Card>
+                    <CardContent>
+                      <CardHeader>{`Name: ${school.label.toUpperCase()}`}</CardHeader>
+                      <CardText>{`Phone: ${school.phone}`}</CardText>
+                      <CardText>{`Email: ${school.phone}`}</CardText>
+                      <CardText>{`Status: ${
+                        school.status ? 'ACTIVE' : 'INACTIVE'
+                      }`}</CardText>
+                    </CardContent>
+                  </Card>
+                </CardContainer>
               );
             })}
           </div>

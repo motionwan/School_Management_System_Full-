@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ErrorContainer = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   width: 100%;
   justify-content: center; ;

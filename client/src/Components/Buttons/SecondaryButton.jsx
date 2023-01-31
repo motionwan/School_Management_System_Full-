@@ -53,20 +53,20 @@ const Icon = styled.span`
   }
 `;
 
-export const SecondaryButton = ({ label, icon, onClick }) => {
+export const SecondaryButton = ({ label, icon, type, onClick }) => {
   return (
     <div>
-      <Button onClick={onClick}>
+      <Button onClick={onClick} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </Button>
     </div>
   );
 };
-export const SecondaryOutlineButton = ({ label, icon, onClick }) => {
+export const SecondaryOutlineButton = ({ label, icon, type, onClick }) => {
   return (
     <div>
-      <ButtonOutline onClick={onClick}>
+      <ButtonOutline onClick={onClick} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </ButtonOutline>
