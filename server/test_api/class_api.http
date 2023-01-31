@@ -4,6 +4,8 @@
 // ....................CLASS API........................
 get {{hostname}}/classes
 
+
+
 ###
 post {{hostname}}/classes
 Content-Type: application/json

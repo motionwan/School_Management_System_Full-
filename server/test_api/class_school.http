@@ -1,0 +1,43 @@
+@hostname = http://localhost:3001
+
+/// ..............class School api .................///
+###
+post {{hostname}}/class_school
+Content-Type: application/json
+
+{
+    "classId":"63d91c365744496640675615",
+    "schoolId":"63d95aa8cbdcf350e3fdef12"
+}
+
+###
+get {{hostname}}/class_school
+
+
+###
+get {{hostname}}/class_school/classes/63d95aa8cbdcf350e3fdef12
+
+
+###
+get {{hostname}}/class_school/class/63d95aa8cbdcf350e3fdef12
+
+
+###
+get {{hostname}}/class_school/school/class/63d95aa8cbdcf350e3fdef12
+
+
+###
+DELETE {{hostname}}/class_school/63d4026d817e833cbd0c6ac8
+
+
+
+###
+
+/// .......................HOMEWORK API ......................///
+get {{hostname}}/homework
+
+###
+put {{hostname}}/homework
+
+
+###

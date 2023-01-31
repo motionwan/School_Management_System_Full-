@@ -5,7 +5,7 @@ const { format } = require('date-fns');
 
 const classSchoolSchema = new Schema({
   schoolId: { type: toId, ref: 'School' },
-  classId: { type: toId, ref: 'Classes' },
+  classId: { type: toId, ref: 'Classes', unique: true },
   defaultSectionId: { type: toId, ref: 'ClassSection' },
   createdAt: {
     type: String,

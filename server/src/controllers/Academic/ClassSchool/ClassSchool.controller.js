@@ -20,6 +20,9 @@ const createClassSchool = async (req, res) => {
     });
     return res.json(classSchool);
   } catch (err) {
+    // if (err.code === 11000) {
+    //   return res.status(409).json({ error: 'Class has been assigned already' });
+    // }
     return res.status(500).json({ error: err.message });
   }
 };
@@ -94,7 +97,9 @@ const findAssignedClassWithSchoolId = async (req, res) => {
       { schoolId: id },
       { schools: 0 },
       { _id: 0 }
-    ).populate('classId');
+    )
+      .populate('classId')
+      .populate('defaultSectionId');
     return res.json(assignedClass);
   } catch (err) {
     return res.status(500).json({ error: err.message });

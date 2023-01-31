@@ -50,7 +50,6 @@ const Sidebar = () => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const { pathname } = useLocation();
   const { auth } = useContext(AuthContext);
-  console.log(auth);
 
   const schoolArray = [
     {
