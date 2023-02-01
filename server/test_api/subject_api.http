@@ -1,0 +1,31 @@
+/// .......................SUBJECT ATTENDANCE API ......................///
+@hostname = http://localhost:3001
+
+###
+post {{hostname}}/subject
+Content-Type: application/json
+
+{
+    "label":"English language",
+    "code":"eng",
+    "type":"theory",
+    "classSchoolId":"63d4026d817e833cbd0c6ac8"
+}
+
+
+###
+put {{hostname}}/subject/63d9203df7998ab93630a906
+Content-Type: application/json
+
+{
+    "label":"Mathematics",
+    "code":"Math101",
+    "type":"theory"
+
+}
+
+###
+get {{hostname}}/subject
+
+###
+delete {{hostname}}/subject/63d9203df7998ab93630a906

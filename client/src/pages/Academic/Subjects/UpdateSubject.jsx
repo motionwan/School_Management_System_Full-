@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Layout from '../../../Components/Layout/Layout';
+import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
+import TermSelector from '../../../Components/TermSelector/TermSelector';
+import AuthContext from '../../../context/AuthContext/AuthContext';
 
-const Subjects = () => {
-  return <div>Subjects</div>;
+const UpdateSubject = () => {
+  const { auth, currentData } = useContext(AuthContext);
+  return (
+    <Layout>
+      <LocationLabel label={auth.schoolId.label.toUpperCase()}>
+        <TermSelector />
+      </LocationLabel>
+    </Layout>
+  );
 };
 
-export default Subjects;
+export default UpdateSubject;
