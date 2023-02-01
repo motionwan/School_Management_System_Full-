@@ -63,7 +63,7 @@ const AddSchool = () => {
       if (res.status === 200) {
         Store.addNotification({
           title: 'Success!',
-          message: 'School added successfully',
+          message: 'School Updated successfully',
           type: 'success',
           insert: 'top',
           container: 'top-right',

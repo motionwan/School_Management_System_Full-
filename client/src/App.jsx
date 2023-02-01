@@ -29,6 +29,8 @@ import AddSubjects from './pages/Academic/Subjects/AddSubjects';
 import UpdateSubject from './pages/Academic/Subjects/UpdateSubject';
 import SchoolDashboard from './pages/School/SchoolDashboard/SchoolDashboard';
 import AssignClasses from './pages/School/AssignClasses/AssignClasses';
+import AddSection from './pages/Academic/Sections/AddSection';
+import UpdateSection from './pages/Academic/Sections/UpdateSection';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -156,12 +158,36 @@ const App = () => {
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/id/class_sections'
+                path='/client_academic/:id/class_sections'
                 element={<ClassSections />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_class_sections'
+                element={<AddSection />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_class_section'
+                element={<UpdateSection />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
             <Route
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >

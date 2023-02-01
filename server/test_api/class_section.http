@@ -1,0 +1,28 @@
+@hostname = http://localhost:3001
+
+###
+get {{hostname}}/class_section
+
+//get and count sections
+
+###
+get {{hostname}}/class_section/count/63d95aa8cbdcf350e3fdef12
+
+//get all sections for a particular class school
+###
+get {{hostname}}/class_section/63d9db1adc2cae33cf245b17
+
+###
+put {{hostname}}/class_section/
+
+###
+delete {{hostname}}/class_section/Id
+
+###
+post {{hostname}}/class_section/
+Content-Type: application/json
+
+{
+    "classSchoolId":"63d9db1adc2cae33cf245b17",
+    "label":"B"
+}

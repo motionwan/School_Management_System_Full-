@@ -1,7 +1,7 @@
 const ClassSchool = require('../../../models/Academic/ClassSchool/ClassSchool.mongo');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
-const Sections = require('../../../models/Academic/Section/ClassSection.mongo');
+const Sections = require('../../../models/Academic/ClassSection/ClassSection.mongo');
 
 // Assign a class to a school
 const createClassSchool = async (req, res) => {
@@ -82,8 +82,8 @@ const updateClassSchool = async (req, res) => {
 // find a class in class school
 const findClass = async (req, res) => {
   try {
-    const { id } = req.params; // class id
-    const foundClass = await ClassSchool.find({ classId: ObjectId(id) })
+    const { id } = req.params; // class school id
+    const foundClass = await ClassSchool.find({ _id: ObjectId(id) })
       .populate('classId', 'label')
       .populate('schoolId', 'label')
       .populate('defaultSectionId', 'label');
@@ -125,6 +125,38 @@ const getUniqueClass = async (req, res) => {
   }
 };
 
+// School.aggregate([
+//   {
+//     $group: {
+//       _id: "$classInfo",
+//       count: { $sum: 1 }
+//     }
+//   }
+// ])
+// .exec(function (err, result) {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   console.log(result);
+// });
+
+const countSections = async (req, res) => {
+  try {
+    const { id } = req.params; //school id
+    const countSection = await ClassSchool.aggregate([
+      { $match: { schoolId: ObjectId(id) } },
+      {
+        $group: { _id: '$defaultSectionId', sectionCount: { $sum: 1 } },
+        // sectionCount: { $sum: 1 },
+      },
+    ]);
+    return res.json(countSection);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 //  FOR EVERY CLASS THERE SHOULD BE A DIFFERENT CLASS SCHOOL
 
 module.exports = {
@@ -135,4 +167,5 @@ module.exports = {
   getUniqueClass,
   updateClassSchool,
   findAssignedClassWithSchoolId,
+  countSections,
 };

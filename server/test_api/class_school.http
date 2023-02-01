@@ -15,19 +15,22 @@ get {{hostname}}/class_school
 
 
 ###
-get {{hostname}}/class_school/classes/63d95aa8cbdcf350e3fdef12
+get {{hostname}}/class_school/classes/63d931b719dfd07c302c6d45
 
 
 ###
-get {{hostname}}/class_school/class/63d95aa8cbdcf350e3fdef12
+get {{hostname}}/class_school/class/63d931b719dfd07c302c6d43
 
 
 ###
-get {{hostname}}/class_school/school/class/63d95aa8cbdcf350e3fdef12
+get {{hostname}}/class_school/school/class/63d931b719dfd07c302c6d43
 
 
 ###
 DELETE {{hostname}}/class_school/63d91cd4d777a814651036c0
+
+###
+get {{hostname}}/class_school/count/63d95aa8cbdcf350e3fdef12
 
 
 

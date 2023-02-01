@@ -6,8 +6,8 @@ const { format } = require('date-fns');
 const classSectionSchema = new Schema({
   label: {
     type: String,
-    default: null,
     required: true,
+    unique: true,
   },
   classSchoolId: { type: toId, ref: 'ClassSchool' },
   createdAt: {

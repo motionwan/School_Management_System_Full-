@@ -18,8 +18,8 @@ const Button = styled.button`
     transform: translateY(-2px);
   }
   @media (max-width: 768px) {
-    width: 200px;
-    height: 70px;
+    max-width: 200px;
+    max-height: 50px;
     font-size: 18px;
   }
 `;

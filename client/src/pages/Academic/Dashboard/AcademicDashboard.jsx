@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../../../Components/Layout/Layout';
 import {
   Card,
@@ -14,8 +14,10 @@ import {
 import { Link } from 'react-router-dom';
 import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
+import AuthContext from '../../../context/AuthContext/AuthContext';
 
 const AcademicDashboard = () => {
+  const { auth } = useContext(AuthContext);
   return (
     <div>
       <Layout>
@@ -27,7 +29,9 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Class Section</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link
+                  to={`/client_academic/${auth.schoolId._id}/class_sections`}
+                >
                   <PrimaryButton label='Class Sections' />
                 </Link>
               </ButtonContainer>
@@ -37,7 +41,9 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Subjects</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link
+                  to={`/client_academic/${auth.schoolId._id}/class_sections`}
+                >
                   <PrimaryButton label='Class Sections' />
                 </Link>
                 <Link to='/client_academic/id/class_sections'>
