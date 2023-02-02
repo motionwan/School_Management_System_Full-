@@ -27,5 +27,9 @@ Content-Type: application/json
 ###
 get {{hostname}}/subject
 
+// find all the subjects assigned to this class school id
+###
+get {{hostname}}/subject/class/63d9db1adc2cae33cf245b17
+
 ###
 delete {{hostname}}/subject/63d9203df7998ab93630a906

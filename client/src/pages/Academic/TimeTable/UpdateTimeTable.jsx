@@ -22,7 +22,7 @@ import { baseUrl } from '../../../helpers/baseUrl';
 import { Store } from 'react-notifications-component';
 import { useNavigate } from 'react-router-dom';
 
-const AddSubjects = () => {
+const UpdateTimeTable = () => {
   const navigate = useNavigate();
   const { auth, currentData } = useContext(AuthContext);
   const [classSchools, setClassSchools] = useState('[]');
@@ -58,7 +58,7 @@ const AddSubjects = () => {
   const onSubmit = async (values) => {
     setLoading(true);
     try {
-      const res = await axios.put(`${baseUrl}/subject/${currentData._id}`, {
+      const res = await axios.post(`${baseUrl}/subject`, {
         label: values.label,
         type: values.type,
         code: values.code,
@@ -67,7 +67,7 @@ const AddSubjects = () => {
       if (res) {
         Store.addNotification({
           title: 'Success!',
-          message: 'Subject Updated successfully',
+          message: 'Subject added successfully',
           type: 'success',
           insert: 'top',
           container: 'top-right',
@@ -96,10 +96,10 @@ const AddSubjects = () => {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      label: currentData.label,
-      code: currentData.code,
-      type: currentData.type,
-      classSchoolId: currentData.classSchoolId?._id,
+      label: '',
+      code: '',
+      type: '',
+      classSchoolId: '',
     },
     validationSchema: SubjectSchema,
     onSubmit: onSubmit,
@@ -150,7 +150,6 @@ const AddSubjects = () => {
                 options={subjectTypes}
                 isSearchable={false}
                 onBlur={handleBlur}
-                initialValues={values.type}
                 onChange={(e) => setFieldValue('type', e.value)}
               />
               {touched.type && errors.type ? (
@@ -186,4 +185,4 @@ const AddSubjects = () => {
   );
 };
 
-export default AddSubjects;
+export default UpdateTimeTable;

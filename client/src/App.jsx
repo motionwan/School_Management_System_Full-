@@ -31,6 +31,10 @@ import SchoolDashboard from './pages/School/SchoolDashboard/SchoolDashboard';
 import AssignClasses from './pages/School/AssignClasses/AssignClasses';
 import AddSection from './pages/Academic/Sections/AddSection';
 import UpdateSection from './pages/Academic/Sections/UpdateSection';
+import UpdateTimeTable from './pages/Academic/TimeTable/UpdateTimeTable';
+import AddTimeTable from './pages/Academic/TimeTable/AddTimeTable';
+import TimeTable from './pages/Academic/TimeTable/TimeTable';
+import Subjects from './pages/Academic/Subjects/Subjects';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -194,6 +198,18 @@ const App = () => {
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >
               <Route
+                path='/client_academic/:id/subjects'
+                element={<Subjects />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
                 path='/client_academic/:id/update_subject'
                 element={<UpdateSubject />}
               />
@@ -213,32 +229,37 @@ const App = () => {
             </Route>
             {/* Another route */}
 
-            <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
-            >
-              <Route
-                path='/client_academic/:school_id/:subject_id'
-                element={<UpdateSubject />}
-              />
-              {/* routes to browse if permission is included in user permission */}
-            </Route>
             {/* Another route */}
             <Route
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_subject'
-                element={<AddSubjects />}
+                path='/client_academic/:id/timetable'
+                element={<TimeTable />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
+            {/* Another route */}
+
             {/* Another route */}
             <Route
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/subjects'
-                element={<Subject />}
+                path='/client_academic/:id/add_timetable'
+                element={<AddTimeTable />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_timetable'
+                element={<UpdateTimeTable />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

@@ -93,42 +93,42 @@ const Sidebar = () => {
     {
       label: 'Timetable',
       icon: <AiOutlineTable />,
-      path: `#/client_academic/${auth?.schoolId?._id}/timetable`,
+      path: `/client_academic/${auth?.schoolId?._id}/timetable`,
     },
     {
       label: 'Attendance',
       icon: <AiOutlineCheck />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/attendance`,
     },
     {
       label: 'Student Permissions',
       icon: <FaHandPaper />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/student_permissions`,
     },
     {
       label: 'Study Materials',
       icon: <BiBook />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/study_materials`,
     },
     {
       label: 'Homework',
       icon: <BiBookAdd />,
-      path: `/client_school/${auth?.schoolId?._id}`,
+      path: `/client_school/${auth?.schoolId?._id}/homework`,
     },
     {
       label: 'Noticeboard',
       icon: <AiOutlineNotification />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/noticeboard`,
     },
     {
       label: 'Events',
       icon: <BsCalendarEvent />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/events`,
     },
     {
       label: 'Online Classes',
       icon: <HiOutlineStatusOnline />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
+      path: `/client_academic/${auth?.schoolId?._id}/online_classes`,
     },
   ];
 

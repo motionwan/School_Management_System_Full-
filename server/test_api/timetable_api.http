@@ -1,0 +1,22 @@
+@hostname = http://localhost:3001
+
+###
+get {{hostname}}/timetable
+
+###
+post {{hostname}}   
+Content-Type: application/json
+
+{
+    "startTime":""
+}
+
+
+####
+post {{hostname}}/timetable/class
+Content-type:application/json
+
+{
+    "classSchoolId":"63d9db1adc2cae33cf245b17",
+    "termId":"63d966edcbdcf350e3fdefd4"
+}

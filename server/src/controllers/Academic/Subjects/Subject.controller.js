@@ -20,7 +20,12 @@ const httpCreateSubjects = async (req, res) => {
 // find all subjects;
 const httpFindAllSubjects = async (req, res) => {
   try {
-    return res.json(await Subject.find({}));
+    return res.json(
+      await Subject.find({}).populate({
+        path: 'classSchoolId',
+        populate: { path: 'classId' },
+      })
+    );
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err.message });
@@ -64,16 +69,16 @@ const httpDeleteSubject = async (req, res) => {
 //   }
 // };
 
-// const httpAssignSubjectToClass = async (req, res) => {
-// //   try {
-// //     const subject = req.body;
-// //   const id = req.params.id;
-// //   return res.json(await assignSubjectToClass(id, subject));
-// //   } catch (err) {
-// //     console.log(err);
-// //     res.status(500).json({ error: err.message });
-// //   }
-// };
+const httpFindClassSubjects = async (req, res) => {
+  try {
+    const id = req.params.id;
+    //const subject = req.body;
+    return res.json(await Subject.find({ classSchoolId: id }));
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 // const httpSchoolSubject = async (req, res) => {
 //   const id = req.params.id;
@@ -85,6 +90,7 @@ module.exports = {
   httpFindAllSubjects,
   httpUpdateSubject,
   httpDeleteSubject,
+  httpFindClassSubjects,
   //   httpAssignClassSchool,
   //   httpAssignSubjectToClass,
   //   httpSchoolSubject,

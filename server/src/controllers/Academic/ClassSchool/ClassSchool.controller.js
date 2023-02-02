@@ -157,6 +157,17 @@ const countSections = async (req, res) => {
   }
 };
 
+// find sections with class school id
+
+const findSectionWithClassSchoolId = async (req, res) => {
+  try {
+    const { id } = req.params; // class school id
+    return res.json(await Sections.find({ classSchoolId: id }));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 //  FOR EVERY CLASS THERE SHOULD BE A DIFFERENT CLASS SCHOOL
 
 module.exports = {
@@ -168,4 +179,5 @@ module.exports = {
   updateClassSchool,
   findAssignedClassWithSchoolId,
   countSections,
+  findSectionWithClassSchoolId,
 };

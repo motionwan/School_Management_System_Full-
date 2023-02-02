@@ -50,6 +50,7 @@ const RefreshTokenRouter = require('./routes/Staff/refresh/RefreshToken.router')
 const SettingsRouter = require('./routes/School/Settings/Settings.router');
 const ActiveSchoolRouter = require('./routes/School/ActiveSchool/active.router');
 const ClassSectionRouter = require('./routes/Academics/ClassSection/classSection.router');
+const RoutineRouter = require('./routes/Academics/Routine/Routine.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -69,5 +70,6 @@ app.use('/refresh', RefreshTokenRouter);
 app.use('/settings', SettingsRouter);
 app.use('/active', ActiveSchoolRouter);
 app.use('/class_section', ClassSectionRouter);
+app.use('/timetable', RoutineRouter);
 
 module.exports = app;
