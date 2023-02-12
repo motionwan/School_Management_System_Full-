@@ -4,6 +4,12 @@
 get {{hostname}}/timetable
 
 ###
+
+
+###
+get {{hostname}}/timetable/group/63d966edcbdcf350e3fdefd4
+
+###
 post {{hostname}}   
 Content-Type: application/json
 
@@ -17,6 +23,6 @@ post {{hostname}}/timetable/class
 Content-type:application/json
 
 {
-    "classSchoolId":"63d9db1adc2cae33cf245b17",
-    "termId":"63d966edcbdcf350e3fdefd4"
+    "termId":"63d966edcbdcf350e3fdefd4",
+    "sectionId":"63d9dbb6b1255479e13c0aff"
 }

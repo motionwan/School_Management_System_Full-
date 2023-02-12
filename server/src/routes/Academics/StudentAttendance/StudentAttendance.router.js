@@ -3,12 +3,12 @@ const router = express.Router();
 
 const {
   deleteAttendance,
-  getallAttendance,
+  getallAttendanceByTermId,
   takeAttendance,
   updateAttendance,
 } = require('../../../controllers/Academic/StudentAttendance/StudentAttendance.controller');
 
-router.get('/', getallAttendance);
+router.get('/:id', getallAttendanceByTermId);
 router.post('/', takeAttendance);
 router.put('/:id', updateAttendance);
 router.delete('/:id', deleteAttendance);

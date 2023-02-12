@@ -44,7 +44,7 @@ const TermSelector = () => {
       });
     };
     getAllTerms();
-  }, [auth]);
+  }, [auth.currentTermId._id, auth]);
 
   const handleChange = async (e) => {
     try {

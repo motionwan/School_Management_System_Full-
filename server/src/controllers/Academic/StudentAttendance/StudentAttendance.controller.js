@@ -1,11 +1,19 @@
 const Attendance = require('../../../models/Academic/StudentAttendance/StudentAttendance.mongo');
+const { format, parse, parseISO } = require('date-fns');
 
 // create attendance
 const takeAttendance = async (req, res) => {
   try {
-    const { attendanceDate, status, studentRecordId } = req.body;
+    let { attendanceDateString, status, studentRecordId, termId } = req.body;
+    const format = 'dd-MM-yyyy';
+    const attendanceDate = parse(attendanceDateString, format, new Date());
     return res.json(
-      await Attendance.create({ attendanceDate, status, studentRecordId })
+      await Attendance.create({
+        attendanceDate,
+        status,
+        studentRecordId,
+        termId,
+      })
     );
   } catch (err) {
     console.log(err);
@@ -14,9 +22,11 @@ const takeAttendance = async (req, res) => {
 };
 
 // get all attendance
-const getallAttendance = async (req, res) => {
+//match by term id and do the rest later
+const getallAttendanceByTermId = async (req, res) => {
   try {
-    return res.json(await Attendance.find({}));
+    const { id } = req.params;
+    return res.json(await Attendance.find({ termId: id }));
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: err.message });
@@ -54,7 +64,7 @@ const deleteAttendance = async (req, res) => {
 
 module.exports = {
   deleteAttendance,
-  getallAttendance,
+  getallAttendanceByTermId,
   takeAttendance,
   updateAttendance,
 };

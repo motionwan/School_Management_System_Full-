@@ -35,6 +35,10 @@ import UpdateTimeTable from './pages/Academic/TimeTable/UpdateTimeTable';
 import AddTimeTable from './pages/Academic/TimeTable/AddTimeTable';
 import TimeTable from './pages/Academic/TimeTable/TimeTable';
 import Subjects from './pages/Academic/Subjects/Subjects';
+import ViewTimetable from './pages/Academic/TimeTable/ViewTimetable';
+import Schedule from './pages/Academic/TimeTable/Schedule';
+import ViewAttendance from './pages/Academic/Attendance/ViewAttendance';
+import AddAttendance from './pages/Academic/Attendance/AddAttendance';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -260,6 +264,42 @@ const App = () => {
               <Route
                 path='/client_academic/:id/update_timetable'
                 element={<UpdateTimeTable />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/view_timetable'
+                element={<Schedule />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/attendance'
+                element={<ViewAttendance />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_attendance'
+                element={<AddAttendance />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

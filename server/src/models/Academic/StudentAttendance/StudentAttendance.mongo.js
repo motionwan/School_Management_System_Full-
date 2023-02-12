@@ -1,11 +1,11 @@
-const { format } = require('date-fns');
+const { format, parse } = require('date-fns');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const toId = mongoose.Types.ObjectId;
 
 const attendanceSchema = new Schema({
   attendanceDate: {
-    type: String,
+    type: Date,
     required: true,
   },
   status: {
@@ -13,6 +13,7 @@ const attendanceSchema = new Schema({
     default: null,
   },
   studentRecordId: { type: toId, ref: 'StudentRecord' },
+  termId: { type: toId, ref: 'Term' },
   createdAt: {
     type: String,
     default: format(new Date(), 'do-MMM-yyyy'),

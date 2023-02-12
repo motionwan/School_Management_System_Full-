@@ -12,7 +12,6 @@ import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import AuthContext from '../../../context/AuthContext/AuthContext';
 import { useFormik } from 'formik';
-import SubjectSchema from '../../../formSchema/Subjects/SubjectSchema';
 import {
   ErrorContainer,
   ErrorMessage,
@@ -20,7 +19,6 @@ import {
 import axios from 'axios';
 import { baseUrl } from '../../../helpers/baseUrl';
 import { Store } from 'react-notifications-component';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TimetableSchema from '../../../formSchema/Timetable/TimetableSchema';
 import TimePicker from '../../../Components/TimePicker/TimePicker';
@@ -167,8 +165,6 @@ const AddTimeTable = () => {
       getAllClassSchoolsForSchool();
     }
   }, [values.classSchoolId]);
-
-  console.log(values);
 
   return (
     <Layout>
