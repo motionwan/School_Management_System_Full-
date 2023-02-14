@@ -39,6 +39,9 @@ import ViewTimetable from './pages/Academic/TimeTable/ViewTimetable';
 import Schedule from './pages/Academic/TimeTable/Schedule';
 import ViewAttendance from './pages/Academic/Attendance/ViewAttendance';
 import AddAttendance from './pages/Academic/Attendance/AddAttendance';
+import AddAdmission from './pages/Academic/Students/Admission/AddAdmission';
+import StudentDashboard from './pages/Academic/Students/Dashboard/StudentDashboard';
+import ViewStudents from './pages/Academic/Students/Students/ViewStudents';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -300,6 +303,42 @@ const App = () => {
               <Route
                 path='/client_academic/:id/add_attendance'
                 element={<AddAttendance />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_student/:id'
+                element={<StudentDashboard />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_student/:id/admission'
+                element={<AddAdmission />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_student/:id/students'
+                element={<ViewStudents />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

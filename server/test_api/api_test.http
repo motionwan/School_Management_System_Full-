@@ -150,55 +150,6 @@ delete {{hostname}}/class_school_study_materials/63d90b0422d7b1250ad1dd65
 
 
 
-/// .......................STUDENTS RECORD API ......................///
-###
-post {{hostname}}/student_record
-Content-Type: application/json
-
-{
-"admissionNumber":"001",
-"rollNumber":"002",
- "fullName":"Benjamin Smith",
-"gender":"male",
-"dateOfBirth":"22-05-2010",
-"phoneNumber":"555-555-5555",
-"email":"benjamin@example.com",
-"address":"Heaven way hills",
-"admissionDate":"22-05-2020",
-"bloodGroup":"O+",
-"fatherName":"John Smith",
-"motherName":"Emilia Smith",
-"fatherPhoneNumber":"555-555-454",
-"motherPhoneNumber":"555-555-454",
-"status":true,
-"fatherOccupation":"Fisherman",
-"motherOccupation":"Trader",
-"photoId":"67890",
-"sectionId":"63d9122ac759e654d1284765",
-"sessionId":"63d9122ac759e654d1284765",
-"userId":"63d9122ac759e654d1284765"
-}
-
-
-###
-put {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
-Content-Type: application/json
-
-{
-    "fullName":"Benjamin Mathematics"
-   
-
-}
-
-###
-get {{hostname}}/student_record
-
-###
-delete {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
-
-
-
-
 
 /// .......................Roles API ......................///
 ###

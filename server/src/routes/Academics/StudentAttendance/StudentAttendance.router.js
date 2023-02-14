@@ -8,7 +8,7 @@ const {
   updateAttendance,
 } = require('../../../controllers/Academic/StudentAttendance/StudentAttendance.controller');
 
-router.get('/:id', getallAttendanceByTermId);
+router.get('/', getallAttendanceByTermId);
 router.post('/', takeAttendance);
 router.put('/:id', updateAttendance);
 router.delete('/:id', deleteAttendance);

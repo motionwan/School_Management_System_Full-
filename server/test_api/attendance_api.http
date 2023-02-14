@@ -6,7 +6,7 @@ post {{hostname}}/student_attendance
 Content-Type: application/json
 
 {
-    "attendanceDateString":"31-01-2022",
+    "attendanceDate":"31-01-2022",
     "status":"p",
     "studentRecordId":"63d4026d817e833cbd0c6ac8",
     "termId":"63d966edcbdcf350e3fdefd4"
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-get {{hostname}}/student_attendance/63d966edcbdcf350e3fdefd4
+get {{hostname}}/student_attendance/
 
 ###
 delete {{hostname}}/student_attendance/63d90b0422d7b1250ad1dd65

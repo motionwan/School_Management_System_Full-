@@ -78,7 +78,7 @@ const activateAccount = async (req, res) => {
       return res.status(400).json({ error: 'Link has expired' });
     }
     await Staff.updateOne({ _id: staff._id, verified: true });
-    await Token.deleteOne();
+    await Token.deleteOne({ userId: staff._id });
     return res.json({ message: 'email verified Successfully' });
   } catch (err) {
     res.status(400).json(err.message);

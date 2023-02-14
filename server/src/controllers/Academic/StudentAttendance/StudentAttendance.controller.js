@@ -4,16 +4,19 @@ const { format, parse, parseISO } = require('date-fns');
 // create attendance
 const takeAttendance = async (req, res) => {
   try {
-    let { attendanceDateString, status, studentRecordId, termId } = req.body;
-    const format = 'dd-MM-yyyy';
-    const attendanceDate = parse(attendanceDateString, format, new Date());
+    let { attendanceDate, status, studentRecordId, termId } = req.body;
+
     return res.json(
-      await Attendance.create({
-        attendanceDate,
-        status,
-        studentRecordId,
-        termId,
-      })
+      await Attendance.updateOne(
+        { attendanceDate, studentRecordId },
+        {
+          attendanceDate,
+          status,
+          studentRecordId,
+          termId,
+        },
+        { upsert: true }
+      )
     );
   } catch (err) {
     console.log(err);

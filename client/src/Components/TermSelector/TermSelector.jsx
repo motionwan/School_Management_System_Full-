@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { baseUrl } from '../../helpers/baseUrl';
 import Notification from '../Notification/Notification';
-import Select from 'react-select';
 import styled from 'styled-components';
 import AuthContext from '../../context/AuthContext/AuthContext';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 // styles
 const Container = styled.div`
@@ -44,19 +44,20 @@ const TermSelector = () => {
       });
     };
     getAllTerms();
-  }, [auth.currentTermId._id, auth]);
+  }, [auth.currentTermId?._id, auth]);
 
   const handleChange = async (e) => {
     try {
       //e.preventDefault();
-      setSelectedTerm({ label: e.label, value: e.value });
+      setSelectedTerm({ label: e?.label, value: e?.value });
       const res = await axios.post(`${baseUrl}/settings`, {
-        currentTermId: e.value,
+        currentTermId: e?.value,
         bmb: 1,
       });
       if (res.status === 200) {
         setNotification('Term changed successfully');
         handleNotification('Term changed successfully');
+        window.location.reload();
       }
     } catch (err) {
       console.error(err);
@@ -88,7 +89,7 @@ const TermSelector = () => {
         <Notification message={notification} type='success' />
       ) : null}
       <Heading>Current Term/Semester:</Heading>
-      <Select
+      <CustomSelect
         options={termOptions}
         value={selectedTerm}
         isSearchable={false}

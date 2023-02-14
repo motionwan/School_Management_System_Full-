@@ -10,7 +10,7 @@ const attendanceSchema = new Schema({
   },
   status: {
     type: String,
-    default: null,
+    default: '',
   },
   studentRecordId: { type: toId, ref: 'StudentRecord' },
   termId: { type: toId, ref: 'Term' },

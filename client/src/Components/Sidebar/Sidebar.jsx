@@ -131,6 +131,43 @@ const Sidebar = () => {
       path: `/client_academic/${auth?.schoolId?._id}/online_classes`,
     },
   ];
+  const studentArray = [
+    {
+      label: 'Student Dashboard',
+      icon: <AiOutlineDashboard />,
+      path: `/client_student/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Admission',
+      icon: <BiIntersect />,
+      path: `/client_student/${auth?.schoolId?._id}/admission`,
+    },
+    {
+      label: 'Students',
+      icon: <MdSubject />,
+      path: `/client_student/${auth?.schoolId?._id}/students`,
+    },
+    {
+      label: 'I.D Cards',
+      icon: <AiOutlineTable />,
+      path: `/client_student/${auth?.schoolId?._id}/id`,
+    },
+    {
+      label: 'Promotion',
+      icon: <AiOutlineCheck />,
+      path: `/client_student/${auth?.schoolId?._id}/promotion`,
+    },
+    {
+      label: 'Student Transfers',
+      icon: <FaHandPaper />,
+      path: `/client_student/${auth?.schoolId?._id}/transfer`,
+    },
+    {
+      label: 'Certifications',
+      icon: <BiBook />,
+      path: `/client_student/${auth?.schoolId?._id}/certificate`,
+    },
+  ];
 
   return (
     <>
@@ -196,6 +233,28 @@ const Sidebar = () => {
           <SidebarDivider />
           {/* // end of  school management array */}
           {academicArray.map((links, index) => {
+            return (
+              <SidebarLinkContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <SidebarLink
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                  {sidebarOpen && (
+                    <>
+                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                    </>
+                  )}
+                </SidebarLink>
+              </SidebarLinkContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* // end of  school management array */}
+          {studentArray.map((links, index) => {
             return (
               <SidebarLinkContainer
                 isActive={pathname === links.path}

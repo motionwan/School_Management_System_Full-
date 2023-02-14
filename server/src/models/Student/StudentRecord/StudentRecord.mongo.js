@@ -6,13 +6,6 @@ const toId = mongoose.Types.ObjectId;
 const studentSchema = new Schema({
   admissionNumber: {
     type: String,
-    unique: true,
-    required: true,
-  },
-  rollNumber: {
-    type: String,
-    unique: true,
-    required: true,
   },
   fullName: {
     type: String,
@@ -28,6 +21,7 @@ const studentSchema = new Schema({
   },
   email: {
     type: String,
+    required: true,
   },
   address: {
     type: String,
@@ -38,16 +32,13 @@ const studentSchema = new Schema({
   bloodGroup: {
     type: String,
   },
-  fatherName: {
+  guardianName: {
     type: String,
   },
-  motherName: {
+  guardianPhoneNumber: {
     type: String,
   },
-  fatherPhoneNumber: {
-    type: String,
-  },
-  motherPhoneNumber: {
+  guardianOccupation: {
     type: String,
   },
   status: {
@@ -55,21 +46,23 @@ const studentSchema = new Schema({
     default: true,
     required: true,
   },
-  fatherOccupation: {
-    type: String,
-  },
-  motherOccupation: {
-    type: String,
-  },
   photoId: {
     // deal with this when photo database is ready
     type: String,
   },
-  sectionId: { type: toId, ref: 'Section' },
-  sessionId: { type: toId, ref: 'Session' },
-
-  userId: {
+  resetPasswordToken: {
     type: String,
+    default: '',
+  },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  sectionId: { type: toId, ref: 'ClassSection' },
+  termId: { type: toId, ref: 'Term' },
+  username: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: String,
@@ -80,6 +73,20 @@ const studentSchema = new Schema({
     type: String,
     default: null,
   },
+  city: { type: String },
+  healthInsurance: { type: String },
+  hometown: { type: String },
+  religion: { type: String },
+  // motherPhoneNumber: {
+
+  // motherName: {
+  //   type: String,
+  // },
+  //   type: String,
+  // },
+  // motherOccupation: {
+  //   type: String,
+  // },
 });
 
 module.exports = mongoose.model('StudentRecord', studentSchema);

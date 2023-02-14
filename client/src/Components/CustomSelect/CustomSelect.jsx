@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactSelect from 'react-select';
 import styled from 'styled-components';
 
-const InputContainer = styled.div`
+const Container = styled.div`
   position: flex;
   width: 100%;
   justify-content: center;
@@ -19,13 +20,11 @@ const Label = styled.label`
   }
 `;
 
-const Input = styled.input`
+const SelectContainer = styled(ReactSelect)`
   width: 80%;
-  height: 20px;
   background: transparent;
   border-radius: 5px;
   color: ${({ theme }) => theme.text};
-  padding: 10px;
   font-size: 16px;
   border: 1px solid ${({ theme }) => theme.text};
   &:focus {
@@ -33,35 +32,38 @@ const Input = styled.input`
   }
   @media (max-width: 768px) {
     width: 80%;
-    height: 30px;
     font-size: 20px;
   }
 `;
 
-const TextInput = ({
-  name,
-  id,
-  type,
+const CustomSelect = ({
+  options,
   onChange,
   value,
+  initialValue,
   label,
   placeholder,
-  checked,
   ...rest
 }) => (
-  <InputContainer>
+  <Container>
     <Label>{label}</Label>
-    <Input
-      checked={checked}
-      name={name}
-      id={id}
-      type={type}
+    <SelectContainer
+      styles={{
+        control: (baseStyles, state) => ({
+          ...baseStyles,
+          borderColor: `${({ theme }) => theme.text}`,
+          // backgroundColor: `${({ theme }) => theme.bg3}`,
+        }),
+      }}
+      options={options}
       onChange={onChange}
-      placeholder={placeholder}
       value={value}
+      initialValue={initialValue}
+      placeholder={placeholder}
+      classNamePrefix={null}
       {...rest}
     />
-  </InputContainer>
+  </Container>
 );
 
-export default TextInput;
+export default CustomSelect;

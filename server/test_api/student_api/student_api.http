@@ -1,0 +1,56 @@
+@hostname = http://localhost:3001
+
+
+/// .......................STUDENTS RECORD API ......................///
+###
+post {{hostname}}/student_record
+Content-Type: application/json
+
+{
+ "fullName":"Benjamin More",
+"gender":"male",
+"dateOfBirth":"22-05-2010",
+"phoneNumber":"555-565-5555",
+"email":"be@example.com",
+"address":"Heaven way hills",
+"admissionDate":"22-05-2020",
+"bloodGroup":"O+",
+"guardianName":"wisdom Smith",
+"guardianPhoneNumber":"555-555-454",
+"status":true,
+"guardianOccupation":"Fisherman",
+"photoId":"67890",
+"sectionId":"63d9dbb6b1255479e13c0aff",
+"termId":"63d9122ac759e654d1284765",
+"city":"ashaiman",
+"username":"motion"
+}
+
+
+###
+put {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
+Content-Type: application/json
+
+{
+    "fullName":"Benjamin Mathematics"
+   
+
+}
+
+###
+get {{hostname}}/student_record/63d966edcbdcf350e3fdefd4
+
+###
+delete {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
+
+####
+post {{hostname}}/student_record/search
+Content-Type: application/json
+
+{
+    "searchBy":"admissionNumber",
+    "searchValue":"SMP000015"
+}
+
+###
+get {{hostname}}/student_record/section/63d9dbb6b1255479e13c0aff

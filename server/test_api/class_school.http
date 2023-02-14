@@ -24,6 +24,10 @@ get {{hostname}}/class_school/class/63d95aa8cbdcf350e3fdef12
 
 
 ###
+get {{hostname}}/class_school/section/63d9dbb6b1255479e13c0aff
+
+
+###
 get {{hostname}}/class_school/school/class/63d95aa8cbdcf350e3fdef12
 
 

@@ -14,12 +14,25 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import { useFormik } from 'formik';
 import { format, parse, parseISO } from 'date-fns';
+import {
+  Action,
+  Table,
+  TableRow,
+  TableCell,
+  TableHeader,
+  TableExpandableRow,
+  TableExpandableCell,
+  TableContainer,
+} from '../../../Components/Table/Table.styles';
 import AttendanceSchema from '../../../formSchema/Attendance/AttendanceShema';
 import {
   ErrorContainer,
   ErrorMessage,
 } from '../../../Components/ErrorComponent/Error';
 import MonthPicker from '../../../Components/MonthPicker/MonthPicker';
+import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
+import TextInput from '../../../Components/Input/Input';
+import { SecondaryButton } from '../../../Components/Buttons/SecondaryButton';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -28,17 +41,31 @@ const InputContainer = styled.div`
   display: flex;
   gap: 20px;
   padding: 10px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+  }
 `;
 
 const ViewAttendance = () => {
   const [pageLoading, setPageLoading] = useState(false);
-  const [attendances, setAttendances] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(
+    format(Date.now(), 'yyyy-MM-dd')
+  );
+  const [attendanceData, setAttendanceData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [classSchools, setClassSchools] = useState(null);
   const [section, setSection] = useState(null);
   const { auth } = useContext(AuthContext);
 
-  console.log(attendances);
+  console.log(attendanceData);
+
+  // console.log(attendances);
 
   // handle errors with this function
   const handleError = (error) => {
@@ -52,10 +79,8 @@ const ViewAttendance = () => {
   // find all classes
   useEffect(() => {
     const arr = [];
-    const getAllClassSchoolsForSchool = async () => {
-      const res = await axios.get(
-        `${baseUrl}/class_school/class/${auth.schoolId?._id}`
-      );
+    const getAllClassSchools = async () => {
+      const res = await axios.get(`${baseUrl}/class_school`);
       res.data.forEach((classSchool) => {
         arr.push({
           label: classSchool.classId.label,
@@ -64,47 +89,55 @@ const ViewAttendance = () => {
       });
       setClassSchools(arr);
     };
-    getAllClassSchoolsForSchool();
+    getAllClassSchools();
   }, [auth]);
 
-  useEffect(() => {
-    const getAllSubjects = async () => {
-      setPageLoading(true);
-      try {
-        const res = await axios.get(
-          `${baseUrl}/student_attendance/${auth?.currentTermId?._id}`
-        );
-        setAttendances(res.data);
-        setPageLoading(false);
-      } catch (err) {
-        console.log(err);
-        if (!err.response.ok) setErrorMessage('Network error');
-        handleError(err.response.data.error);
-        setPageLoading(false);
-      }
-    };
-    getAllSubjects();
-  }, [auth?.currentTermId._id]);
+  const onSubmit = async () => {
+    try {
+      attendanceData.map(async (attendance) => {
+        const res = await axios.post(`${baseUrl}/student_attendance`, {
+          studentRecordId: attendance.studentId,
+          attendanceDate: attendance.date,
+          status: attendance.status,
+        });
 
-  const onSubmit = async () => {};
+        console.log(res);
+      });
+    } catch (err) {
+      handleError(err.response.data.error);
+    }
+  };
 
-  const {
-    values,
-    errors,
-    handleBlur,
-    touched,
-    handleChange,
-    setFieldValue,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      date: format(Date.now(), 'yyyy-MM'),
-      classSchoolId: '',
-      sectionId: '',
-    },
-    validationSchema: AttendanceSchema,
-    onSubmit: onSubmit,
-  });
+  const { values, errors, handleBlur, touched, setFieldValue, handleSubmit } =
+    useFormik({
+      initialValues: {
+        date: selectedDate,
+      },
+      validationSchema: AttendanceSchema,
+      onSubmit: onSubmit,
+    });
+
+  const handleRadioChange = (studentId, status) => {
+    const student = attendanceData.find((s) => s.studentId === studentId);
+    if (student) {
+      student.status = status;
+      setAttendanceData([...attendanceData]);
+    } else {
+      setAttendanceData([
+        ...attendanceData,
+        { studentId, status, date: selectedDate },
+      ]);
+    }
+  };
+
+  // const handleCheckAllPresent = () => {
+  //   // set the status of all students to "present"
+  //   setAttendanceData(attendanceData.map((data) => ({ ...data, status: 'p' })));
+  // };
+  // const handleCheckAllAbsent = () => {
+  //   // set the status of all students to "present"
+  //   setAttendanceData(attendanceData.map((data) => ({ ...data, status: 'a' })));
+  // };
 
   useEffect(() => {
     if (values.classSchoolId) {
@@ -125,6 +158,30 @@ const ViewAttendance = () => {
     }
   }, [values.classSchoolId]);
 
+  //console.log(values);
+
+  useEffect(() => {
+    if (values.sectionId) {
+      const getAllStudents = async () => {
+        setPageLoading(true);
+        try {
+          const res = await axios.get(
+            `${baseUrl}/student_record/section/${values.sectionId}`
+          );
+          setStudents(res.data);
+          console.log(res.data);
+          setPageLoading(false);
+        } catch (err) {
+          console.log(err);
+          if (!err.response.ok) setErrorMessage('Network error');
+          handleError(err.response.data.error);
+          setPageLoading(false);
+        }
+      };
+      getAllStudents();
+    }
+  }, [values.sectionId]);
+
   console.log(values);
 
   return (
@@ -143,63 +200,164 @@ const ViewAttendance = () => {
           </LocationLabel>
           <AddView>
             <Link to={`/client_academic/${auth.schoolId._id}/add_attendance `}>
-              <PrimaryButton label='Take Attendance' icon={<FaPlusCircle />} />
+              <PrimaryButton label='View Attendance' icon={<FaPlusCircle />} />
             </Link>
           </AddView>
-          <div>
-            {attendances.length < 1 ? (
-              <h1>No Subject Data to display</h1>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <InputContainer>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <Select placeholder='Select Class' name='classSchoolId' />
-                    {errors.classSchoolId && touched.classSchoolId ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.classSchoolId}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <Select placeholder='Select Section' name='sectionId' />
-                    {errors.sectionId && touched.sectionId ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.sectionId}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <MonthPicker
-                      name='date'
-                      id='date'
-                      value={values.date}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                    />
-                    {errors.date && touched.date ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.date}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                </InputContainer>
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItem: 'center',
-                    justifyContent: 'center',
-                    margin: '5px',
+          <form onSubmit={handleSubmit}>
+            <InputContainer>
+              <div style={{ width: '100%' }}>
+                <CustomSelect
+                  label='class'
+                  placeholder='Select Class'
+                  name='classSchoolId'
+                  options={classSchools}
+                  onChange={(e) => {
+                    setFieldValue('classSchoolId', e.value);
                   }}
-                >
-                  <PrimaryButton label='Take Attendance' type='submit' />
-                </div>
-              </form>
-            )}
-          </div>
+                />
+                {errors.classSchoolId && touched.classSchoolId ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.classSchoolId}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+              <div style={{ width: '100%' }}>
+                <CustomSelect
+                  label='Section'
+                  placeholder='Select Section'
+                  name='sectionId'
+                  options={section}
+                  onChange={(e) => {
+                    setFieldValue('sectionId', e.value);
+                  }}
+                />
+                {errors.sectionId && touched.sectionId ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.sectionId}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+              <div style={{ width: '100%' }}>
+                <TextInput
+                  label='Attendance Date'
+                  type='date'
+                  name='date'
+                  id='date'
+                  value={values.date}
+                  onBlur={handleBlur}
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                />
+                {errors.date && touched.date ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.date}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+            </InputContainer>
+            <div>
+              {students.length < 1 ? (
+                <h1>No student Data to display</h1>
+              ) : (
+                <TableContainer>
+                  <Table>
+                    <thead>
+                      <TableRow>
+                        <TableHeader data-label='Student Name'>
+                          Student Name
+                        </TableHeader>
+                        <TableHeader data-label='Admission No.'>
+                          Admission Number
+                        </TableHeader>
+                        <TableHeader data-label='Course'>Course</TableHeader>
+
+                        <TableHeader>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '10px',
+                            }}
+                          >
+                            {' '}
+                            Status{' '}
+                            {/* <PrimaryButton
+                              type='button'
+                              onClick={handleCheckAllPresent}
+                              label='Mark All Present'
+                            />
+                            <SecondaryButton
+                              type='button'
+                              onClick={handleCheckAllAbsent}
+                              label='Mark All Absent'
+                            /> */}
+                          </div>
+                        </TableHeader>
+                      </TableRow>
+                    </thead>
+                    <tbody>
+                      {students.map((student, index) => (
+                        <React.Fragment key={student._id}>
+                          <TableRow key={student._id}>
+                            <TableCell data-label='Name'>
+                              {student.fullName}
+                            </TableCell>
+                            <TableCell data-label='Admission Number'>
+                              {student.admissionNumber}
+                            </TableCell>
+                            <TableCell data-label='Course'>
+                              {student.sectionId}
+                            </TableCell>
+                            <TableCell data-label='Status'>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '10px',
+                                }}
+                              >
+                                <TextInput
+                                  label='Present'
+                                  type='radio'
+                                  className='form-check-input'
+                                  name={`status${student._id}`}
+                                  value='p'
+                                  onClick={() =>
+                                    handleRadioChange(student._id, 'p')
+                                  }
+                                />
+                                <TextInput
+                                  label='Absent'
+                                  type='radio'
+                                  className='form-check-input'
+                                  name={`status${student._id}`}
+                                  value='a'
+                                  onClick={() =>
+                                    handleRadioChange(student._id, 'a')
+                                  }
+                                />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </Table>
+                </TableContainer>
+              )}
+            </div>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItem: 'center',
+                justifyContent: 'center',
+                margin: '5px',
+              }}
+            >
+              <PrimaryButton label='Take Attendance' type='submit' />
+            </div>
+          </form>
         </Layout>
       )}
     </div>

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const TableContainer = styled.div`
-  overflow-x: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
   display: block;
   position: relative;
 `;
@@ -9,6 +10,7 @@ export const TableContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  overflow-x: scroll;
 
   @media only screen and (max-width: 767px) {
     thead {
