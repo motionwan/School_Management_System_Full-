@@ -42,6 +42,9 @@ import AddAttendance from './pages/Academic/Attendance/AddAttendance';
 import AddAdmission from './pages/Academic/Students/Admission/AddAdmission';
 import StudentDashboard from './pages/Academic/Students/Dashboard/StudentDashboard';
 import ViewStudents from './pages/Academic/Students/Students/ViewStudents';
+import UpdateStudyMaterials from './pages/Academic/StudyMaterials/UpdateStudyMaterials';
+import AddStudyMaterials from './pages/Academic/StudyMaterials/AddStudyMaterials';
+import StudyMaterials from './pages/Academic/StudyMaterials/StudyMaterials';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -339,6 +342,42 @@ const App = () => {
               <Route
                 path='/client_student/:id/students'
                 element={<ViewStudents />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/study_materials'
+                element={<StudyMaterials />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_study_materials'
+                element={<AddStudyMaterials />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_study_materials'
+                element={<UpdateStudyMaterials />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

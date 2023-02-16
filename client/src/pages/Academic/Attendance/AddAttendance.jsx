@@ -11,17 +11,13 @@ import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import { Link, useNavigate } from 'react-router-dom';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import styled from 'styled-components';
-import Select from 'react-select';
 import { useFormik } from 'formik';
-import { format, parse, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import {
-  Action,
   Table,
   TableRow,
   TableCell,
   TableHeader,
-  TableExpandableRow,
-  TableExpandableCell,
   TableContainer,
 } from '../../../Components/Table/Table.styles';
 import AttendanceSchema from '../../../formSchema/Attendance/AttendanceShema';
@@ -29,10 +25,9 @@ import {
   ErrorContainer,
   ErrorMessage,
 } from '../../../Components/ErrorComponent/Error';
-import MonthPicker from '../../../Components/MonthPicker/MonthPicker';
 import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
 import TextInput from '../../../Components/Input/Input';
-import { SecondaryButton } from '../../../Components/Buttons/SecondaryButton';
+import Notification from '../../../Components/Notification/Notification';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -51,7 +46,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const ViewAttendance = () => {
+const AddAttendance = () => {
   const [pageLoading, setPageLoading] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
@@ -62,10 +57,9 @@ const ViewAttendance = () => {
   const [classSchools, setClassSchools] = useState(null);
   const [section, setSection] = useState(null);
   const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   console.log(attendanceData);
-
-  // console.log(attendances);
 
   // handle errors with this function
   const handleError = (error) => {
@@ -99,25 +93,34 @@ const ViewAttendance = () => {
           studentRecordId: attendance.studentId,
           attendanceDate: attendance.date,
           status: attendance.status,
+          sectionId: attendance.sectionId,
         });
 
-        console.log(res);
+        // return success message if all data is sent to the database
       });
+      navigate(`/client_student/${auth?.currentTermId?._id}/students`);
     } catch (err) {
       handleError(err.response.data.error);
     }
   };
 
-  const { values, errors, handleBlur, touched, setFieldValue, handleSubmit } =
-    useFormik({
-      initialValues: {
-        date: selectedDate,
-      },
-      validationSchema: AttendanceSchema,
-      onSubmit: onSubmit,
-    });
+  const {
+    values,
+    errors,
+    handleBlur,
+    touched,
+    setFieldValue,
+    setValues,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      date: selectedDate,
+    },
+    validationSchema: AttendanceSchema,
+    onSubmit: onSubmit,
+  });
 
-  const handleRadioChange = (studentId, status) => {
+  const handleRadioChange = (studentId, status, sectionId) => {
     const student = attendanceData.find((s) => s.studentId === studentId);
     if (student) {
       student.status = status;
@@ -125,7 +128,7 @@ const ViewAttendance = () => {
     } else {
       setAttendanceData([
         ...attendanceData,
-        { studentId, status, date: selectedDate },
+        { studentId, status, date: selectedDate, sectionId },
       ]);
     }
   };
@@ -169,7 +172,6 @@ const ViewAttendance = () => {
             `${baseUrl}/student_record/section/${values.sectionId}`
           );
           setStudents(res.data);
-          console.log(res.data);
           setPageLoading(false);
         } catch (err) {
           console.log(err);
@@ -181,8 +183,6 @@ const ViewAttendance = () => {
       getAllStudents();
     }
   }, [values.sectionId]);
-
-  console.log(values);
 
   return (
     <div>
@@ -239,14 +239,16 @@ const ViewAttendance = () => {
               </div>
               <div style={{ width: '100%' }}>
                 <TextInput
-                  label='Attendance Date'
-                  type='date'
                   name='date'
-                  id='date'
-                  value={values.date}
+                  type='date'
+                  label='Attendance Month'
                   onBlur={handleBlur}
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
+                  value={selectedDate}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    setSelectedDate(value);
+                    setValues({ ...values, date: value });
+                  }}
                 />
                 {errors.date && touched.date ? (
                   <ErrorContainer>
@@ -323,7 +325,11 @@ const ViewAttendance = () => {
                                   name={`status${student._id}`}
                                   value='p'
                                   onClick={() =>
-                                    handleRadioChange(student._id, 'p')
+                                    handleRadioChange(
+                                      student._id,
+                                      'p',
+                                      student.sectionId
+                                    )
                                   }
                                 />
                                 <TextInput
@@ -333,7 +339,11 @@ const ViewAttendance = () => {
                                   name={`status${student._id}`}
                                   value='a'
                                   onClick={() =>
-                                    handleRadioChange(student._id, 'a')
+                                    handleRadioChange(
+                                      student._id,
+                                      'a',
+                                      student.sectionId
+                                    )
                                   }
                                 />
                               </div>
@@ -360,8 +370,11 @@ const ViewAttendance = () => {
           </form>
         </Layout>
       )}
+      {errorMessage ? (
+        <Notification message={errorMessage} type='error' />
+      ) : null}
     </div>
   );
 };
 
-export default ViewAttendance;
+export default AddAttendance;

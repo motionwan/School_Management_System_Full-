@@ -28,4 +28,10 @@ get {{hostname}}/student_attendance/
 delete {{hostname}}/student_attendance/63d90b0422d7b1250ad1dd65
 
 ###
+post {{hostname}}/student_attendance/monthly
+Content-Type: application/json
 
+{
+    "date":"2023-02'",
+    "sectionId":"63d9dbb6b1255479e13c0aff"
+}

@@ -8,18 +8,33 @@ import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import { FaPlusCircle, FaSchool } from 'react-icons/fa';
 import AddView from '../../../Components/AddViewComponent/AddView';
 import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import styled from 'styled-components';
-import Select from 'react-select';
 import { useFormik } from 'formik';
-import { format, parse, parseISO } from 'date-fns';
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  parseISO,
+  parse,
+} from 'date-fns';
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHeader,
+  TableContainer,
+} from '../../../Components/Table/Table.styles';
 import AttendanceSchema from '../../../formSchema/Attendance/AttendanceShema';
 import {
   ErrorContainer,
   ErrorMessage,
 } from '../../../Components/ErrorComponent/Error';
-import MonthPicker from '../../../Components/MonthPicker/MonthPicker';
+import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
+import TextInput from '../../../Components/Input/Input';
+import Notification from '../../../Components/Notification/Notification';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -28,17 +43,44 @@ const InputContainer = styled.div`
   display: flex;
   gap: 20px;
   padding: 10px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+  }
 `;
 
 const ViewAttendance = () => {
   const [pageLoading, setPageLoading] = useState(false);
-  const [attendances, setAttendances] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(
+    format(Date.now(), 'yyyy-MM')
+  );
+  const [attendanceData, setAttendanceData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [classSchools, setClassSchools] = useState(null);
   const [section, setSection] = useState(null);
   const { auth } = useContext(AuthContext);
 
-  console.log(attendances);
+  const parsedDate = parse(selectedDate, 'yyyy-MM', new Date());
+  // const month = getMonth(parsedDate);
+
+  const monthStart = startOfMonth(parsedDate);
+  const monthEnd = endOfMonth(parsedDate);
+  const datesArray = eachDayOfInterval({ start: monthStart, end: monthEnd });
+
+  console.log(attendanceData);
+
+  const groupedAttendance = attendanceData.reduce((acc, curr) => {
+    const name = curr.student.name;
+    if (!acc[name]) {
+      acc[name] = [];
+    }
+    acc[name].push(curr.attendance);
+    return acc;
+  }, {});
 
   // handle errors with this function
   const handleError = (error) => {
@@ -52,10 +94,8 @@ const ViewAttendance = () => {
   // find all classes
   useEffect(() => {
     const arr = [];
-    const getAllClassSchoolsForSchool = async () => {
-      const res = await axios.get(
-        `${baseUrl}/class_school/class/${auth.schoolId?._id}`
-      );
+    const getAllClassSchools = async () => {
+      const res = await axios.get(`${baseUrl}/class_school`);
       res.data.forEach((classSchool) => {
         arr.push({
           label: classSchool.classId.label,
@@ -64,41 +104,35 @@ const ViewAttendance = () => {
       });
       setClassSchools(arr);
     };
-    getAllClassSchoolsForSchool();
+    getAllClassSchools();
   }, [auth]);
 
-  useEffect(() => {
-    const getAllSubjects = async () => {
-      setPageLoading(true);
-      try {
-        const res = await axios.get(
-          `${baseUrl}/student_attendance/${auth?.currentTermId?._id}`
-        );
-        setAttendances(res.data);
-        setPageLoading(false);
-      } catch (err) {
-        console.log(err);
-        if (!err.response.ok) setErrorMessage('Network error');
-        handleError(err.response.data.error);
-        setPageLoading(false);
-      }
-    };
-    getAllSubjects();
-  }, [auth?.currentTermId._id]);
-
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    setPageLoading(true);
+    try {
+      const res = await axios.post(`${baseUrl}/student_attendance/monthly`, {
+        sectionId: values.sectionId,
+        date: values.date,
+      });
+      setAttendanceData(res.data);
+      setPageLoading(false);
+    } catch (err) {
+      handleError(err.response.data.error);
+      setPageLoading(false);
+    }
+  };
 
   const {
     values,
     errors,
+    setValues,
     handleBlur,
     touched,
-    handleChange,
     setFieldValue,
     handleSubmit,
   } = useFormik({
     initialValues: {
-      date: format(Date.now(), 'yyyy-MM'),
+      date: selectedDate,
       classSchoolId: '',
       sectionId: '',
     },
@@ -125,8 +159,6 @@ const ViewAttendance = () => {
     }
   }, [values.classSchoolId]);
 
-  console.log(values);
-
   return (
     <div>
       {pageLoading ? (
@@ -146,62 +178,126 @@ const ViewAttendance = () => {
               <PrimaryButton label='Take Attendance' icon={<FaPlusCircle />} />
             </Link>
           </AddView>
-          <div>
-            {attendances.length < 1 ? (
-              <h1>No Subject Data to display</h1>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <InputContainer>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <Select placeholder='Select Class' name='classSchoolId' />
-                    {errors.classSchoolId && touched.classSchoolId ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.classSchoolId}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <Select placeholder='Select Section' name='sectionId' />
-                    {errors.sectionId && touched.sectionId ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.sectionId}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <label htmlFor='classSchoolId'>Class School ID</label>
-                    <MonthPicker
-                      name='date'
-                      id='date'
-                      value={values.date}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                    />
-                    {errors.date && touched.date ? (
-                      <ErrorContainer>
-                        <ErrorMessage>{errors.date}</ErrorMessage>
-                      </ErrorContainer>
-                    ) : null}
-                  </div>
-                </InputContainer>
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItem: 'center',
-                    justifyContent: 'center',
-                    margin: '5px',
+          <form onSubmit={handleSubmit}>
+            <InputContainer>
+              <div style={{ width: '100%' }}>
+                <CustomSelect
+                  label='class'
+                  placeholder='Select Class'
+                  name='classSchoolId'
+                  options={classSchools}
+                  onChange={(e) => {
+                    setFieldValue('classSchoolId', e.value);
                   }}
-                >
-                  <PrimaryButton label='View Attendance' type='submit' />
-                </div>
-              </form>
+                />
+                {errors.classSchoolId && touched.classSchoolId ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.classSchoolId}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+              <div style={{ width: '100%' }}>
+                <CustomSelect
+                  label='Section'
+                  placeholder='Select Section'
+                  name='sectionId'
+                  options={section}
+                  onChange={(e) => {
+                    setFieldValue('sectionId', e.value);
+                  }}
+                />
+                {errors.sectionId && touched.sectionId ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.sectionId}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+              <div style={{ width: '100%' }}>
+                <TextInput
+                  name='date'
+                  type='month'
+                  label='Attendance Month'
+                  onBlur={handleBlur}
+                  value={selectedDate}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    setSelectedDate(value);
+                    setValues({ ...values, date: value });
+                  }}
+                />
+                {errors.date && touched.date ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.date}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div>
+            </InputContainer>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '10px 0',
+              }}
+            >
+              {' '}
+              <PrimaryButton label='View Attendance' type='submit' />
+            </div>
+          </form>
+          <div>
+            {attendanceData.length < 1 ? (
+              <h1>No student Data to display</h1>
+            ) : (
+              <TableContainer>
+                <Table>
+                  <thead>
+                    <TableRow>
+                      <TableHeader>Name</TableHeader>
+                      {datesArray.map((day) => (
+                        <TableHeader key={day}>{format(day, 'd')}</TableHeader>
+                      ))}
+                    </TableRow>
+                  </thead>
+                  <tbody>
+                    {Object.keys(groupedAttendance).map((name, id) => (
+                      <TableRow key={id}>
+                        <TableCell>{name}</TableCell>
+                        {datesArray.map((date) => {
+                          const attendance = groupedAttendance[name].find(
+                            (item) =>
+                              format(
+                                parseISO(item.attendanceDate),
+                                'yyyy-MM-dd'
+                              ) === format(date, 'yyyy-MM-dd')
+                          );
+                          return (
+                            <TableCell key={date}>
+                              {attendance ? attendance.status : ''}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </Table>
+              </TableContainer>
             )}
           </div>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItem: 'center',
+              justifyContent: 'center',
+              margin: '5px',
+            }}
+          ></div>
         </Layout>
       )}
+      {errorMessage ? (
+        <Notification message={errorMessage} type='error' />
+      ) : null}
     </div>
   );
 };

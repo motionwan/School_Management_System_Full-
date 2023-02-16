@@ -13,6 +13,7 @@ const attendanceSchema = new Schema({
     default: '',
   },
   studentRecordId: { type: toId, ref: 'StudentRecord' },
+  sectionId: { type: toId, ref: 'ClassSection' },
   termId: { type: toId, ref: 'Term' },
   createdAt: {
     type: String,
