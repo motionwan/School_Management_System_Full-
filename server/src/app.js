@@ -51,6 +51,7 @@ const SettingsRouter = require('./routes/School/Settings/Settings.router');
 const ActiveSchoolRouter = require('./routes/School/ActiveSchool/active.router');
 const ClassSectionRouter = require('./routes/Academics/ClassSection/classSection.router');
 const RoutineRouter = require('./routes/Academics/Routine/Routine.router');
+const StudentPermissionsRouter = require('./routes/Academics/Exeat/Exeat.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -71,5 +72,6 @@ app.use('/settings', SettingsRouter);
 app.use('/active', ActiveSchoolRouter);
 app.use('/class_section', ClassSectionRouter);
 app.use('/timetable', RoutineRouter);
+app.use('/exeat', StudentPermissionsRouter);
 
 module.exports = app;

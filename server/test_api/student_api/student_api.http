@@ -52,3 +52,5 @@ Content-Type: application/json
     "searchValue":"SMP000015"
 }
 
+###
+get {{hostname}}/student_record/section/63d9dbb6b1255479e13c0aff

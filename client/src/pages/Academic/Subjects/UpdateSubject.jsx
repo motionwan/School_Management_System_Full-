@@ -21,6 +21,7 @@ import axios from 'axios';
 import { baseUrl } from '../../../helpers/baseUrl';
 import { Store } from 'react-notifications-component';
 import { useNavigate } from 'react-router-dom';
+import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
 
 const AddSubjects = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const AddSubjects = () => {
   const [classSchools, setClassSchools] = useState('[]');
   const [loading, setLoading] = useState(false);
   const [errorMassage, setErrorMessage] = useState('');
+  const [section, setSection] = useState(null);
 
   const subjectTypes = [
     { label: 'Theory', value: 'theory' },
@@ -35,8 +37,6 @@ const AddSubjects = () => {
     { label: 'Objective', value: 'objective' },
     { label: 'Subjective', value: 'subjective' },
   ];
-
-  console.log(classSchools);
 
   useEffect(() => {
     const arr = [];
@@ -63,6 +63,7 @@ const AddSubjects = () => {
         type: values.type,
         code: values.code,
         classSchoolId: values.classSchoolId,
+        sectionId: values.sectionId,
       });
       if (res) {
         Store.addNotification({
@@ -100,11 +101,30 @@ const AddSubjects = () => {
       code: currentData.code,
       type: currentData.type,
       classSchoolId: currentData.classSchoolId?._id,
+      sectionId: currentData.sectionId,
     },
     validationSchema: SubjectSchema,
     onSubmit: onSubmit,
   });
-  console.log(values);
+
+  useEffect(() => {
+    if (values.classSchoolId) {
+      const arr = [];
+      const getAllClassSchoolsForSchool = async () => {
+        const res = await axios.get(
+          `${baseUrl}/class_section/${values.classSchoolId}`
+        );
+        res.data.forEach((classSchool) => {
+          arr.push({
+            label: classSchool.label,
+            value: classSchool._id,
+          });
+        });
+        setSection(arr);
+      };
+      getAllClassSchoolsForSchool();
+    }
+  }, [values.classSchoolId]);
   return (
     <Layout>
       <LocationLabel label={auth.schoolId.label.toUpperCase()}>
@@ -144,7 +164,7 @@ const AddSubjects = () => {
               </ErrorContainer>
             ) : null}
             <div style={{ width: '100%', marginTop: '50px' }}>
-              <Select
+              <CustomSelect
                 placeholder='Subject Type'
                 name='type'
                 options={subjectTypes}
@@ -161,8 +181,9 @@ const AddSubjects = () => {
             </div>
           </div>
           <div style={{ width: '100%' }}>
-            <Select
+            <CustomSelect
               placeholder='Class'
+              label='Class'
               name='classSchoolId'
               options={classSchools}
               isSearchable={false}
@@ -172,6 +193,22 @@ const AddSubjects = () => {
             {touched.classSchoolId && errors.classSchoolId ? (
               <ErrorContainer>
                 <ErrorMessage>{errors.classSchoolId}</ErrorMessage>
+              </ErrorContainer>
+            ) : null}
+          </div>
+          <div style={{ width: '100%' }}>
+            <CustomSelect
+              placeholder='Section'
+              label='Section'
+              name='sectionId'
+              options={section}
+              isSearchable={false}
+              onBlur={handleBlur}
+              onChange={(e) => setFieldValue('sectionId', e.value)}
+            />
+            {touched.sectionId && errors.sectionId ? (
+              <ErrorContainer>
+                <ErrorMessage>{errors.sectionId}</ErrorMessage>
               </ErrorContainer>
             ) : null}
           </div>

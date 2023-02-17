@@ -101,9 +101,9 @@ const Sidebar = () => {
       path: `/client_academic/${auth?.schoolId?._id}/attendance`,
     },
     {
-      label: 'Student Permissions',
+      label: 'Exeat',
       icon: <FaHandPaper />,
-      path: `/client_academic/${auth?.schoolId?._id}/student_permissions`,
+      path: `/client_academic/${auth?.schoolId?._id}/exeat`,
     },
     {
       label: 'Study Materials',

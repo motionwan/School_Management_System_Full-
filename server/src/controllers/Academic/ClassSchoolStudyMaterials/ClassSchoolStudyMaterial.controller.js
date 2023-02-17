@@ -17,18 +17,21 @@ const createClassSchoolStudyMaterial = async (req, res) => {
         createdAt: req.body.createdAt,
         updatedAt: req.body.updatedAt,
       };
-      const { classSchoolId, subjectId, sectionId } = req.body;
+      const { classSchoolId, subjectId, sectionId, addedBy } = req.body;
       const newStudyMaterial = await StudyMaterial.create(studyMaterial);
-      const studyMaterialId = ObjectId(newStudyMaterial._id);
+      const learningMaterialId = ObjectId(newStudyMaterial._id);
       const classSchoolStudyMaterial = await ClassSchoolStudyMaterial.create({
         classSchoolId,
-        studyMaterialId,
+        learningMaterialId,
         subjectId,
         sectionId,
+        addedBy,
       });
-      const classSchoolStudyMaterialId = ObjectId(classSchoolStudyMaterial._id);
-      await StudyMaterial.findByIdAndUpdate(studyMaterialId, {
-        classSchoolStudyMaterialId: classSchoolStudyMaterialId,
+      const classSchoolLearningMaterialId = ObjectId(
+        classSchoolStudyMaterial._id
+      );
+      await StudyMaterial.findByIdAndUpdate(learningMaterialId, {
+        classSchoolLearningMaterialId: classSchoolLearningMaterialId,
       });
       return res.json(classSchoolStudyMaterial);
     } else {
@@ -41,18 +44,21 @@ const createClassSchoolStudyMaterial = async (req, res) => {
         createdAt: req.body.createdAt,
         updatedAt: req.body.updatedAt,
       };
-      const { classSchoolId, subjectId, sectionId } = req.body;
+      const { classSchoolId, subjectId, sectionId, addedBy } = req.body;
       const newStudyMaterial = await StudyMaterial.create(studyMaterial);
-      const studyMaterialId = ObjectId(newStudyMaterial._id);
+      const learningMaterialId = ObjectId(newStudyMaterial._id);
       const classSchoolStudyMaterial = await ClassSchoolStudyMaterial.create({
         classSchoolId,
-        studyMaterialId,
+        learningMaterialId,
         subjectId,
         sectionId,
+        addedBy,
       });
-      const classSchoolStudyMaterialId = ObjectId(classSchoolStudyMaterial._id);
-      await StudyMaterial.findByIdAndUpdate(studyMaterialId, {
-        classSchoolStudyMaterialId: classSchoolStudyMaterialId,
+      const classSchoolLearningMaterialId = ObjectId(
+        classSchoolStudyMaterial._id
+      );
+      await StudyMaterial.findByIdAndUpdate(learningMaterialId, {
+        classSchoolLearningMaterialId: classSchoolLearningMaterialId,
       });
       return res.json(classSchoolStudyMaterial);
     }
@@ -93,7 +99,7 @@ const getAllClassSchoolStudyMaterial = async (req, res) => {
 const deleteClassSchoolStudyMaterial = async (req, res) => {
   try {
     const { id } = req.params; // class school study material id
-    await StudyMaterial.deleteOne({ classSchoolStudyMaterialId: id });
+    await StudyMaterial.deleteOne({ classSchoolLearningMaterialId: id });
     const deletedClassSchoolStudyMaterial =
       await ClassSchoolStudyMaterial.findByIdAndDelete(id);
     return res.json(deletedClassSchoolStudyMaterial);

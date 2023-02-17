@@ -9,9 +9,10 @@ const subjectSchema = new Schema({
     required: true,
     unique: true,
   },
-  code: { type: String, required: true, default: null },
-  type: { type: String, required: true, default: null },
+  code: { type: String, required: true },
+  type: { type: String, required: true },
   classSchoolId: { type: toId, ref: 'ClassSchool' },
+  sectionId: { type: toId, ref: 'ClassSection', required: true },
   createdAt: {
     type: String,
     required: true,

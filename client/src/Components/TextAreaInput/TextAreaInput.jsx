@@ -1,67 +1,68 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const InputContainer = styled.div`
-  position: flex;
+const TextAreaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
-  align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 150px;
+    font-size: 20px;
+    margin: 15px;
+    padding: 10px;
+  }
 `;
 
 const Label = styled.label`
   font-size: 18px;
   font-weight: 500;
-  display: block;
   color: ${({ theme }) => theme.text};
-  pointer-events: none;
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
+  margin-bottom: 5px;
 `;
 
-const Input = styled.input`
+const TextArea = styled.textarea`
   width: 100%;
-  height: 20px;
+  height: 100px;
   background: transparent;
   border-radius: 5px;
   color: ${({ theme }) => theme.text};
   padding: 10px;
   font-size: 16px;
   border: 1px solid ${({ theme }) => theme.text};
+  resize: none;
   &:focus {
     outline: none;
   }
   @media (max-width: 768px) {
     width: 100%;
-    height: 30px;
+    height: 150px;
     font-size: 20px;
   }
 `;
 
-const TextInput = ({
+const TextAreaInput = ({
   name,
   id,
-  type,
   onChange,
   value,
   label,
   placeholder,
-  checked,
   ...rest
 }) => (
-  <InputContainer>
-    <Label>{label}</Label>
-    <Input
-      checked={checked}
+  <TextAreaContainer>
+    <Label htmlFor={id}>{label}</Label>
+    <TextArea
       name={name}
       id={id}
-      type={type}
       onChange={onChange}
       placeholder={placeholder}
       value={value}
       {...rest}
     />
-  </InputContainer>
+  </TextAreaContainer>
 );
 
-export default TextInput;
+export default TextAreaInput;

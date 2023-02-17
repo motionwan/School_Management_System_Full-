@@ -71,8 +71,6 @@ const ViewAttendance = () => {
   const monthEnd = endOfMonth(parsedDate);
   const datesArray = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-  console.log(attendanceData);
-
   const groupedAttendance = attendanceData.reduce((acc, curr) => {
     const name = curr.student.name;
     if (!acc[name]) {

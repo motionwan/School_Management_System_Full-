@@ -45,6 +45,9 @@ import ViewStudents from './pages/Academic/Students/Students/ViewStudents';
 import UpdateStudyMaterials from './pages/Academic/StudyMaterials/UpdateStudyMaterials';
 import AddStudyMaterials from './pages/Academic/StudyMaterials/AddStudyMaterials';
 import StudyMaterials from './pages/Academic/StudyMaterials/StudyMaterials';
+import UpdateExeat from './pages/Academic/Exeat/UpdateExeat';
+import AddExeat from './pages/Academic/Exeat/AddExeat';
+import Exeat from './pages/Academic/Exeat/Exeat';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -306,6 +309,39 @@ const App = () => {
               <Route
                 path='/client_academic/:id/add_attendance'
                 element={<AddAttendance />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/client_academic/:id/exeat' element={<Exeat />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_exeat'
+                element={<AddExeat />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_exeat'
+                element={<UpdateExeat />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

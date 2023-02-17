@@ -148,6 +148,7 @@ const Subjects = () => {
                       <TableHeader>Type</TableHeader>
                       <TableHeader>Code</TableHeader>
                       <TableHeader>Class</TableHeader>
+                      <TableHeader>Course</TableHeader>
                       <TableHeader>Teacher</TableHeader>
                     </TableRow>
                   </thead>
@@ -172,6 +173,7 @@ const Subjects = () => {
                           <TableCell data-label='Class'>
                             {subject.classSchoolId?.classId?.label}
                           </TableCell>
+                          <TableCell data-label='Class'>to be..</TableCell>
                           <TableCell data-label='Teacher'>
                             To be assigned
                           </TableCell>

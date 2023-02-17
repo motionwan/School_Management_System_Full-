@@ -1,0 +1,8 @@
+@hostname = http://localhost:3001
+
+######
+get {{hostname}}/exeat
+
+####
+//get all exeats for the current term
+get {{hostname}}/exeat/63d966edcbdcf350e3fdefd4

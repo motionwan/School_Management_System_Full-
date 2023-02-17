@@ -3,8 +3,10 @@ const Subject = require('../../../models/Academic/Subjects/Subject.mongo');
 // create subjects
 const httpCreateSubjects = async (req, res) => {
   try {
-    const { label, code, type, classSchoolId } = req.body;
-    return res.json(await Subject.create({ label, code, type, classSchoolId }));
+    const { label, code, type, classSchoolId, sectionId } = req.body;
+    return res.json(
+      await Subject.create({ label, code, type, classSchoolId, sectionId })
+    );
   } catch (err) {
     if (err.code === 11000) {
       return res
@@ -57,6 +59,16 @@ const httpDeleteSubject = async (req, res) => {
   }
 };
 
+//find section subject
+const findSectionSubject = async (req, res) => {
+  try {
+    const { id } = req.params; // section id
+    return res.json(await Subject.find({ sectionId: id }));
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 // assign class in school to subject
 // const httpAssignClassSchool = async (req, res) => {
 //   try {
@@ -91,6 +103,7 @@ module.exports = {
   httpUpdateSubject,
   httpDeleteSubject,
   httpFindClassSubjects,
+  findSectionSubject,
   //   httpAssignClassSchool,
   //   httpAssignSubjectToClass,
   //   httpSchoolSubject,
