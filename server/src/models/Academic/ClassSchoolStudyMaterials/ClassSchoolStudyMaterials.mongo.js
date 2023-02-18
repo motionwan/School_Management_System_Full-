@@ -5,9 +5,10 @@ const Schema = mongoose.Schema;
 
 const classSchoolStudyMaterialsSchema = new Schema({
   classSchoolId: { type: toId, ref: 'ClassSchool' },
-  learningMaterialId: { type: toId, ref: 'StudyMaterial' },
+  studyMaterialId: { type: toId, ref: 'StudyMaterial' },
   subjectId: { type: toId, ref: 'Subject' },
   sectionId: { type: toId, ref: 'ClassSection' },
+  termId: { type: toId, ref: 'Term', required: true },
   addedBy: { type: toId, ref: 'User' },
   createdAt: {
     type: String,

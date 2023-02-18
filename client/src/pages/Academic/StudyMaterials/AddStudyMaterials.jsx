@@ -8,26 +8,10 @@ import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import { FaPlusCircle, FaSchool } from 'react-icons/fa';
 import AddView from '../../../Components/AddViewComponent/AddView';
 import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
-import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  eachDayOfInterval,
-  parseISO,
-  parse,
-} from 'date-fns';
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableHeader,
-  TableContainer,
-} from '../../../Components/Table/Table.styles';
-import AttendanceSchema from '../../../formSchema/Attendance/AttendanceShema';
 import {
   ErrorContainer,
   ErrorMessage,
@@ -37,6 +21,7 @@ import TextInput from '../../../Components/Input/Input';
 import Notification from '../../../Components/Notification/Notification';
 import TextAreaInput from '../../../Components/TextAreaInput/TextAreaInput';
 import LearningMaterialSchema from '../../../formSchema/LearningMaterials/LearningMaterialSchema';
+import { Store } from 'react-notifications-component';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -72,14 +57,13 @@ const SecondaryInputContainer = styled.div`
 
 const AddStudyMaterials = () => {
   const [pageLoading, setPageLoading] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(
-    format(Date.now(), 'yyyy-MM')
-  );
-  const [attendanceData, setAttendanceData] = useState([]);
+  //const [attendanceData, setAttendanceData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [classSchools, setClassSchools] = useState(null);
+  const [subjects, setSubjects] = useState(null);
   const [section, setSection] = useState(null);
   const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // handle errors with this function
   const handleError = (error) => {
@@ -106,16 +90,41 @@ const AddStudyMaterials = () => {
     getAllClassSchools();
   }, [auth]);
 
-  const onSubmit = async () => {
-    setPageLoading(true);
+  const onSubmit = async (values) => {
+    const data = new FormData();
+    data.append('sectionId', values.sectionId);
+    data.append('label', values.label);
+    data.append('description', values.description);
+    data.append('classSchoolId', values.classSchoolId);
+    data.append('subjectId', values.subjectId);
+    data.append('url', values.url);
+    data.append('addedBy', auth?.userId);
+    data.append('attachment', values.attachment);
+    data.append('termId', auth?.currentTermId._id);
     try {
-      const res = await axios.post(`${baseUrl}/student_attendance/monthly`, {
-        sectionId: values.sectionId,
-        date: values.date,
-      });
-      setAttendanceData(res.data);
+      setPageLoading(true);
+      const res = await axios.post(
+        `${baseUrl}/class_school_study_materials`,
+        data
+      );
+      if (res) {
+        Store.addNotification({
+          title: 'Success!',
+          message: 'School Updated successfully',
+          type: 'success',
+          insert: 'top',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__bounceIn'],
+          animationOut: ['animate__animated', 'animate__bounceOut'],
+          dismiss: {
+            duration: 5000,
+          },
+        });
+        navigate(`/client_academic/${auth?.schoolId?._id}/study_materials`);
+      }
       setPageLoading(false);
     } catch (err) {
+      console.error(err);
       handleError(err.response.data.error);
       setPageLoading(false);
     }
@@ -134,9 +143,9 @@ const AddStudyMaterials = () => {
       classSchoolId: '',
       sectionId: '',
       subjectId: '',
-      title: '',
+      label: '',
       description: '',
-      learningMaterialId: '',
+      attachment: null,
       url: '',
       addedBy: '',
     },
@@ -164,11 +173,11 @@ const AddStudyMaterials = () => {
   }, [values.classSchoolId]);
 
   useEffect(() => {
-    if (values.classSchoolId) {
+    if (values.sectionId) {
       const arr = [];
       const getAllClassSchoolsForSchool = async () => {
         const res = await axios.get(
-          `${baseUrl}/class_section/${values.classSchoolId}`
+          `${baseUrl}/subject/section/${values.sectionId}`
         );
         res.data.forEach((classSchool) => {
           arr.push({
@@ -176,11 +185,11 @@ const AddStudyMaterials = () => {
             value: classSchool._id,
           });
         });
-        setSection(arr);
+        setSubjects(arr);
       };
       getAllClassSchoolsForSchool();
     }
-  }, [values.classSchoolId]);
+  }, [values.sectionId]);
 
   return (
     <div>
@@ -237,8 +246,8 @@ const AddStudyMaterials = () => {
               <CustomSelect
                 name='subjectId'
                 label='Subject'
+                options={subjects}
                 onBlur={handleBlur}
-                value={selectedDate}
                 onChange={(e) => {
                   setFieldValue('subjectId', e.value);
                 }}
@@ -260,14 +269,14 @@ const AddStudyMaterials = () => {
             >
               <TextInput
                 label='Title'
-                name='title'
-                value={values.title}
+                name='label'
+                value={values.label}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.title && touched.title ? (
+              {errors.label && touched.label ? (
                 <ErrorContainer>
-                  <ErrorMessage>{errors.title}</ErrorMessage>
+                  <ErrorMessage>{errors.label}</ErrorMessage>
                 </ErrorContainer>
               ) : null}
             </div>
@@ -317,16 +326,18 @@ const AddStudyMaterials = () => {
               }}
             >
               <TextInput
-                label='Learning Material'
+                label='Attachment'
                 type='file'
-                name='learningMaterialId'
+                name='attachment'
                 onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.learningMaterialId}
+                onChange={(e) => {
+                  setFieldValue('attachment', e.currentTarget.files[0]);
+                }}
+                // value={values.attachment}
               />
-              {errors.learningMaterialId && touched.learningMaterialId ? (
+              {errors.attachment && touched.attachment ? (
                 <ErrorContainer>
-                  <ErrorMessage>{errors.learningMaterialId}</ErrorMessage>
+                  <ErrorMessage>{errors.attachment}</ErrorMessage>
                 </ErrorContainer>
               ) : null}
             </div>
@@ -344,6 +355,8 @@ const AddStudyMaterials = () => {
             <PrimaryButton label='Add Learning Material' type='submit' />
           </div>
         </form>
+        {pageLoading && <Spinner />}
+        {errorMessage && <Notification message={errorMessage} type='error' />}
       </Layout>
     </div>
   );
