@@ -106,14 +106,14 @@ const Sidebar = () => {
       path: `/client_academic/${auth?.schoolId?._id}/exeat`,
     },
     {
-      label: 'Study Materials',
+      label: 'Learning Materials',
       icon: <BiBook />,
       path: `/client_academic/${auth?.schoolId?._id}/study_materials`,
     },
     {
       label: 'Homework',
       icon: <BiBookAdd />,
-      path: `/client_school/${auth?.schoolId?._id}/homework`,
+      path: `/client_academic/${auth?.schoolId?._id}/homework`,
     },
     {
       label: 'Noticeboard',

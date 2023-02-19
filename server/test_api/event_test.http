@@ -1,0 +1,4 @@
+   @hostname = http://localhost:3001
+
+   ####
+   get {{hostname}}/event/63d966edcbdcf350e3fdefd4

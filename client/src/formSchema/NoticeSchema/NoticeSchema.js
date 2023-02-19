@@ -5,7 +5,6 @@ const SUPPORTED_FORMATS = [
   'image/jpeg',
   'image/png',
   'image/gif',
-  'video/mp4',
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -14,14 +13,11 @@ const SUPPORTED_FORMATS = [
   'application/vnd.ms-powerpoint',
   'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 ];
-const MAX_FILE_SIZE = 314572800; // 300MB in bytes
+const MAX_FILE_SIZE = 9145728; // 9MB in bytes
 
-const LearningMaterialSchema = yup.object().shape({
-  classSchoolId: yup.string().required('Class is required'),
-  sectionId: yup.string().required('Section is required'),
-  subjectId: yup.string().required('Subject is required'),
-  label: yup.string().required('Title is required'),
-  description: yup.string(),
+const NoticeSchema = yup.object().shape({
+  topic: yup.string().required('Topic is required'),
+  description: yup.string().required('Notice body is required'),
   attachment: yup
     .mixed()
     .test(
@@ -34,7 +30,6 @@ const LearningMaterialSchema = yup.object().shape({
       'File size too large',
       (value) => !value || value.size <= MAX_FILE_SIZE
     ),
-  url: yup.string(),
 });
 
-export default LearningMaterialSchema;
+export default NoticeSchema;

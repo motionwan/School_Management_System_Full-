@@ -24,7 +24,7 @@ import AddTerm from './pages/SchoolManagement/Terms/AddTerm';
 import UpdateTerm from './pages/SchoolManagement/Terms/UpdateTerm';
 import AcademicDashboard from './pages/Academic/Dashboard/AcademicDashboard';
 import ClassSections from './pages/Academic/Sections/ClassSections';
-import Subject from './pages/Academic/Subjects/Subjects';
+//import Subject from './pages/Academic/Subjects/Subjects';
 import AddSubjects from './pages/Academic/Subjects/AddSubjects';
 import UpdateSubject from './pages/Academic/Subjects/UpdateSubject';
 import SchoolDashboard from './pages/School/SchoolDashboard/SchoolDashboard';
@@ -35,7 +35,7 @@ import UpdateTimeTable from './pages/Academic/TimeTable/UpdateTimeTable';
 import AddTimeTable from './pages/Academic/TimeTable/AddTimeTable';
 import TimeTable from './pages/Academic/TimeTable/TimeTable';
 import Subjects from './pages/Academic/Subjects/Subjects';
-import ViewTimetable from './pages/Academic/TimeTable/ViewTimetable';
+//import ViewTimetable from './pages/Academic/TimeTable/ViewTimetable';
 import Schedule from './pages/Academic/TimeTable/Schedule';
 import ViewAttendance from './pages/Academic/Attendance/ViewAttendance';
 import AddAttendance from './pages/Academic/Attendance/AddAttendance';
@@ -48,6 +48,15 @@ import StudyMaterials from './pages/Academic/StudyMaterials/StudyMaterials';
 import UpdateExeat from './pages/Academic/Exeat/UpdateExeat';
 import AddExeat from './pages/Academic/Exeat/AddExeat';
 import Exeat from './pages/Academic/Exeat/Exeat';
+import HomeWork from './pages/Academic/Homework/HomeWork';
+import AddHomeWork from './pages/Academic/Homework/AddHomeWork';
+import UpdateHomeWork from './pages/Academic/Homework/UpdateHomeWork';
+import UpdateNotice from './pages/Academic/Noticeboard/UpdateNotice';
+import AddNotice from './pages/Academic/Noticeboard/AddNotice';
+import Notice from './pages/Academic/Noticeboard/Notice';
+import UpdateEvent from './pages/Academic/Events/UpdateEvent';
+import AddEvent from './pages/Academic/Events/AddEvent';
+import Event from './pages/Academic/Events/Event';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -342,6 +351,111 @@ const App = () => {
               <Route
                 path='/client_academic/:id/update_exeat'
                 element={<UpdateExeat />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/homework'
+                element={<HomeWork />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_homework'
+                element={<AddHomeWork />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_homework'
+                element={<UpdateHomeWork />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/noticeboard'
+                element={<Notice />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_notice'
+                element={<AddNotice />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_notice'
+                element={<UpdateNotice />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/client_academic/:id/events' element={<Event />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/add_event'
+                element={<AddEvent />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/:id/update_event'
+                element={<UpdateEvent />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
