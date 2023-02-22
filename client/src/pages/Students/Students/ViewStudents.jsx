@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import Layout from '../../../../Components/Layout/Layout';
-import { baseUrl } from '../../../../helpers/baseUrl';
-import Spinner from '../../../../Components/Spinner/Spinner';
-import Notification from '../../../../Components/Notification/Notification';
-import AuthContext from '../../../../context/AuthContext/AuthContext';
-import LocationLabel from '../../../../Components/LocationLabel/LocationLabel';
+import Layout from '../../../Components/Layout/Layout';
+import { baseUrl } from '../../../helpers/baseUrl';
+import Spinner from '../../../Components/Spinner/Spinner';
+import Notification from '../../../Components/Notification/Notification';
+import AuthContext from '../../../context/AuthContext/AuthContext';
+import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import { FaSchool } from 'react-icons/fa';
-import AddView from '../../../../Components/AddViewComponent/AddView';
-import { PrimaryButton } from '../../../../Components/Buttons/PrimaryButton';
+import AddView from '../../../Components/AddViewComponent/AddView';
+import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
-import TermSelector from '../../../../Components/TermSelector/TermSelector';
+import TermSelector from '../../../Components/TermSelector/TermSelector';
 import {
   Action,
   Table,
@@ -20,12 +20,12 @@ import {
   TableExpandableRow,
   TableExpandableCell,
   TableContainer,
-} from '../../../../Components/Table/Table.styles';
-import DeleteEdit from '../../../../Components/DeleteAndEdit/DeleteEdit';
-import DialogModal from '../../../../Components/Dialog/Dialog';
+} from '../../../Components/Table/Table.styles';
+import DeleteEdit from '../../../Components/DeleteAndEdit/DeleteEdit';
+import DialogModal from '../../../Components/Dialog/Dialog';
 import styled from 'styled-components';
-import CustomSelect from '../../../../Components/CustomSelect/CustomSelect';
-import TextInput from '../../../../Components/Input/Input';
+import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
+import TextInput from '../../../Components/Input/Input';
 import { useFormik } from 'formik';
 
 const SearchContainer = styled.div`

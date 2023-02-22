@@ -1,24 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
-import AddView from '../../../../Components/AddViewComponent/AddView';
-import { PrimaryButton } from '../../../../Components/Buttons/PrimaryButton';
-import Layout from '../../../../Components/Layout/Layout';
-import LocationLabel from '../../../../Components/LocationLabel/LocationLabel';
-import TermSelector from '../../../../Components/TermSelector/TermSelector';
-import AuthContext from '../../../../context/AuthContext/AuthContext';
+import AddView from '../../../Components/AddViewComponent/AddView';
+import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
+import Layout from '../../../Components/Layout/Layout';
+import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
+import TermSelector from '../../../Components/TermSelector/TermSelector';
+import AuthContext from '../../../context/AuthContext/AuthContext';
 import styled from 'styled-components';
-import TextInput from '../../../../Components/Input/Input';
+import TextInput from '../../../Components/Input/Input';
 import { useFormik } from 'formik';
-import StudentRecord from '../../../../formSchema/StudentRecord/StudentRecord';
+import StudentRecord from '../../../formSchema/StudentRecord/StudentRecord';
 import {
   ErrorContainer,
   ErrorMessage,
-} from '../../../../Components/ErrorComponent/Error';
-import CustomSelect from '../../../../Components/CustomSelect/CustomSelect';
+} from '../../../Components/ErrorComponent/Error';
+import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
 import axios from 'axios';
-import { baseUrl } from '../../../../helpers/baseUrl';
+import { baseUrl } from '../../../helpers/baseUrl';
 import { Store } from 'react-notifications-component';
-import { useNavigate } from 'react-router-dom';
-import Notification from '../../../../Components/Notification/Notification';
+import { Link, useNavigate } from 'react-router-dom';
+import Notification from '../../../Components/Notification/Notification';
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +31,10 @@ const Container = styled.div`
 `;
 const InputContainer = styled.div`
   display: flex;
-  width: 100%;
-  margin: 20px 0;
+  width: 95%;
+  margin: 20px 20px;
+  padding: 10px;
+  gap: 35px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -44,7 +46,7 @@ const InputWrapper = styled.div`
   width: 100%;
 `;
 
-const AddAdmission = () => {
+const AddStudent = () => {
   const [classSchools, setClassSchools] = useState('[]');
   const [programs, setPrograms] = useState('[]');
   const [errorMessage, setErrorMessage] = useState('');
@@ -112,6 +114,7 @@ const AddAdmission = () => {
 
   const onSubmit = async (values) => {
     const data = new FormData();
+    console.log(values);
     data.append('fullName', values.fullName);
     data.append('gender', values.gender);
     data.append('dateOfBirth', values.dateOfBirth);
@@ -182,6 +185,7 @@ const AddAdmission = () => {
       hometown: '',
       religion: '',
       username: '',
+      allergies: '',
     },
     validationSchema: StudentRecord,
     onSubmit: onSubmit,
@@ -207,6 +211,8 @@ const AddAdmission = () => {
     }
   }, [values.classSchoolId]);
 
+  console.log(values);
+
   return (
     <div>
       <Layout>
@@ -214,7 +220,9 @@ const AddAdmission = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <PrimaryButton label='View Students' />
+          <Link to={`/client_student/${auth?.schoolId._id}/students`}>
+            <PrimaryButton label='View Students' />
+          </Link>
         </AddView>
         <form onSubmit={handleSubmit}>
           <Container>
@@ -454,7 +462,6 @@ const AddAdmission = () => {
               <InputWrapper style={{ maxWidth: '300px' }}>
                 <TextInput
                   label='Username'
-                  type='text'
                   name='username'
                   value={values.username}
                   onChange={handleChange}
@@ -527,4 +534,4 @@ const AddAdmission = () => {
   );
 };
 
-export default AddAdmission;
+export default AddStudent;

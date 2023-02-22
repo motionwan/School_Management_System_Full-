@@ -85,6 +85,7 @@ const AddEvent = () => {
     data.append('addedBy', auth?.userId);
     data.append('termId', auth?.currentTermId._id);
     data.append('schoolId', auth?.schoolId?._id);
+
     try {
       setPageLoading(true);
       const res = await axios.post(`${baseUrl}/event`, data);

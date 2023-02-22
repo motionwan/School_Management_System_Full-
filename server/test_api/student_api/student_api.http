@@ -53,4 +53,9 @@ Content-Type: application/json
 }
 
 ###
-get {{hostname}}/student_record/section/63d9dbb6b1255479e13c0aff
+post {{hostname}}/student_record/section/63d9122ac759e654d1284765
+Content-Type: application/json
+
+{
+    "sectionId":"63d9dbb6b1255479e13c0aff"
+}

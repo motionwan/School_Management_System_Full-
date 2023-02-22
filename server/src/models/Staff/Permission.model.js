@@ -1,19 +1,16 @@
+// Permission model schema
+
 const mongoose = require('mongoose');
 const toId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 
-const roleSchema = new Schema({
+const permissionSchema = new Schema({
   name: {
     type: String,
     required: true,
     unique: true,
   },
-  permissions: [
-    {
-      type: toId,
-      ref: 'Permission',
-    },
-  ],
+  resources: [{ type: String, required: true }],
 });
 
-module.exports = mongoose.model('Roles', roleSchema);
+module.exports = mongoose.model('Permission', permissionSchema);

@@ -8,59 +8,151 @@ const jwtAccessToken = process.env.ACCESS_TOKEN;
 const sendEmail = require('../../../utils/email');
 const Settings = require('../../../models/School/Settings/settings.mongo');
 
-const createStaff = async (req, res) => {
+const adminCreateStaff = async (req, res) => {
   try {
-    const {
-      fullName,
-      schoolId,
-      role,
-      status,
-      phoneNumber,
-      photoId,
-      gender,
-      dateOfBirth,
-      username,
-      email,
-      address,
-    } = req.body;
-    const image = req?.file?.path;
-    const password = await bcrypt.hash(req.body.password, 12);
-
-    const newStaff = await Staff.create({
-      fullName,
-      schoolId,
-      role,
-      photoId,
-      gender,
-      dateOfBirth,
-      status,
-      image,
-      phoneNumber,
-      username,
-      email,
-      password,
-      address,
-    });
+    let sectionId = null;
+    if (req.body.sectionId) {
+      sectionId = req.body.sectionId;
+    }
+    const { email, role } = req.body;
+    const newStaff = await Staff.create({ email, role, sectionId });
     if (newStaff) {
       const token = await Token.create({
-        userId: newStaff._id,
+        staffId: newStaff._id,
         token: crypto.randomBytes(32).toString('hex'),
       });
-      const url = `${process.env.CLIENT_URL}/users/${newStaff._id}/verify/${token.token}`;
-      await sendEmail(newStaff.email, 'Verify Email', url);
+      const url = `${process.env.CLIENT_URL}/staff/signup/${token.token}/${newStaff._id}`;
+      await sendEmail(newStaff.email, 'Sign Up with this link', url);
       //console.log(token);
       return res
         .status(201)
-        .json({ message: 'Email sent to account please verify' });
+        .json({ message: `Email sent to ${newStaff.email} for sign up` });
     }
   } catch (err) {
-    if (err.code === 11000) {
-      return res.status(409).json({ error: 'Staff Already Exists' });
-    }
-    console.log(err);
     return res.status(500).json({ error: err.message });
   }
 };
+
+const signUpStaff = async (req, res) => {
+  try {
+    const { token, id } = req.params;
+    let photoId = '';
+    if (req.file) {
+      photoId = req.file.path;
+    }
+    const {
+      fullName,
+      gender,
+      dateOfBirth,
+      phoneNumber,
+      address,
+      bloodGroup,
+      city,
+      healthInsurance,
+      hometown,
+      religion,
+      username,
+      repeatPassword,
+      emergencyContactName,
+      emergencyContactNumber,
+      emergencyContactAddress,
+    } = req.body;
+
+    const password = await bcrypt.hash(req.body.password, 12);
+
+    const staff = await Staff.findById(id);
+
+    if (!staff) {
+      return res.status(400).json({ error: 'Invalid Link' });
+    }
+    const oldToken = await Token.findOne({
+      staffId: id,
+      token: token,
+    });
+    if (!oldToken) {
+      return res.status(400).json({ error: 'Link has expired' });
+    }
+    const update = await Staff.findByIdAndUpdate(staff._id, {
+      verified: true,
+      fullName,
+      gender,
+      dateOfBirth,
+      phoneNumber,
+      address,
+      bloodGroup,
+      photoId,
+      city,
+      healthInsurance,
+      hometown,
+      religion,
+      username,
+      password,
+      repeatPassword,
+      emergencyContactName,
+      emergencyContactNumber,
+      emergencyContactAddress,
+    });
+    console.log(update);
+    await Token.findByIdAndDelete(oldToken._id);
+    return res.json({ message: 'Sign up successful' });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+// const createStaff = async (req, res) => {
+//   try {
+//     const {
+//       fullName,
+//       schoolId,
+//       role,
+//       status,
+//       phoneNumber,
+//       photoId,
+//       gender,
+//       dateOfBirth,
+//       username,
+//       email,
+//       address,
+//     } = req.body;
+//     const image = req?.file?.path;
+//     const password = await bcrypt.hash(req.body.password, 12);
+
+//     const newStaff = await Staff.create({
+//       fullName,
+//       schoolId,
+//       role,
+//       photoId,
+//       gender,
+//       dateOfBirth,
+//       status,
+//       image,
+//       phoneNumber,
+//       username,
+//       email,
+//       password,
+//       address,
+//     });
+//     if (newStaff) {
+//       const token = await Token.create({
+//         userId: newStaff._id,
+//         token: crypto.randomBytes(32).toString('hex'),
+//       });
+//       const url = `${process.env.CLIENT_URL}/users/${newStaff._id}/verify/${token.token}`;
+//       await sendEmail(newStaff.email, 'Verify Email', url);
+//       //console.log(token);
+//       return res
+//         .status(201)
+//         .json({ message: 'Email sent to account please verify' });
+//     }
+//   } catch (err) {
+//     if (err.code === 11000) {
+//       return res.status(409).json({ error: 'Staff Already Exists' });
+//     }
+//     console.log(err);
+//     return res.status(500).json({ error: err.message });
+//   }
+// };
 
 // activate account
 const activateAccount = async (req, res) => {
@@ -151,7 +243,7 @@ const signInStaff = async (req, res) => {
         username: staff.username,
         image: staff?.image,
         email: staff.email,
-        role: staff?.role,
+        role: [staff?.role],
         userId: staff?._id,
         schoolId: staff?.schoolId,
         // we want the current term id
@@ -307,7 +399,7 @@ const deleteStaff = async (req, res) => {
 };
 
 module.exports = {
-  createStaff,
+  //createStaff,
   updateStaff,
   deleteStaff,
   getAllStaff,
@@ -316,4 +408,6 @@ module.exports = {
   forgotPassword,
   signInStaff,
   logoutStaff,
+  adminCreateStaff,
+  signUpStaff,
 };

@@ -17,7 +17,7 @@ const StudentRecord = yup.object().shape({
   guardianPhoneNumber: yup
     .string()
     .required('Guardian phone number is required'),
-  motherOccupation: yup.string(),
+  guardianOccupation: yup.string(),
   photoId: yup
     .mixed()
     .test(
@@ -41,6 +41,7 @@ const StudentRecord = yup.object().shape({
   hometown: yup.string(),
   religion: yup.string(),
   classSchoolId: yup.string().required('Class is required'),
+  allergies: yup.string(),
 });
 
 export default StudentRecord;

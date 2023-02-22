@@ -10,6 +10,8 @@ const Settings = require('../../../models/School/Settings/settings.mongo');
 const Section = require('../../../models/Academic/ClassSection/ClassSection.mongo');
 const ClassSchool = require('../../../models/Academic/ClassSchool/ClassSchool.mongo');
 const Schools = require('../../../models/SchoolManagment/Schools/schools.mongo');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const admitStudent = async (req, res) => {
   try {
@@ -38,6 +40,7 @@ const admitStudent = async (req, res) => {
       healthInsurance,
       hometown,
       religion,
+      allergies,
       // fatherOccupation,
       // fatherPhoneNumber,
       // motherName,
@@ -65,6 +68,7 @@ const admitStudent = async (req, res) => {
       healthInsurance,
       hometown,
       religion,
+      allergies,
       // fatherName,
       // motherName,
       // fatherPhoneNumber,
@@ -342,6 +346,7 @@ const updateStudent = async (req, res) => {
       healthInsurance,
       hometown,
       religion,
+      allergies,
       // fatherName,
       // motherName,
       // fatherPhoneNumber,
@@ -373,6 +378,7 @@ const updateStudent = async (req, res) => {
         healthInsurance,
         hometown,
         religion,
+        allergies,
         // fatherName,
         // motherName,
         // fatherPhoneNumber,
@@ -418,10 +424,19 @@ const searchStudents = async (req, res) => {
   }
 };
 
-const getStudentBySectionId = async (req, res) => {
+const getStudentBySectionAndTermId = async (req, res) => {
   try {
-    const { id } = req.params; // section id;
-    return res.json(await StudentRecord.find({ sectionId: id }));
+    const { id } = req.params; // termId ;
+    const { sectionId } = req.body;
+    const students = await StudentRecord.aggregate([
+      {
+        $match: {
+          termId: ObjectId(id),
+          sectionId: ObjectId(sectionId),
+        },
+      },
+    ]);
+    return res.json(students);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -444,5 +459,5 @@ module.exports = {
   forgotPassword,
   logoutStudent,
   searchStudents,
-  getStudentBySectionId,
+  getStudentBySectionAndTermId,
 };

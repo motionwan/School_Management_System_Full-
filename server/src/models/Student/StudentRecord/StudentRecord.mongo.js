@@ -77,6 +77,7 @@ const studentSchema = new Schema({
   healthInsurance: { type: String },
   hometown: { type: String },
   religion: { type: String },
+  allergies: String,
   // motherPhoneNumber: {
 
   // motherName: {

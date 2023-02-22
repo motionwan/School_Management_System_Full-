@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const toId = mongoose.Types.ObjectId;
 
 const tokenSchema = new Schema({
-  userId: {
+  staffId: {
     type: toId,
     required: true,
-    ref: 'user',
+    ref: 'Staff',
     unique: true,
   },
   token: {

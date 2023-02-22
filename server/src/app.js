@@ -54,6 +54,7 @@ const RoutineRouter = require('./routes/Academics/Routine/Routine.router');
 const StudentPermissionsRouter = require('./routes/Academics/Exeat/Exeat.router');
 const NoticeRouter = require('./routes/Academics/Notice/Notice.router');
 const EventRouter = require('./routes/Academics/Events/event.router');
+const StaffPermissionsRouter = require('./routes/Staff/Permissions/Permissions.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -77,5 +78,6 @@ app.use('/timetable', RoutineRouter);
 app.use('/exeat', StudentPermissionsRouter);
 app.use('/notice', NoticeRouter);
 app.use('/event', EventRouter);
+app.use('/permission', StaffPermissionsRouter);
 
 module.exports = app;

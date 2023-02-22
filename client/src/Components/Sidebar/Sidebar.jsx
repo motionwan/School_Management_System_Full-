@@ -169,6 +169,39 @@ const Sidebar = () => {
     },
   ];
 
+  const adminArray = [
+    {
+      label: 'Admin Dashboard',
+      icon: <AiOutlineDashboard />,
+      path: `/staff/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Admins',
+      icon: <BiIntersect />,
+      path: `/staff/${auth?.schoolId?._id}/admin`,
+    },
+    {
+      label: 'Roles',
+      icon: <MdSubject />,
+      path: `/staff/${auth?.schoolId?._id}/roles`,
+    },
+    {
+      label: 'Staff List',
+      icon: <AiOutlineTable />,
+      path: `/staff/${auth?.schoolId?._id}/staffs`,
+    },
+    {
+      label: 'Staff Attendance',
+      icon: <AiOutlineCheck />,
+      path: `/staff/${auth?.schoolId?._id}/attendance`,
+    },
+    {
+      label: 'Staff Exeats',
+      icon: <FaHandPaper />,
+      path: `/staff/${auth?.schoolId?._id}/exeat`,
+    },
+  ];
+
   return (
     <>
       <SidebarContainer isOpen={sidebarOpen}>
@@ -255,6 +288,28 @@ const Sidebar = () => {
           <SidebarDivider />
           {/* // end of  school management array */}
           {studentArray.map((links, index) => {
+            return (
+              <SidebarLinkContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <SidebarLink
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                  {sidebarOpen && (
+                    <>
+                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                    </>
+                  )}
+                </SidebarLink>
+              </SidebarLinkContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* // end of  school management array */}
+          {adminArray.map((links, index) => {
             return (
               <SidebarLinkContainer
                 isActive={pathname === links.path}
@@ -392,6 +447,60 @@ const Sidebar = () => {
           })}
           <SidebarDivider />
           {academicArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
+          {studentArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
+          {adminArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}

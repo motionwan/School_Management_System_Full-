@@ -8,13 +8,13 @@ const {
   getAllStudents,
   deleteStudent,
   searchStudents,
-  getStudentBySectionId,
+  getStudentBySectionAndTermId,
 } = require('../../../controllers/Students/StudentRecord/StudentRecord.controller');
 
 router.post('/', upload.single('photoId'), admitStudent);
 router.put('/:id', updateStudent);
 router.get('/:id', getAllStudents);
-router.get('/section/:id', getStudentBySectionId);
+router.post('/section/:id', getStudentBySectionAndTermId);
 router.delete('/:id', deleteStudent);
 router.post('/search', searchStudents);
 

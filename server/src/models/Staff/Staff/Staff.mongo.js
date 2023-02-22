@@ -5,41 +5,45 @@ const Schema = mongoose.Schema;
 const StaffSchema = new Schema({
   fullName: {
     type: String,
-    required: true,
+    default: null,
   },
   dateOfBirth: {
     type: String,
-    required: true,
+    default: null,
   },
   photoId: {
     type: String,
+    default: null,
   },
   gender: {
     type: String,
+    default: '',
   },
   password: {
     type: String,
-    required: true,
+    default: '',
   },
-  image: String,
+  bloodGroup: { type: String, default: '' },
+  hometown: { type: String, default: '' },
+  city: { type: String, default: '' },
+  religion: { type: String, default: '' },
+  healthInsurance: { type: String, default: '' },
   schoolId: {
     type: toId,
     ref: 'School',
-    required: true,
   },
-
   phoneNumber: {
     type: String,
     unique: true,
-    required: true,
+    default: '',
   },
   verified: {
     type: Boolean,
-    required: true,
     default: false,
   },
   refreshToken: {
     type: String,
+    default: '',
   },
   resetPasswordToken: {
     data: String,
@@ -48,7 +52,7 @@ const StaffSchema = new Schema({
   username: {
     type: String,
     unique: true,
-    required: true,
+    default: '',
   },
   email: {
     type: String,
@@ -57,14 +61,24 @@ const StaffSchema = new Schema({
   },
   address: {
     type: String,
+    default: '',
   },
+  sectionId: {
+    type: toId,
+    ref: 'ClassSection',
+    required: false,
+  },
+  emergencyContactName: { type: String, default: '' },
+  emergencyContactNumber: { type: String, default: '' },
+  emergencyContactAddress: { type: String, default: '' },
 
   role: {
     type: toId,
     ref: 'Roles',
     required: true,
   },
-  status: { type: Boolean, required: true },
+  //permission: { type: toId, ref: 'Permission' },
+  status: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model('Staff', StaffSchema);

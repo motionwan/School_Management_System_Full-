@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
-import Layout from '../../../../Components/Layout/Layout';
+import Layout from '../../../Components/Layout/Layout';
 import {
   Card,
   Container,
   CardContainer,
   CardHeader,
   ButtonContainer,
-} from '../../../../Components/DashboardCard/DashboardCard';
+} from '../../../Components/DashboardCard/DashboardCard';
 import {
   PrimaryButton,
   PrimaryOutlineButton,
-} from '../../../../Components/Buttons/PrimaryButton';
+} from '../../../Components/Buttons/PrimaryButton';
 import { Link } from 'react-router-dom';
-import LocationLabel from '../../../../Components/LocationLabel/LocationLabel';
-import TermSelector from '../../../../Components/TermSelector/TermSelector';
-import AuthContext from '../../../../context/AuthContext/AuthContext';
+import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
+import TermSelector from '../../../Components/TermSelector/TermSelector';
+import AuthContext from '../../../context/AuthContext/AuthContext';
 
 const StudentDashboard = () => {
   const { auth } = useContext(AuthContext);

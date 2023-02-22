@@ -23,6 +23,7 @@ import TextAreaInput from '../../../Components/TextAreaInput/TextAreaInput';
 import { Store } from 'react-notifications-component';
 import DateInput from '../../../Components/DateInput/DateInput';
 import HomeworkSchema from '../../../formSchema/Homework/HomeworkSchema';
+import StudentIDCard from '../../../Components/StudentId/StudentId';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -56,14 +57,17 @@ const SecondaryInputContainer = styled.div`
   }
 `;
 
-const AddHomeWork = () => {
+const StudentId = () => {
   const [pageLoading, setPageLoading] = useState(false);
   //const [attendanceData, setAttendanceData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [classSchools, setClassSchools] = useState(null);
-  const [subjects, setSubjects] = useState(null);
+  const [students, setStudents] = useState(null);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [detailedStudents, setDetailedStudents] = useState([]);
   const [section, setSection] = useState(null);
   const { auth } = useContext(AuthContext);
+  const [showCard, setShowCard] = useState(false);
   const navigate = useNavigate();
 
   // handle errors with this function
@@ -74,6 +78,9 @@ const AddHomeWork = () => {
       setErrorMessage(null);
     }, 10000);
   };
+
+  //console.log(detailedStudents);
+  console.log(selectedStudents);
 
   // find all classes
   useEffect(() => {
@@ -129,28 +136,34 @@ const AddHomeWork = () => {
     }
   };
 
-  const {
-    values,
-    errors,
-    handleBlur,
-    touched,
-    setFieldValue,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      classSchoolId: '',
-      sectionId: '',
-      subjectId: '',
-      title: '',
-      description: '',
-      attachment: null,
-      submissionDate: Date.now(), //format(addDays(new Date(), 3), 'dd-MM-yyyy'),
-      addedBy: '',
-    },
-    validationSchema: HomeworkSchema,
-    onSubmit: onSubmit,
-  });
+  const handleStudentSelect = (selectedIds) => {
+    const selectedStudents = detailedStudents.filter((student) =>
+      selectedIds.includes(student._id)
+    );
+    setSelectedStudents(selectedStudents);
+  };
+
+  const { values, errors, handleBlur, touched, setFieldValue, handleSubmit } =
+    useFormik({
+      initialValues: {
+        classSchoolId: '',
+        sectionId: '',
+        subjectId: '',
+        title: '',
+        description: '',
+        attachment: null,
+        submissionDate: Date.now(), //format(addDays(new Date(), 3), 'dd-MM-yyyy'),
+        addedBy: '',
+      },
+      validationSchema: HomeworkSchema,
+      onSubmit: onSubmit,
+    });
+
+  const handleId = () => {
+    selectedStudents.map((student) => {
+      setShowCard(true);
+    });
+  };
 
   useEffect(() => {
     if (values.classSchoolId) {
@@ -175,20 +188,24 @@ const AddHomeWork = () => {
     if (values.sectionId) {
       const arr = [];
       const getAllClassSchoolsForSchool = async () => {
-        const res = await axios.get(
-          `${baseUrl}/subject/section/${values.sectionId}`
+        const res = await axios.post(
+          `${baseUrl}/student_record/section/${auth?.currentTermId?._id}`,
+          {
+            sectionId: values.sectionId,
+          }
         );
-        res.data.forEach((classSchool) => {
+        setDetailedStudents(res.data);
+        res.data.forEach((student) => {
           arr.push({
-            label: classSchool.label,
-            value: classSchool._id,
+            label: student.fullName,
+            value: student._id,
           });
         });
-        setSubjects(arr);
+        setStudents(arr);
       };
       getAllClassSchoolsForSchool();
     }
-  }, [values.sectionId]);
+  }, [values.sectionId, auth]);
 
   return (
     <div>
@@ -199,11 +216,7 @@ const AddHomeWork = () => {
         >
           <TermSelector />
         </LocationLabel>
-        <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/homework `}>
-            <PrimaryButton label='View Homework' icon={<FaPlusCircle />} />
-          </Link>
-        </AddView>
+        <AddView>ID Cards</AddView>
         <form onSubmit={handleSubmit}>
           <InputContainer>
             <div style={{ width: '100%' }}>
@@ -240,121 +253,44 @@ const AddHomeWork = () => {
             </div>
             <div style={{ width: '100%' }}>
               <CustomSelect
-                name='subjectId'
-                label='Subject'
-                options={subjects}
+                name='studentId'
+                label='Students'
+                isMulti
+                options={students}
                 onBlur={handleBlur}
-                onChange={(e) => {
-                  setFieldValue('subjectId', e.value);
+                onChange={(selectedOptions) => {
+                  const selectedIds = selectedOptions.map(
+                    (option) => option.value
+                  );
+                  handleStudentSelect(selectedIds);
                 }}
               />
-              {errors.subjectId && touched.subjectId ? (
+
+              {errors.studentId && touched.studentId ? (
                 <ErrorContainer>
-                  <ErrorMessage>{errors.subjectId}</ErrorMessage>
+                  <ErrorMessage>{errors.studentId}</ErrorMessage>
                 </ErrorContainer>
               ) : null}
             </div>
           </InputContainer>
-
-          <InputContainer>
-            <div style={{ width: '100%', margin: '0, 10px' }}>
-              <DateInput
-                label='Submission Date'
-                placeholder='Select Section'
-                name='submissionDate'
-                selected={values.submissionDate}
-                dateFormat='dd-MMM-yyyy'
-                onChange={(e) => {
-                  setFieldValue('submissionDate', e);
-                }}
-              />
-              {errors.submissionDate && touched.submissionDate ? (
-                <ErrorContainer>
-                  <ErrorMessage>{errors.submissionDate}</ErrorMessage>
-                </ErrorContainer>
-              ) : null}
-            </div>
-            <div style={{ width: '100%', margin: '0 50px' }}></div>
-            <div style={{ width: '100%' }}></div>
-          </InputContainer>
-
-          <SecondaryInputContainer>
-            <div
-              style={{
-                width: '100%',
-                margin: '20px 0',
-              }}
-            >
-              <TextInput
-                label='Title'
-                name='title'
-                value={values.label}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {errors.label && touched.label ? (
-                <ErrorContainer>
-                  <ErrorMessage>{errors.label}</ErrorMessage>
-                </ErrorContainer>
-              ) : null}
-            </div>
-
-            <div
-              style={{
-                width: '100%',
-                margin: '20px 0',
-              }}
-            >
-              <TextAreaInput
-                label='Additional Information'
-                name='description'
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.description}
-              />
-              {errors.description && touched.description ? (
-                <ErrorContainer>
-                  <ErrorMessage>{errors.description}</ErrorMessage>
-                </ErrorContainer>
-              ) : null}
-            </div>
-
-            <div
-              style={{
-                width: '100%',
-                margin: '20px 0',
-              }}
-            >
-              <TextInput
-                label='Attachment'
-                type='file'
-                name='attachment'
-                onBlur={handleBlur}
-                onChange={(e) => {
-                  setFieldValue('attachment', e.currentTarget.files[0]);
-                }}
-                // value={values.attachment}
-              />
-              {errors.attachment && touched.attachment ? (
-                <ErrorContainer>
-                  <ErrorMessage>{errors.attachment}</ErrorMessage>
-                </ErrorContainer>
-              ) : null}
-            </div>
-          </SecondaryInputContainer>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '10px 0',
-            }}
-          >
-            {' '}
-            <PrimaryButton label='Add Learning Material' type='submit' />
-          </div>
         </form>
+        <StudentIDCard cards={selectedStudents} />
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '10px 0',
+          }}
+        >
+          {' '}
+          <PrimaryButton
+            onClick={handleId}
+            label='Get I.D Cards'
+            type='button'
+          />
+        </div>
         {pageLoading && <Spinner />}
         {errorMessage && <Notification message={errorMessage} type='error' />}
       </Layout>
@@ -362,4 +298,4 @@ const AddHomeWork = () => {
   );
 };
 
-export default AddHomeWork;
+export default StudentId;
