@@ -59,7 +59,7 @@ const AddAttendance = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(attendanceData);
+  //console.log(attendanceData);
 
   // handle errors with this function
   const handleError = (error) => {

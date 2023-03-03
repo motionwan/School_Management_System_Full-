@@ -55,6 +55,9 @@ const StudentPermissionsRouter = require('./routes/Academics/Exeat/Exeat.router'
 const NoticeRouter = require('./routes/Academics/Notice/Notice.router');
 const EventRouter = require('./routes/Academics/Events/event.router');
 const StaffPermissionsRouter = require('./routes/Staff/Permissions/Permissions.router');
+const ExamPaperRouter = require('./routes/Examination/ExamPaper/ExamPaper.router');
+const ExamRouter = require('./routes/Examination/Exams/Examination.router');
+const ClassSchoolExamRouter = require('./routes/Examination/ClassSchoolExams/ClassSchoolExams.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -79,5 +82,8 @@ app.use('/exeat', StudentPermissionsRouter);
 app.use('/notice', NoticeRouter);
 app.use('/event', EventRouter);
 app.use('/permission', StaffPermissionsRouter);
+app.use('/exams_paper', ExamPaperRouter);
+app.use('/exams', ExamRouter);
+app.use('/class_school_exams', ClassSchoolExamRouter);
 
 module.exports = app;

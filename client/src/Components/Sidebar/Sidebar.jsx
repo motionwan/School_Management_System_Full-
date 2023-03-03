@@ -175,11 +175,11 @@ const Sidebar = () => {
       icon: <AiOutlineDashboard />,
       path: `/staff/${auth?.schoolId?._id}`,
     },
-    {
-      label: 'Admins',
-      icon: <BiIntersect />,
-      path: `/staff/${auth?.schoolId?._id}/admin`,
-    },
+    // {
+    //   label: 'Admins',
+    //   icon: <BiIntersect />,
+    //   path: `/staff/${auth?.schoolId?._id}/admin`,
+    // },
     {
       label: 'Roles',
       icon: <MdSubject />,
@@ -200,6 +200,39 @@ const Sidebar = () => {
       icon: <FaHandPaper />,
       path: `/staff/${auth?.schoolId?._id}/exeat`,
     },
+  ];
+
+  const examArray = [
+    {
+      label: 'Exams Dashboard',
+      icon: <AiOutlineDashboard />,
+      path: `/exams/${auth?.schoolId?._id}`,
+    },
+    {
+      label: 'Manage Exams',
+      icon: <BiIntersect />,
+      path: `/exams/${auth?.schoolId?._id}/exam`,
+    },
+    {
+      label: 'Exams Results',
+      icon: <MdSubject />,
+      path: `/staff/${auth?.schoolId?._id}/results`,
+    },
+    {
+      label: 'Bulk print result',
+      icon: <AiOutlineTable />,
+      path: `/exams/${auth?.schoolId?._id}/bulk_print`,
+    },
+    {
+      label: 'Result Assessment',
+      icon: <AiOutlineCheck />,
+      path: `/staff/${auth?.schoolId?._id}/result_assessment`,
+    },
+    // {
+    //   label: 'Staff Exeats',
+    //   icon: <FaHandPaper />,
+    //   path: `/staff/${auth?.schoolId?._id}/exeat`,
+    // },
   ];
 
   return (
@@ -310,6 +343,28 @@ const Sidebar = () => {
           <SidebarDivider />
           {/* // end of  school management array */}
           {adminArray.map((links, index) => {
+            return (
+              <SidebarLinkContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <SidebarLink
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                  {sidebarOpen && (
+                    <>
+                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                    </>
+                  )}
+                </SidebarLink>
+              </SidebarLinkContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* // end of  school management array */}
+          {examArray.map((links, index) => {
             return (
               <SidebarLinkContainer
                 isActive={pathname === links.path}
@@ -501,6 +556,33 @@ const Sidebar = () => {
           <SidebarDivider />
           {/* mobile navbar ends here */}
           {adminArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
+          {examArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}

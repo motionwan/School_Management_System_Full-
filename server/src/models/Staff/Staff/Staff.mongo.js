@@ -5,11 +5,10 @@ const Schema = mongoose.Schema;
 const StaffSchema = new Schema({
   fullName: {
     type: String,
-    default: null,
+    lowercase: true,
   },
   dateOfBirth: {
     type: String,
-    default: null,
   },
   photoId: {
     type: String,
@@ -17,17 +16,26 @@ const StaffSchema = new Schema({
   },
   gender: {
     type: String,
-    default: '',
   },
   password: {
     type: String,
-    default: '',
   },
-  bloodGroup: { type: String, default: '' },
-  hometown: { type: String, default: '' },
-  city: { type: String, default: '' },
-  religion: { type: String, default: '' },
-  healthInsurance: { type: String, default: '' },
+  bloodGroup: { type: String },
+  hometown: {
+    type: String,
+    lowercase: true,
+  },
+  city: {
+    type: String,
+    lowercase: true,
+  },
+  religion: {
+    type: String,
+    lowercase: true,
+  },
+  healthInsurance: {
+    type: String,
+  },
   schoolId: {
     type: toId,
     ref: 'School',
@@ -35,7 +43,6 @@ const StaffSchema = new Schema({
   phoneNumber: {
     type: String,
     unique: true,
-    default: '',
   },
   verified: {
     type: Boolean,
@@ -43,34 +50,41 @@ const StaffSchema = new Schema({
   },
   refreshToken: {
     type: String,
-    default: '',
   },
   resetPasswordToken: {
     data: String,
-    default: '',
   },
   username: {
     type: String,
     unique: true,
-    default: '',
+    lowercase: true,
   },
   email: {
     type: String,
     unique: true,
     required: true,
+    lowercase: true,
   },
   address: {
     type: String,
-    default: '',
   },
   sectionId: {
     type: toId,
     ref: 'ClassSection',
     required: false,
   },
-  emergencyContactName: { type: String, default: '' },
-  emergencyContactNumber: { type: String, default: '' },
-  emergencyContactAddress: { type: String, default: '' },
+  emergencyContactName: {
+    type: String,
+    lowercase: true,
+  },
+  emergencyContactNumber: {
+    type: String,
+    lowercase: true,
+  },
+  emergencyContactAddress: {
+    type: String,
+    lowercase: true,
+  },
 
   role: {
     type: toId,

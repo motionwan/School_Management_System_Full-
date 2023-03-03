@@ -12,7 +12,7 @@ import TermSelector from '../../../Components/TermSelector/TermSelector';
 import AuthContext from '../../../context/AuthContext/AuthContext';
 import { baseUrl } from '../../../helpers/baseUrl';
 
-const Staffs = () => {
+const Admins = () => {
   const { auth } = useContext(AuthContext);
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,8 +51,8 @@ const Staffs = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/staff/${auth.schoolId._id}/add_staff `}>
-            <PrimaryButton label='Add Staff' icon={<FaPlusCircle />} />
+          <Link to={`/staff/${auth.schoolId._id}/add_admin `}>
+            <PrimaryButton label='Add Admin' icon={<FaPlusCircle />} />
           </Link>
         </AddView>
         <DataTable data={roles} columns={columns} />
@@ -62,4 +62,4 @@ const Staffs = () => {
   );
 };
 
-export default Staffs;
+export default Admins;

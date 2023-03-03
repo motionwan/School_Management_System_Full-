@@ -3,11 +3,13 @@ import { v } from '../../Styles/variables';
 
 export const SLayout = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 export const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const SMain = styled.main`

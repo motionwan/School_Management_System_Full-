@@ -92,7 +92,6 @@ const signUpStaff = async (req, res) => {
       emergencyContactNumber,
       emergencyContactAddress,
     });
-    console.log(update);
     await Token.findByIdAndDelete(oldToken._id);
     return res.json({ message: 'Sign up successful' });
   } catch (err) {
@@ -155,27 +154,27 @@ const signUpStaff = async (req, res) => {
 // };
 
 // activate account
-const activateAccount = async (req, res) => {
-  const { id, token } = req.params;
-  try {
-    const staff = await Staff.findById(id);
-    if (!staff) {
-      return res.status(400).json({ error: 'Invalid Link' });
-    }
-    const oldToken = await Token.findOne({
-      userId: id,
-      token: token,
-    });
-    if (!oldToken) {
-      return res.status(400).json({ error: 'Link has expired' });
-    }
-    await Staff.updateOne({ _id: staff._id, verified: true });
-    await Token.deleteOne({ userId: staff._id });
-    return res.json({ message: 'email verified Successfully' });
-  } catch (err) {
-    res.status(400).json(err.message);
-  }
-};
+// const activateAccount = async (req, res) => {
+//   const { id, token } = req.params;
+//   try {
+//     const staff = await Staff.findById(id);
+//     if (!staff) {
+//       return res.status(400).json({ error: 'Invalid Link' });
+//     }
+//     const oldToken = await Token.findOne({
+//       userId: id,
+//       token: token,
+//     });
+//     if (!oldToken) {
+//       return res.status(400).json({ error: 'Link has expired' });
+//     }
+//     await Staff.updateOne({ _id: staff._id, verified: true });
+//     await Token.deleteOne({ userId: staff._id });
+//     return res.json({ message: 'email verified Successfully' });
+//   } catch (err) {
+//     res.status(400).json(err.message);
+//   }
+// };
 
 const signInStaff = async (req, res) => {
   try {
@@ -341,39 +340,48 @@ const resetPassword = async (req, res) => {
 const updateStaff = async (req, res) => {
   try {
     const { id } = req.params;
-    const image = req?.file?.path;
+
     const {
       fullName,
-      schoolId,
-      role,
-      dateOfBirth,
-      status,
       gender,
-      photoId,
+      dateOfBirth,
       phoneNumber,
-      username,
-      email,
       address,
+      bloodGroup,
+      photoId,
+      city,
+      healthInsurance,
+      hometown,
+      religion,
+      username,
+      password,
+      repeatPassword,
+      emergencyContactName,
+      emergencyContactNumber,
+      emergencyContactAddress,
     } = req.body;
     return res.status(200).json(
       await Staff.findByIdAndUpdate(id, {
         fullName,
-        schoolId,
-        role,
-        dateOfBirth,
-        status,
         gender,
-        image,
-        photoId,
+        dateOfBirth,
         phoneNumber,
-        username,
-        email,
         address,
+        bloodGroup,
+        photoId,
+        city,
+        healthInsurance,
+        hometown,
+        religion,
+        username,
+        password,
+        repeatPassword,
+        emergencyContactName,
+        emergencyContactNumber,
+        emergencyContactAddress,
       })
     );
   } catch (err) {
-    if (err.code === 11000)
-      return res.status(409).json({ error: 'Staff Already Exists' });
     console.log(err);
     return res.status(500).json({ error: err.message });
   }
@@ -381,7 +389,38 @@ const updateStaff = async (req, res) => {
 
 const getAllStaff = async (req, res) => {
   try {
-    return res.json(await Staff.find({}).populate('role'));
+    const staff = await Staff.aggregate([
+      {
+        $project: {
+          _id: 1,
+          fullName: {
+            $toUpper: '$fullName',
+          },
+          username: 1,
+          verify: {
+            $cond: {
+              if: { $eq: ['$verified', true] },
+              then: 'yes',
+              else: 'no',
+            },
+          },
+          active: {
+            $cond: {
+              if: { $eq: ['$status', true] },
+              then: 'active',
+              else: 'inactive',
+            },
+          },
+          email: 1,
+          role: `$role.name`,
+          emergencyContactNumber: 1,
+          emergencyContactName: {
+            $toUpper: '$emergencyContactName',
+          },
+        },
+      },
+    ]);
+    return res.json(staff);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: err.message });
@@ -400,10 +439,10 @@ const deleteStaff = async (req, res) => {
 
 module.exports = {
   //createStaff,
+  // activateAccount,
   updateStaff,
   deleteStaff,
   getAllStaff,
-  activateAccount,
   resetPassword,
   forgotPassword,
   signInStaff,

@@ -31,5 +31,11 @@ get {{hostname}}/subject
 ###
 get {{hostname}}/subject/class/63d9db1adc2cae33cf245b17
 
+
+// get all the subjects assigned to this section id;
+###
+get {{hostname}}/subject/section/63d9dbb6b1255479e13c0aff
+
 ###
 delete {{hostname}}/subject/63d9203df7998ab93630a906
+

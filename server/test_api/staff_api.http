@@ -5,24 +5,6 @@
 ###
 get {{hostname}}/staff
 
-###
-post {{hostname}}/staff
-Content-Type: application/json
-
-{
- "fullName":"Benjamin Smith",
- "username":"bensmith",
-"gender":"male",
-"password":"123456",
-"dateOfBirth":"22-05-2010",
-"phoneNumber":"555-555-5555",
-"email":"benjamin@example.com",
-"address":"Heaven way hills",
-"status":true,
-"photoId":"67890",
-"schoolId":"63d9122ac759e654d1284765",
-"role":"63d430f00ffc6973e14893b6"
-}
 
 
 ###

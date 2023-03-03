@@ -38,30 +38,11 @@ const Input = styled.input`
   }
 `;
 
-const TextInput = ({
-  name,
-  id,
-  type,
-  onChange,
-  value,
-  label,
-  placeholder,
-  checked,
-  ...rest
-}) => (
+const TextInput = React.forwardRef(({ label, ...rest }, ref) => (
   <InputContainer>
     <Label>{label}</Label>
-    <Input
-      checked={checked}
-      name={name}
-      id={id}
-      type={type}
-      onChange={onChange}
-      placeholder={placeholder}
-      value={value}
-      {...rest}
-    />
+    <Input ref={ref} {...rest} />
   </InputContainer>
-);
+));
 
 export default TextInput;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useState, useEffect } from 'react';
 import { FaPlusCircle, FaSchool } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AddView from '../../../Components/AddViewComponent/AddView';
 import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import Layout from '../../../Components/Layout/Layout';
@@ -18,6 +18,7 @@ import {
   ErrorContainer,
   ErrorMessage,
 } from '../../../Components/ErrorComponent/Error';
+import { Store } from 'react-notifications-component';
 
 const MainContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -35,7 +36,7 @@ const MainContainer = styled.div`
 
 const AddRoles = () => {
   const { auth } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [permissions, setPermissions] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -58,6 +59,21 @@ const AddRoles = () => {
       permissions: values.selectedPermissions,
       schoolId: auth?.schoolId._id,
     });
+    if (res) {
+      Store.addNotification({
+        title: 'Success!',
+        message: 'School Updated successfully',
+        type: 'success',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__bounceIn'],
+        animationOut: ['animate__animated', 'animate__bounceOut'],
+        dismiss: {
+          duration: 5000,
+        },
+      });
+      navigate(`/staff/${auth?.schoolId?._id}/roles`);
+    }
   };
 
   const {

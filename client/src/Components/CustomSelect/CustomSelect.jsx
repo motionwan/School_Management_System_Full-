@@ -21,7 +21,7 @@ const Label = styled.label`
 `;
 
 const SelectContainer = styled(ReactSelect)`
-  width: 80%;
+  width: 100%;
   background: transparent;
   border-radius: 5px;
   color: ${({ theme }) => theme.text};
@@ -35,35 +35,31 @@ const SelectContainer = styled(ReactSelect)`
     font-size: 20px;
   }
 `;
-
-const CustomSelect = ({
-  options,
-  onChange,
-  value,
-  initialValue,
-  label,
-  placeholder,
-  ...rest
-}) => (
-  <Container>
-    <Label>{label}</Label>
-    <SelectContainer
-      styles={{
-        control: (baseStyles, state) => ({
-          ...baseStyles,
-          borderColor: `${({ theme }) => theme.text}`,
-          // backgroundColor: `${({ theme }) => theme.bg3}`,
-        }),
-      }}
-      options={options}
-      onChange={onChange}
-      value={value}
-      initialValue={initialValue}
-      placeholder={placeholder}
-      classNamePrefix={null}
-      {...rest}
-    />
-  </Container>
+const CustomSelect = React.forwardRef(
+  (
+    { options, onChange, value, initialValue, label, placeholder, ...rest },
+    ref
+  ) => (
+    <Container>
+      <Label>{label}</Label>
+      <SelectContainer
+        ref={ref}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            borderColor: `${({ theme }) => theme.text}`,
+          }),
+        }}
+        options={options}
+        onChange={onChange}
+        value={value}
+        initialValue={initialValue}
+        placeholder={placeholder}
+        classNamePrefix={null}
+        {...rest}
+      />
+    </Container>
+  )
 );
 
 export default CustomSelect;

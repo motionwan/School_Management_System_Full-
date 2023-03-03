@@ -65,6 +65,12 @@ import UpdateStaff from './pages/Administration/StaffList/UpdateStaff';
 import AddStaff from './pages/Administration/StaffList/AddStaff';
 import Staff from './pages/Administration/StaffList/Staff';
 import StaffSignUp from './pages/Auth/StaffSignup';
+import UpdateAdmin from './pages/Administration/Admins/UpdateAdmin';
+import AddAdmins from './pages/Administration/Admins/AddAdmin';
+import Admins from './pages/Administration/Admins/Admins';
+import UpdateExams from './pages/Examinamtion/Exams/UpdateExams';
+import AddExams from './pages/Examinamtion/Exams/AddExams';
+import Examination from './pages/Examinamtion/Exams/Examination';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -601,6 +607,60 @@ const App = () => {
               element={<RequireAuth permissions={['/admin', 'super-admin']} />}
             >
               <Route path='/staff/:id/update_staff' element={<UpdateStaff />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/staff/:id/admin' element={<Admins />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/staff/:id/add_admin' element={<AddAdmins />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/exams/:id/exam' element={<Examination />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/exams/:id/add_exams' element={<AddExams />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/exams/:id/update_exams' element={<UpdateExams />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+            >
+              <Route path='/staff/:id/update_admin' element={<UpdateAdmin />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
