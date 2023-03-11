@@ -22,33 +22,38 @@ const Container = styled.div`
 const Heading = styled.h3`
   padding: 10px;
 `;
-
 const TermSelector = () => {
+  const { auth } = useContext(AuthContext);
   const [terms, setTerms] = useState([]);
   const [notification, setNotification] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedTerm, setSelectedTerm] = useState({ label: '', value: '' });
-  const { auth } = useContext(AuthContext);
-  const termOptions = [];
-  terms.forEach((term) => {
-    termOptions.push({ label: term.label, value: term._id });
+  const [selectedTerm, setSelectedTerm] = useState({
+    label: auth?.currentTermId?.label || '',
+    value: auth?.currentTermId?._id || '',
   });
-  //console.log(selectedTerm);
+
   useEffect(() => {
     const getAllTerms = async () => {
-      const res = await axios.get(`${baseUrl}/term`);
-      setTerms(res.data);
-      setSelectedTerm({
-        label: auth?.currentTermId?.label,
-        value: auth?.currentTermId?._id,
-      });
+      try {
+        const arr = [];
+        const res = await axios.get(`${baseUrl}/term`);
+        res.data.forEach((data) =>
+          arr.push({
+            label: data.label,
+            value: data._id,
+          })
+        );
+        setTerms(arr);
+      } catch (err) {
+        console.error(err);
+        handleError(err);
+      }
     };
     getAllTerms();
-  }, [auth.currentTermId?._id, auth]);
+  }, []);
 
   const handleChange = async (e) => {
     try {
-      //e.preventDefault();
       setSelectedTerm({ label: e?.label, value: e?.value });
       const res = await axios.post(`${baseUrl}/settings`, {
         currentTermId: e?.value,
@@ -64,6 +69,7 @@ const TermSelector = () => {
       handleError(err);
     }
   };
+
   const handleError = (error) => {
     setErrorMessage(error);
 
@@ -90,7 +96,7 @@ const TermSelector = () => {
       ) : null}
       <Heading>Current Term/Semester:</Heading>
       <CustomSelect
-        options={termOptions}
+        options={terms}
         value={selectedTerm}
         isSearchable={false}
         onChange={(e) => handleChange(e)}

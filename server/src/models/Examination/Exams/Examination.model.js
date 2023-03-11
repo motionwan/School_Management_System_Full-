@@ -12,10 +12,12 @@ const ExamSchema = new Schema({
     type: String,
   },
   startDate: {
-    type: String,
+    type: Date,
+    required: true,
   },
   endDate: {
-    type: String,
+    type: Date,
+    required: true,
   },
   classSchoolId: {
     type: toId,

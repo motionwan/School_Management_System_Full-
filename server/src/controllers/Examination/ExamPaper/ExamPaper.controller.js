@@ -1,5 +1,7 @@
-const ExamPaper = require('../../../models/Examination/ExamPapers/ExamPaper.model');
 const { parseISO } = require('date-fns');
+const ExamPaper = require('../../../models/Examination/ExamPapers/ExamPaper.model');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const createExamPaper = async (req, res) => {
   try {
@@ -14,6 +16,7 @@ const createExamPaper = async (req, res) => {
       termId,
     } = req.body;
     const parsedDate = parseISO(paperDate);
+
     return res.json(
       await ExamPaper.create({
         subjectId,
@@ -27,7 +30,6 @@ const createExamPaper = async (req, res) => {
       })
     );
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ error: err.message });
   }
 };
@@ -80,9 +82,35 @@ const deleteExamPaper = async (req, res) => {
   }
 };
 
+const getExamPapersByExamId = async (req, res) => {
+  try {
+    const { id } = req.params; //exams id;
+    const { teacherId } = req.body;
+    const examPaper = await ExamPaper.aggregate([
+      { $match: { examId: ObjectId(id) } },
+      {
+        $lookup: {
+          from: 'subjects',
+          localField: 'subjectId',
+          foreignField: '_id',
+          as: 'subject',
+        },
+      },
+      // match subject id with teacher id
+      { $match: { 'subject.teacherId': ObjectId(teacherId) } }, // only return the teachers subjects
+      { $unwind: '$subject' },
+      { $project: { _id: 1, label: '$subject.label' } },
+    ]);
+    return res.json(examPaper);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createExamPaper,
   getAllExamPapers,
   updateExamPaper,
   deleteExamPaper,
+  getExamPapersByExamId,
 };

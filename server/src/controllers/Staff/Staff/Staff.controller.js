@@ -7,6 +7,8 @@ const jwtRefreshToken = process.env.REFRESH_TOKEN;
 const jwtAccessToken = process.env.ACCESS_TOKEN;
 const sendEmail = require('../../../utils/email');
 const Settings = require('../../../models/School/Settings/settings.mongo');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const adminCreateStaff = async (req, res) => {
   try {
@@ -14,8 +16,13 @@ const adminCreateStaff = async (req, res) => {
     if (req.body.sectionId) {
       sectionId = req.body.sectionId;
     }
-    const { email, role } = req.body;
-    const newStaff = await Staff.create({ email, role, sectionId });
+    const { email, role, schoolId } = req.body;
+    const newStaff = await Staff.create({
+      email,
+      role: [...role],
+      sectionId,
+      schoolId,
+    });
     if (newStaff) {
       const token = await Token.create({
         staffId: newStaff._id,
@@ -99,83 +106,6 @@ const signUpStaff = async (req, res) => {
   }
 };
 
-// const createStaff = async (req, res) => {
-//   try {
-//     const {
-//       fullName,
-//       schoolId,
-//       role,
-//       status,
-//       phoneNumber,
-//       photoId,
-//       gender,
-//       dateOfBirth,
-//       username,
-//       email,
-//       address,
-//     } = req.body;
-//     const image = req?.file?.path;
-//     const password = await bcrypt.hash(req.body.password, 12);
-
-//     const newStaff = await Staff.create({
-//       fullName,
-//       schoolId,
-//       role,
-//       photoId,
-//       gender,
-//       dateOfBirth,
-//       status,
-//       image,
-//       phoneNumber,
-//       username,
-//       email,
-//       password,
-//       address,
-//     });
-//     if (newStaff) {
-//       const token = await Token.create({
-//         userId: newStaff._id,
-//         token: crypto.randomBytes(32).toString('hex'),
-//       });
-//       const url = `${process.env.CLIENT_URL}/users/${newStaff._id}/verify/${token.token}`;
-//       await sendEmail(newStaff.email, 'Verify Email', url);
-//       //console.log(token);
-//       return res
-//         .status(201)
-//         .json({ message: 'Email sent to account please verify' });
-//     }
-//   } catch (err) {
-//     if (err.code === 11000) {
-//       return res.status(409).json({ error: 'Staff Already Exists' });
-//     }
-//     console.log(err);
-//     return res.status(500).json({ error: err.message });
-//   }
-// };
-
-// activate account
-// const activateAccount = async (req, res) => {
-//   const { id, token } = req.params;
-//   try {
-//     const staff = await Staff.findById(id);
-//     if (!staff) {
-//       return res.status(400).json({ error: 'Invalid Link' });
-//     }
-//     const oldToken = await Token.findOne({
-//       userId: id,
-//       token: token,
-//     });
-//     if (!oldToken) {
-//       return res.status(400).json({ error: 'Link has expired' });
-//     }
-//     await Staff.updateOne({ _id: staff._id, verified: true });
-//     await Token.deleteOne({ userId: staff._id });
-//     return res.json({ message: 'email verified Successfully' });
-//   } catch (err) {
-//     res.status(400).json(err.message);
-//   }
-// };
-
 const signInStaff = async (req, res) => {
   try {
     const login = req.body.login;
@@ -186,6 +116,7 @@ const signInStaff = async (req, res) => {
     })
       .populate('role')
       .populate('schoolId');
+    console.log(staff);
 
     if (!staff) {
       return res
@@ -235,6 +166,7 @@ const signInStaff = async (req, res) => {
         secure: false,
         maxAge: 24 * 60 * 60 * 1000,
       });
+      console.log(currentTermId);
       //console.log(staff.role);
       // send data via json
       return res.status(200).json({
@@ -242,7 +174,7 @@ const signInStaff = async (req, res) => {
         username: staff.username,
         image: staff?.image,
         email: staff.email,
-        role: [staff?.role],
+        role: staff?.role,
         userId: staff?._id,
         schoolId: staff?.schoolId,
         // we want the current term id
@@ -351,6 +283,9 @@ const updateStaff = async (req, res) => {
       photoId,
       city,
       healthInsurance,
+      subjectId,
+      sectionId,
+      //classSchoolId,
       hometown,
       religion,
       username,
@@ -369,6 +304,9 @@ const updateStaff = async (req, res) => {
         address,
         bloodGroup,
         photoId,
+        subjectId: [...subjectId],
+        //classSchoolId: [...classSchoolId],
+        sectionId,
         city,
         healthInsurance,
         hometown,
@@ -389,7 +327,11 @@ const updateStaff = async (req, res) => {
 
 const getAllStaff = async (req, res) => {
   try {
+    const { id } = req.params; // school id
     const staff = await Staff.aggregate([
+      {
+        $match: { verified: true, schoolId: ObjectId(id) },
+      },
       {
         $project: {
           _id: 1,

@@ -18,7 +18,7 @@ const upload = require('../../../middleware/uploads.multer');
 //router.post('/', createStaff);
 //router.get('/:id/verify/:token', activateAccount);
 // verify and sign up staff
-router.get('/', getAllStaff);
+router.get('/:id', getAllStaff);
 router.get('/logout', logoutStaff);
 router.put('/:id', updateStaff);
 router.delete('/:id', deleteStaff);

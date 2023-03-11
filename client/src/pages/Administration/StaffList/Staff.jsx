@@ -23,7 +23,7 @@ const Staffs = () => {
     const getAllStaff = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${baseUrl}/staff`);
+        const res = await axios.get(`${baseUrl}/staff/${auth?.schoolId._id}`);
         setRoles(res.data);
         setLoading(false);
       } catch (err) {}
@@ -51,7 +51,7 @@ const Staffs = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/staff/${auth.schoolId._id}/add_staff `}>
+          <Link to={`/staff/add_staff `}>
             <PrimaryButton label='Add Staff' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

@@ -11,6 +11,7 @@ const {
 router.post('/', createExam);
 router.put('/:id', updateExam);
 router.get('/', getAllExams);
+
 router.delete('/:id', deleteExam);
 
 module.exports = router;

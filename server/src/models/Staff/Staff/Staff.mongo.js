@@ -42,7 +42,8 @@ const StaffSchema = new Schema({
   },
   phoneNumber: {
     type: String,
-    unique: true,
+    defaultValue: '',
+    // unique: true,
   },
   verified: {
     type: Boolean,
@@ -56,8 +57,14 @@ const StaffSchema = new Schema({
   },
   username: {
     type: String,
-    unique: true,
+    //unique: true,
     lowercase: true,
+  },
+  isAdmin: {
+    type: Boolean,
+  },
+  isTeachingStaff: {
+    type: Boolean,
   },
   email: {
     type: String,
@@ -69,7 +76,7 @@ const StaffSchema = new Schema({
     type: String,
   },
   sectionId: {
-    type: toId,
+    type: [toId],
     ref: 'ClassSection',
     required: false,
   },
@@ -87,9 +94,13 @@ const StaffSchema = new Schema({
   },
 
   role: {
-    type: toId,
-    ref: 'Roles',
+    type: [String],
     required: true,
+    lowercase: true,
+  },
+  subjectId: {
+    type: [toId],
+    ref: 'Subject',
   },
   //permission: { type: toId, ref: 'Permission' },
   status: { type: Boolean, default: true },

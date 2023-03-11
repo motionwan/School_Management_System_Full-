@@ -71,6 +71,10 @@ import Admins from './pages/Administration/Admins/Admins';
 import UpdateExams from './pages/Examinamtion/Exams/UpdateExams';
 import AddExams from './pages/Examinamtion/Exams/AddExams';
 import Examination from './pages/Examinamtion/Exams/Examination';
+import AssignTeacher from './pages/Academic/Subjects/AssignTeacher';
+import UpdateExamResult from './pages/Examinamtion/ExamResult/UpdateExamResult';
+import AddExamResult from './pages/Examinamtion/ExamResult/AddExamResult';
+import ExamsResult from './pages/Examinamtion/ExamResult/ExamsResult';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -88,7 +92,19 @@ const App = () => {
           <Route path='/staff/signup/:token/:id' element={<StaffSignUp />} />
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth permissions={['super-admin']} />}>
+            <Route
+              element={
+                <RequireAuth
+                  permissions={[
+                    'super-admin',
+                    'admin',
+                    'teacher',
+                    'accountant',
+                    'housemaster',
+                  ]}
+                />
+              }
+            >
               <Route path='/dashboard' element={<Dashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
@@ -123,7 +139,7 @@ const App = () => {
             {/* Another route */}
             <Route element={<RequireAuth permissions={['super-admin']} />}>
               <Route
-                path='/school_management/terms/:id/update'
+                path='/school_management/terms/update'
                 element={<UpdateTerm />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -139,7 +155,7 @@ const App = () => {
             {/* Another route */}
             <Route element={<RequireAuth permissions={['super-admin']} />}>
               <Route
-                path='/school_management/classes/:id/update'
+                path='/school_management/classes/update'
                 element={<UpdateClass />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -157,37 +173,34 @@ const App = () => {
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
-            <Route element={<RequireAuth permissions='/admin' />}>
+            <Route element={<RequireAuth permissions='admin' />}>
               <Route
-                path='/school_management/schools/:id/update'
+                path='/school_management/schools/update'
                 element={<UpdateSchool />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/client_school/:id' element={<SchoolDashboard />} />
+              <Route path='/client_school' element={<SchoolDashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id'
-                element={<AcademicDashboard />}
-              />
+              <Route path='/client_academic' element={<AcademicDashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
 
             {/* new route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/assign_classes'
+                path='/client_academic/assign_classes'
                 element={<AssignClasses />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -196,10 +209,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/class_sections'
+                path='/client_academic/class_sections'
                 element={<ClassSections />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -208,10 +221,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_class_sections'
+                path='/client_academic/add_class_sections'
                 element={<AddSection />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -220,10 +233,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_class_section'
+                path='/client_academic/update_class_section'
                 element={<UpdateSection />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -232,34 +245,41 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id/subjects'
-                element={<Subjects />}
-              />
+              <Route path='/client_academic/subjects' element={<Subjects />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_subject'
+                path='/client_academic/update_subject'
                 element={<UpdateSubject />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_academic/subject/assign_teacher'
+                element={<AssignTeacher />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_school/:id/add_subjects'
+                path='/client_school/add_subjects'
                 element={<AddSubjects />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -268,10 +288,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/timetable'
+                path='/client_academic/timetable'
                 element={<TimeTable />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -280,10 +300,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_timetable'
+                path='/client_academic/add_timetable'
                 element={<AddTimeTable />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -292,10 +312,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_timetable'
+                path='/client_academic/update_timetable'
                 element={<UpdateTimeTable />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -304,10 +324,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/view_timetable'
+                path='/client_academic/view_timetable'
                 element={<Schedule />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -316,10 +336,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/attendance'
+                path='/client_academic/attendance'
                 element={<ViewAttendance />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -328,10 +348,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_attendance'
+                path='/client_academic/add_attendance'
                 element={<AddAttendance />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -340,31 +360,28 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/client_academic/:id/exeat' element={<Exeat />} />
+              <Route path='/client_academic/exeat' element={<Exeat />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id/add_exeat'
-                element={<AddExeat />}
-              />
+              <Route path='/client_academic/add_exeat' element={<AddExeat />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_exeat'
+                path='/client_academic/update_exeat'
                 element={<UpdateExeat />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -373,22 +390,19 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id/homework'
-                element={<HomeWork />}
-              />
+              <Route path='/client_academic/homework' element={<HomeWork />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_homework'
+                path='/client_academic/add_homework'
                 element={<AddHomeWork />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -397,10 +411,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_homework'
+                path='/client_academic/update_homework'
                 element={<UpdateHomeWork />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -409,22 +423,19 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id/noticeboard'
-                element={<Notice />}
-              />
+              <Route path='/client_academic/noticeboard' element={<Notice />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_notice'
+                path='/client_academic/add_notice'
                 element={<AddNotice />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -433,10 +444,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_notice'
+                path='/client_academic/update_notice'
                 element={<UpdateNotice />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -445,31 +456,28 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/client_academic/:id/events' element={<Event />} />
+              <Route path='/client_academic/events' element={<Event />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_academic/:id/add_event'
-                element={<AddEvent />}
-              />
+              <Route path='/client_academic/add_event' element={<AddEvent />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_event'
+                path='/client_academic/update_event'
                 element={<UpdateEvent />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -478,22 +486,19 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route
-                path='/client_student/:id'
-                element={<StudentDashboard />}
-              />
+              <Route path='/client_student' element={<StudentDashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_student/:id/admission'
+                path='/client_student/admission'
                 element={<AddAdmission />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -502,10 +507,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_student/:id/students'
+                path='/client_student/students'
                 element={<ViewStudents />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -514,10 +519,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/study_materials'
+                path='/client_academic/study_materials'
                 element={<StudyMaterials />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -526,10 +531,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/add_study_materials'
+                path='/client_academic/add_study_materials'
                 element={<AddStudyMaterials />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -538,10 +543,10 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route
-                path='/client_academic/:id/update_study_materials'
+                path='/client_academic/update_study_materials'
                 element={<UpdateStudyMaterials />}
               />
               {/* routes to browse if permission is included in user permission */}
@@ -550,117 +555,156 @@ const App = () => {
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/client_student/:id/id' element={<StudentID />} />
+              <Route path='/client_student/id' element={<StudentID />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/roles' element={<Roles />} />
+              <Route path='/staff/roles' element={<Roles />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/add_role' element={<AddRoles />} />
+              <Route path='/staff/add_role' element={<AddRoles />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/update_role' element={<UpdateRoles />} />
+              <Route path='/staff/update_role' element={<UpdateRoles />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/staffs' element={<Staff />} />
+              <Route path='/staff/staffs' element={<Staff />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/add_staff' element={<AddStaff />} />
+              <Route path='/staff/add_staff' element={<AddStaff />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/update_staff' element={<UpdateStaff />} />
+              <Route path='/staff/update_staff' element={<UpdateStaff />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/admin' element={<Admins />} />
+              <Route path='/staff/admin' element={<Admins />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/add_admin' element={<AddAdmins />} />
+              <Route path='/staff/add_admin' element={<AddAdmins />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/exams/:id/exam' element={<Examination />} />
+              <Route path='/exams/exam' element={<Examination />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/exams/:id/add_exams' element={<AddExams />} />
+              <Route path='/exams/add_exams' element={<AddExams />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/exams/:id/update_exams' element={<UpdateExams />} />
+              <Route path='/exams/update_exams' element={<UpdateExams />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
 
             {/* Another route */}
             <Route
-              element={<RequireAuth permissions={['/admin', 'super-admin']} />}
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
-              <Route path='/staff/:id/update_admin' element={<UpdateAdmin />} />
+              <Route path='/staff/update_admin' element={<UpdateAdmin />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth permissions={['admin', 'super-admin, teacher']} />
+              }
+            >
+              <Route path='/exams/exam_results' element={<ExamsResult />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth permissions={['admin', 'super-admin, teacher']} />
+              }
+            >
+              <Route
+                path='/exams/add_exam_result'
+                element={<AddExamResult />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth permissions={['admin', 'super-admin, teacher']} />
+              }
+            >
+              <Route
+                path='/exams/update_exam_result'
+                element={<UpdateExamResult />}
+              />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

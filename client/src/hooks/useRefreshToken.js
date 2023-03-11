@@ -27,7 +27,8 @@ const useRefreshToken = () => {
     console.log('username', res?.data?.username);
     console.log('userId', res?.data?.userId);
     console.log('schoolId', res?.data?.schoolId);
-    console.log('current Term', res?.data?.currentTermId);
+    console.log('currentTermId', res?.data?.currentTermId);
+    console.log('role', res?.data?.role);
     return res?.data?.accessToken;
   };
   return refresh;

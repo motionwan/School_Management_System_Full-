@@ -52,8 +52,10 @@ Content-Type: application/json
     "searchValue":"SMP000015"
 }
 
+
+//get student record by section and termId
 ###
-post {{hostname}}/student_record/section/63d9122ac759e654d1284765
+post {{hostname}}/student_record/section/63d966edcbdcf350e3fdefd4
 Content-Type: application/json
 
 {

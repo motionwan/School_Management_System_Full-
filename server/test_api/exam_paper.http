@@ -1,0 +1,9 @@
+  @hostname = http://localhost:3001
+
+###
+  post {{hostname}}/exams_paper/6401c1379c45609f1ac3185d
+  Content-Type: application/json
+
+  {
+    "teacherId":"6405e8b002d08d473649c406"
+  }

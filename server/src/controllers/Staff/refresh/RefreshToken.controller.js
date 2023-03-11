@@ -34,7 +34,7 @@ const handleRefreshToken = async (req, res) => {
       username: staff.username,
       image: staff?.image,
       email: staff.email,
-      role: [staff?.role],
+      role: staff?.role,
       userId: staff?._id,
       schoolId: staff?.schoolId,
       currentTermId: currentTermId[0]?.currentTermId,

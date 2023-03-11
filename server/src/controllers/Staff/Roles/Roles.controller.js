@@ -35,7 +35,7 @@ const deleteRoles = async (req, res) => {
 
 const getAllRoles = async (req, res) => {
   try {
-    return res.json(await Roles.find({}));
+    return res.json(await Roles.find({}).populate('permissions'));
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: err.message });

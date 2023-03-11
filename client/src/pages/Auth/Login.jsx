@@ -45,7 +45,9 @@ const Login = () => {
         image: res?.data?.image,
         userId: res?.data?.userId,
         schoolId: res?.data?.schoolId,
+        currentTermId: res?.data?.currentTermId,
       });
+      console.log(res.data.role);
       //console.log(res?.data);
       if (res.status === 401) {
         setPageLoading(false);

@@ -23,6 +23,11 @@ const MainPage = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 const ExamDetailsContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -31,6 +36,11 @@ const ExamDetailsContainer = styled.div`
   width: 100%;
   flex-direction: column;
   margin-bottom: 20px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const TwoByTwoContainer = styled.div`
@@ -40,6 +50,10 @@ const TwoByTwoContainer = styled.div`
   padding: 20px;
   margin: 5px;
   align-items: center;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -81,6 +95,12 @@ const PaperContainer = styled.div`
   margin-top: 10px;
   background-color: ${({ theme }) => theme.bg3};
   position: relative;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 100%;
+    margin: 10px 0;
+  }
 `;
 
 const SingleInputContainer = styled.div`
@@ -94,6 +114,10 @@ const InputContainer = styled.div`
   align-items: center;
   margin: 30px 40px;
   display: flex;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 const Container = styled.div`

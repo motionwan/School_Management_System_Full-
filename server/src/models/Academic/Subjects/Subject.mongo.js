@@ -13,6 +13,7 @@ const subjectSchema = new Schema({
   type: { type: String, required: true },
   classSchoolId: { type: toId, ref: 'ClassSchool' },
   sectionId: { type: toId, ref: 'ClassSection', required: true },
+  teacherId: { type: toId, ref: 'Staff' },
   createdAt: {
     type: String,
     required: true,

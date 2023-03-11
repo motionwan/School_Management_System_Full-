@@ -11,7 +11,6 @@ import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import AuthContext from '../../../context/AuthContext/AuthContext';
 import { useFormik } from 'formik';
-import SubjectSchema from '../../../formSchema/Subjects/SubjectSchema';
 import {
   ErrorContainer,
   ErrorMessage,
@@ -25,12 +24,23 @@ import AddView from '../../../Components/AddViewComponent/AddView';
 import AdminAddStaffSchema from '../../../formSchema/AddStaff/AdminAddStaff';
 import Notification from '../../../Components/Notification/Notification';
 import Spinner from '../../../Components/Spinner/Spinner';
+import styled from 'styled-components';
+import CheckboxInput from '../../../Components/CheckBoxInput/CheckBoxInput';
+
+const FieldSet = styled.fieldset`
+  width: 100%;
+  min-height: 5rem;
+  display: flex;
+`;
+const Legend = styled.legend`
+  font-size: 18px;
+  font-weight: bold;
+`;
 
 const AddStaff = () => {
   const navigate = useNavigate();
-  const { auth, currentData } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const [classSchools, setClassSchools] = useState('[]');
-  const [roles, setRoles] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [section, setSection] = useState(null);
@@ -60,21 +70,28 @@ const AddStaff = () => {
     }, 10000);
   };
 
-  useEffect(() => {
-    const arr = [];
-    const getAllClassSchoolsForSchool = async () => {
-      const res = await axios.get(`${baseUrl}/role`);
-      console.log(res.data);
-      res.data.forEach((role) => {
-        arr.push({
-          label: role.name,
-          value: role._id,
-        });
-      });
-      setRoles(arr);
-    };
-    getAllClassSchoolsForSchool();
-  }, [auth]);
+  const roles = [
+    {
+      label: 'Admin',
+      value: 'admin',
+    },
+    {
+      label: 'Teacher',
+      value: 'teacher',
+    },
+    {
+      label: 'Accountant',
+      value: 'accountant',
+    },
+    {
+      label: 'Librarian',
+      value: 'librarian',
+    },
+    {
+      label: 'House Master/House Mistress',
+      value: 'housemaster',
+    },
+  ];
 
   const onSubmit = async (values) => {
     setLoading(true);
@@ -84,7 +101,8 @@ const AddStaff = () => {
         role: values.role,
         classSchoolId: values.classSchoolId,
         sectionId: values.sectionId,
-        schoolId: auth?.schoolId._id,
+        schoolId: auth?.schoolId?._id,
+        // phoneNumber: values.phoneNumber,
       });
       if (res) {
         Store.addNotification({
@@ -99,7 +117,7 @@ const AddStaff = () => {
             duration: 10000,
           },
         });
-        // navigate(`/client_academic/${auth?.schoolId?._id}/subjects`);
+        navigate(`/staff/staffs`);
       }
       setLoading(false);
     } catch (err) {
@@ -107,6 +125,11 @@ const AddStaff = () => {
       setLoading(false);
     }
   };
+
+  const additionalRoles = [
+    { value: 'housemaster', label: 'House Master' },
+    { value: 'accountant', label: 'Accountant' },
+  ];
 
   const {
     values,
@@ -119,9 +142,11 @@ const AddStaff = () => {
   } = useFormik({
     initialValues: {
       email: '',
-      role: '',
+      role: [],
       classSchoolId: '',
+      //phoneNumber: '',
       sectionId: null,
+      additionalRole: '',
       //type: '',
     },
     validationSchema: AdminAddStaffSchema,
@@ -146,6 +171,8 @@ const AddStaff = () => {
       getAllClassSchoolsForSchool();
     }
   }, [values.classSchoolId]);
+
+  //console.log(values);
 
   return (
     <Layout>
@@ -180,8 +207,24 @@ const AddStaff = () => {
                 ) : null}
               </div>
 
+              {/* <div style={{ width: '100%' }}>
+                {' '}
+                <TextInput
+                  label={`New Staff's Phone Number (required)`}
+                  name='phoneNumber'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phoneNumber}
+                />
+                {touched.phoneNumber && errors.phoneNumber ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.phoneNumber}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </div> */}
+
               <div style={{ width: '100%' }}>
-                <h4>Assign Staff a role and class</h4>
+                <h4>Assign Staff role(s) and class (for Class Teachers)</h4>
                 <div style={{ width: '100%', marginTop: '50px' }}>
                   <CustomSelect
                     placeholder='Role'
@@ -190,7 +233,7 @@ const AddStaff = () => {
                     options={roles}
                     isSearchable={false}
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue('role', e.value)}
+                    onChange={(e) => setFieldValue('role', [e.value])}
                   />
                   {touched.role && errors.role ? (
                     <ErrorContainer>
@@ -223,8 +266,8 @@ const AddStaff = () => {
                 }}
               >
                 <CustomSelect
-                  placeholder='Section'
-                  label='Section (optional)'
+                  placeholder='Course'
+                  label='Course (optional)'
                   name='sectionId'
                   options={section}
                   isSearchable={false}
@@ -236,6 +279,43 @@ const AddStaff = () => {
                     <ErrorMessage>{errors.sectionId}</ErrorMessage>
                   </ErrorContainer>
                 ) : null}
+              </div>
+              <div style={{ width: '100%', display: 'flex' }}>
+                <FieldSet>
+                  <Legend>Additional Responsibility</Legend>
+
+                  {additionalRoles.map((role) => {
+                    return (
+                      <React.Fragment key={role.value}>
+                        <div style={{ padding: '20px 10px' }}>
+                          <CheckboxInput
+                            label={role.label}
+                            type='checkbox'
+                            id={role.value}
+                            name='role'
+                            value={role.value}
+                            checked={values.role.includes(role.value)}
+                            onChange={(e) => {
+                              const checked = e.target.checked;
+                              const value = e.target.value;
+
+                              if (checked) {
+                                setFieldValue('role', [...values.role, value]);
+                              } else {
+                                setFieldValue(
+                                  'role',
+                                  values.role.filter(
+                                    (roleValue) => roleValue !== value
+                                  )
+                                );
+                              }
+                            }}
+                          />
+                        </div>
+                      </React.Fragment>
+                    );
+                  })}
+                </FieldSet>
               </div>
               <PrimaryButton
                 type='submit'

@@ -23,6 +23,7 @@ import {
 } from '../../../Components/Table/Table.styles';
 import DeleteEdit from '../../../Components/DeleteAndEdit/DeleteEdit';
 import DialogModal from '../../../Components/Dialog/Dialog';
+import { format } from 'date-fns';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
@@ -50,6 +51,7 @@ const Subjects = () => {
         const res = await axios.get(
           `${baseUrl}/class_school_exams/${auth?.currentTermId._id}`
         );
+        console.log(res.data);
         setSubjects(res.data);
         setPageLoading(false);
       } catch (err) {
@@ -60,7 +62,7 @@ const Subjects = () => {
       }
     };
     getAllExamsWithDetails();
-  }, []);
+  }, [auth?.currentTermId]);
 
   const handleDelete = async (subject) => {
     setCurrentData(subject);
@@ -147,6 +149,7 @@ const Subjects = () => {
                     <TableRow>
                       <TableHeader>Actions</TableHeader>
                       <TableHeader>Class</TableHeader>
+                      <TableHeader>Course</TableHeader>
                       <TableHeader>Exam Center</TableHeader>
                       <TableHeader>Start Date</TableHeader>
                       <TableHeader>End Date</TableHeader>
@@ -163,17 +166,20 @@ const Subjects = () => {
                               Actions
                             </Action>
                           </TableCell>
-                          <TableCell data-label='Label'>
+                          <TableCell data-label='Class'>
                             {subject.class}
                           </TableCell>
-                          <TableCell data-label='Type'>
+                          <TableCell data-label='Course'>
+                            {subject.section}
+                          </TableCell>
+                          <TableCell data-label='Exams Center'>
                             {subject.examCenter}
                           </TableCell>
-                          <TableCell data-label='Code'>
-                            {subject.startDate}
+                          <TableCell data-label='Start Date'>
+                            {format(new Date(subject.startDate), 'do-MMM-yyyy')}
                           </TableCell>
-                          <TableCell data-label='Code'>
-                            {subject.endDate}
+                          <TableCell data-label='End Date'>
+                            {format(new Date(subject.endDate), 'do-MMM-yyyy')}
                           </TableCell>
                           <TableCell data-label='Class'>
                             {subject.classSchoolId?.classId?.label}

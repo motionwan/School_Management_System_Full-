@@ -23,6 +23,7 @@ import {
 } from '../../../Components/Table/Table.styles';
 import DeleteEdit from '../../../Components/DeleteAndEdit/DeleteEdit';
 import DialogModal from '../../../Components/Dialog/Dialog';
+import { TertiaryButton } from '../../../Components/Buttons/TertiaryButton';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
@@ -175,7 +176,12 @@ const Subjects = () => {
                           </TableCell>
                           <TableCell data-label='Class'>to be..</TableCell>
                           <TableCell data-label='Teacher'>
-                            To be assigned
+                            <Link to='/client_academic/subject/assign_teacher'>
+                              <TertiaryButton
+                                onClick={() => setCurrentData(subject)}
+                                label='Assign Teacher'
+                              />
+                            </Link>
                           </TableCell>
                         </TableRow>
                         <TableExpandableRow

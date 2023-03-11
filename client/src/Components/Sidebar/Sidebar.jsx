@@ -14,24 +14,16 @@ import {
   SLogo,
   SSidebar,
 } from './sidebar.styles';
-
 import { logoPNG } from '../../assets';
 import { AiOutlineSetting, AiOutlineLeft } from 'react-icons/ai';
-import { BsCalendarEvent } from 'react-icons/bs';
-import { MdLogout, MdSubject } from 'react-icons/md';
-import { FaSuitcase, FaQuestion, FaSchool, FaHandPaper } from 'react-icons/fa';
-import { IoMdSettings, IoIosSchool } from 'react-icons/io';
-import { TbNewSection } from 'react-icons/tb';
-import { SiGoogleclassroom } from 'react-icons/si';
+import { MdLogout } from 'react-icons/md';
 import {
-  AiOutlineTable,
-  AiOutlineCheck,
-  AiOutlineNotification,
-  AiOutlineDashboard,
-} from 'react-icons/ai';
-import { BiIntersect, BiBook, BiBookAdd } from 'react-icons/bi';
-import { HiOutlineStatusOnline } from 'react-icons/hi';
-
+  AdminSchoolArray,
+  AdminStudentArray,
+  AdminAdminArray,
+  AdminExamArray,
+  AdminAcademicArray,
+} from './MobileNavBar/Routes/AdminRoutes';
 import { ThemeContext } from '../../App';
 import { useLocation } from 'react-router-dom';
 import {
@@ -50,190 +42,6 @@ const Sidebar = () => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
   const { pathname } = useLocation();
   const { auth } = useContext(AuthContext);
-
-  const schoolArray = [
-    {
-      label: 'Dashboard',
-      icon: <FaSchool />,
-      path: `/client_school/${auth?.schoolId?._id}`,
-    },
-    {
-      label: 'Inquiries',
-      icon: <FaQuestion />,
-      path: `/client_school/${auth?.schoolId?._id}/enquiries`,
-    },
-    {
-      label: 'Settings',
-      icon: <IoMdSettings />,
-      path: `/client_school/${auth?.schoolId?._id}/settings`,
-    },
-    {
-      label: 'Logs',
-      icon: <FaSuitcase />,
-      path: `/client_school/${auth?.schoolId?._id}/logs`,
-    },
-  ];
-
-  const academicArray = [
-    {
-      label: 'Academic Dashboard',
-      icon: <AiOutlineDashboard />,
-      path: `/client_academic/${auth?.schoolId?._id}`,
-    },
-    {
-      label: 'Class Sections',
-      icon: <BiIntersect />,
-      path: `/client_academic/${auth?.schoolId?._id}/class_sections`,
-    },
-    {
-      label: 'Subjects',
-      icon: <MdSubject />,
-      path: `/client_academic/${auth?.schoolId?._id}/subjects`,
-    },
-    {
-      label: 'Timetable',
-      icon: <AiOutlineTable />,
-      path: `/client_academic/${auth?.schoolId?._id}/timetable`,
-    },
-    {
-      label: 'Attendance',
-      icon: <AiOutlineCheck />,
-      path: `/client_academic/${auth?.schoolId?._id}/attendance`,
-    },
-    {
-      label: 'Exeat',
-      icon: <FaHandPaper />,
-      path: `/client_academic/${auth?.schoolId?._id}/exeat`,
-    },
-    {
-      label: 'Learning Materials',
-      icon: <BiBook />,
-      path: `/client_academic/${auth?.schoolId?._id}/study_materials`,
-    },
-    {
-      label: 'Homework',
-      icon: <BiBookAdd />,
-      path: `/client_academic/${auth?.schoolId?._id}/homework`,
-    },
-    {
-      label: 'Noticeboard',
-      icon: <AiOutlineNotification />,
-      path: `/client_academic/${auth?.schoolId?._id}/noticeboard`,
-    },
-    {
-      label: 'Events',
-      icon: <BsCalendarEvent />,
-      path: `/client_academic/${auth?.schoolId?._id}/events`,
-    },
-    {
-      label: 'Online Classes',
-      icon: <HiOutlineStatusOnline />,
-      path: `/client_academic/${auth?.schoolId?._id}/online_classes`,
-    },
-  ];
-  const studentArray = [
-    {
-      label: 'Student Dashboard',
-      icon: <AiOutlineDashboard />,
-      path: `/client_student/${auth?.schoolId?._id}`,
-    },
-    {
-      label: 'Admission',
-      icon: <BiIntersect />,
-      path: `/client_student/${auth?.schoolId?._id}/admission`,
-    },
-    {
-      label: 'Students',
-      icon: <MdSubject />,
-      path: `/client_student/${auth?.schoolId?._id}/students`,
-    },
-    {
-      label: 'I.D Cards',
-      icon: <AiOutlineTable />,
-      path: `/client_student/${auth?.schoolId?._id}/id`,
-    },
-    {
-      label: 'Promotion',
-      icon: <AiOutlineCheck />,
-      path: `/client_student/${auth?.schoolId?._id}/promotion`,
-    },
-    {
-      label: 'Student Transfers',
-      icon: <FaHandPaper />,
-      path: `/client_student/${auth?.schoolId?._id}/transfer`,
-    },
-    {
-      label: 'Certifications',
-      icon: <BiBook />,
-      path: `/client_student/${auth?.schoolId?._id}/certificate`,
-    },
-  ];
-
-  const adminArray = [
-    {
-      label: 'Admin Dashboard',
-      icon: <AiOutlineDashboard />,
-      path: `/staff/${auth?.schoolId?._id}`,
-    },
-    // {
-    //   label: 'Admins',
-    //   icon: <BiIntersect />,
-    //   path: `/staff/${auth?.schoolId?._id}/admin`,
-    // },
-    {
-      label: 'Roles',
-      icon: <MdSubject />,
-      path: `/staff/${auth?.schoolId?._id}/roles`,
-    },
-    {
-      label: 'Staff List',
-      icon: <AiOutlineTable />,
-      path: `/staff/${auth?.schoolId?._id}/staffs`,
-    },
-    {
-      label: 'Staff Attendance',
-      icon: <AiOutlineCheck />,
-      path: `/staff/${auth?.schoolId?._id}/attendance`,
-    },
-    {
-      label: 'Staff Exeats',
-      icon: <FaHandPaper />,
-      path: `/staff/${auth?.schoolId?._id}/exeat`,
-    },
-  ];
-
-  const examArray = [
-    {
-      label: 'Exams Dashboard',
-      icon: <AiOutlineDashboard />,
-      path: `/exams/${auth?.schoolId?._id}`,
-    },
-    {
-      label: 'Manage Exams',
-      icon: <BiIntersect />,
-      path: `/exams/${auth?.schoolId?._id}/exam`,
-    },
-    {
-      label: 'Exams Results',
-      icon: <MdSubject />,
-      path: `/staff/${auth?.schoolId?._id}/results`,
-    },
-    {
-      label: 'Bulk print result',
-      icon: <AiOutlineTable />,
-      path: `/exams/${auth?.schoolId?._id}/bulk_print`,
-    },
-    {
-      label: 'Result Assessment',
-      icon: <AiOutlineCheck />,
-      path: `/staff/${auth?.schoolId?._id}/result_assessment`,
-    },
-    // {
-    //   label: 'Staff Exeats',
-    //   icon: <FaHandPaper />,
-    //   path: `/staff/${auth?.schoolId?._id}/exeat`,
-    // },
-  ];
 
   return (
     <>
@@ -254,136 +62,122 @@ const Sidebar = () => {
           </SLogo>
           <SidebarDivider />
 
-          {schoolManagementArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* // end of  school management array */}
-          {schoolArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* // end of  school management array */}
-          {academicArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* // end of  school management array */}
-          {studentArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* // end of  school management array */}
-          {adminArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* // end of  school management array */}
-          {examArray.map((links, index) => {
-            return (
-              <SidebarLinkContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <SidebarLink
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
-                  {sidebarOpen && (
-                    <>
-                      <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
-                    </>
-                  )}
-                </SidebarLink>
-              </SidebarLinkContainer>
-            );
-          })}
+          {/* ADMIN ROUTES GOES HEREk */}
+          {auth?.permissions.includes('admin') && (
+            <>
+              {/* // end of  school management array */}
+              {AdminSchoolArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {/* // end of  school management array */}
+              {AdminAcademicArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {/* // end of  school management array */}
+              {AdminStudentArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {/* // end of  school management array */}
+              {AdminAdminArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {/* // end of  school management array */}
+              {AdminExamArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+            </>
+          )}
+          {/* ADMIN ROUTES ENDS HERE  */}
+
           <SidebarDivider />
           {/* // end of  school management array */}
           {secondaryLinkArray.map((links, index) => {
@@ -449,7 +243,8 @@ const Sidebar = () => {
             </SidebarTheme>
           </MobileSidebarSettingsContainer>
           {/*sidebar links here*/}
-          {schoolManagementArray.map((links, index) => {
+
+          {AdminSchoolArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}
@@ -475,60 +270,7 @@ const Sidebar = () => {
             );
           })}
           <SidebarDivider />
-          {schoolArray.map((links, index) => {
-            return (
-              <MobileNavLinksContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <MobileNavBarLinks
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  {openMobileNav && (
-                    <>
-                      <MobileNavBarLabel
-                        onClick={() => {
-                          setOpenMobileNav((p) => !p);
-                        }}
-                      >
-                        {links.label}
-                      </MobileNavBarLabel>
-                    </>
-                  )}
-                </MobileNavBarLinks>
-              </MobileNavLinksContainer>
-            );
-          })}
-          <SidebarDivider />
-          {academicArray.map((links, index) => {
-            return (
-              <MobileNavLinksContainer
-                isActive={pathname === links.path}
-                key={index}
-              >
-                <MobileNavBarLinks
-                  style={!sidebarOpen ? { width: `fit-content` } : {}}
-                  to={links.path}
-                >
-                  {openMobileNav && (
-                    <>
-                      <MobileNavBarLabel
-                        onClick={() => {
-                          setOpenMobileNav((p) => !p);
-                        }}
-                      >
-                        {links.label}
-                      </MobileNavBarLabel>
-                    </>
-                  )}
-                </MobileNavBarLinks>
-              </MobileNavLinksContainer>
-            );
-          })}
-          <SidebarDivider />
-          {/* mobile navbar ends here */}
-          {studentArray.map((links, index) => {
+          {AdminAcademicArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}
@@ -555,7 +297,7 @@ const Sidebar = () => {
           })}
           <SidebarDivider />
           {/* mobile navbar ends here */}
-          {adminArray.map((links, index) => {
+          {AdminStudentArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}
@@ -582,7 +324,34 @@ const Sidebar = () => {
           })}
           <SidebarDivider />
           {/* mobile navbar ends here */}
-          {examArray.map((links, index) => {
+          {AdminAdminArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
+          {AdminExamArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}
@@ -629,26 +398,3 @@ const secondaryLinkArray = [
 ];
 
 export default Sidebar;
-
-const schoolManagementArray = [
-  {
-    label: 'School Management',
-    icon: <FaSchool />,
-    path: '/school_management',
-  },
-  {
-    label: 'Schools',
-    icon: <IoIosSchool />,
-    path: '/school_management/schools',
-  },
-  {
-    label: 'Classes',
-    icon: <SiGoogleclassroom />,
-    path: '/school_management/classes',
-  },
-  {
-    label: 'Terms/Semester',
-    icon: <TbNewSection />,
-    path: '/school_management/terms',
-  },
-];

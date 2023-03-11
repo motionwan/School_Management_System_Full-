@@ -38,9 +38,15 @@ const httpFindAllSubjects = async (req, res) => {
 const httpUpdateSubject = async (req, res) => {
   try {
     const { id } = req.params; // subject id
-    const { label, code, type, classSchoolId } = req.body;
+    const { label, code, type, classSchoolId, teacherId } = req.body;
     return res.json(
-      await Subject.findByIdAndUpdate(id, { label, code, type, classSchoolId })
+      await Subject.findByIdAndUpdate(id, {
+        label,
+        code,
+        type,
+        classSchoolId,
+        teacherId,
+      })
     );
   } catch (err) {
     console.log(err);

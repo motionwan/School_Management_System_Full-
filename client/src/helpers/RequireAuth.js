@@ -5,9 +5,9 @@ const RequireAuth = ({ permissions }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  const path = auth?.permissions?.map((permission) => permission.name);
-  // console.log(`path: ${path}`);
-  // console.log(`permissions: ${permissions}`);
+  //console.log(permissions);
+
+  const path = auth?.permissions?.map((permission) => permission);
 
   return path?.find((permission) => permissions?.includes(permission)) ? (
     <Outlet />
