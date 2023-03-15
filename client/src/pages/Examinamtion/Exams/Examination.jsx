@@ -129,7 +129,7 @@ const Subjects = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/exams/${auth.schoolId._id}/add_exams `}>
+            <Link to={`/exams/add_exams `}>
               <PrimaryButton label='Add Exams' icon={<FaPlusCircle />} />
             </Link>
           </AddView>
@@ -148,6 +148,7 @@ const Subjects = () => {
                   <thead>
                     <TableRow>
                       <TableHeader>Actions</TableHeader>
+                      <TableHeader>Exams Title</TableHeader>
                       <TableHeader>Class</TableHeader>
                       <TableHeader>Course</TableHeader>
                       <TableHeader>Exam Center</TableHeader>
@@ -165,6 +166,9 @@ const Subjects = () => {
                             <Action onClick={() => handleExpand(subject._id)}>
                               Actions
                             </Action>
+                          </TableCell>
+                          <TableCell data-label='Exams Label'>
+                            {subject.examLabel}
                           </TableCell>
                           <TableCell data-label='Class'>
                             {subject.class}
@@ -189,7 +193,7 @@ const Subjects = () => {
                         <TableExpandableRow
                           showExpandedRow={expandedRowId === subject._id}
                         >
-                          <TableExpandableCell colSpan={7}>
+                          <TableExpandableCell colSpan={9}>
                             <DeleteEdit
                               deleteRecord={() => handleDelete(subject)}
                               editRecord={() => handleEdit(subject)}

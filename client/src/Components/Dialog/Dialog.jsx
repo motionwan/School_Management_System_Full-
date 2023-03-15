@@ -58,7 +58,6 @@ const DialogModal = ({ message, onDialog }) => {
               label='Yes'
               onClick={() => onDialog(true)}
             />
-
             <PrimaryOutlineButton label='No' onClick={() => onDialog(false)} />
           </ModalActions>
         </ModalContainer>

@@ -1,0 +1,11 @@
+@media print {
+  @page {
+    size: A4;
+  }
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+}

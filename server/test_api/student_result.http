@@ -1,0 +1,11 @@
+@hostname = http://localhost:3001
+
+### Refresh Token Router
+post {{hostname}}/exams_result/student_result/640dd6272d54fc328ca010c0
+Content-Type: application/json
+
+{
+    "studentRecordId":"63f20c0cb8488dcf130ccb9e"
+}
+
+

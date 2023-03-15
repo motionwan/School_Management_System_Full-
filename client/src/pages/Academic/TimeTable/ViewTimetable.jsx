@@ -14,9 +14,6 @@ const ViewTimetable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(currentData);
-  console.log(data);
-
   useEffect(() => {
     setLoading(true);
     const getAllTimeTableData = async () => {

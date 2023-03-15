@@ -103,7 +103,7 @@ const Notice = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/add_notice `}>
+          <Link to={`/client_academic/add_notice `}>
             <PrimaryButton label='Add New Notice' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

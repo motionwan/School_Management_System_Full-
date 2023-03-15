@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaPlusCircle, FaSchool } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaSchool } from 'react-icons/fa';
 import AddView from '../../../Components/AddViewComponent/AddView';
-import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import { TertiaryButton } from '../../../Components/Buttons/TertiaryButton';
 import CustomSelect from '../../../Components/CustomSelect/CustomSelect';
 import TextInput from '../../../Components/Input/Input';
@@ -12,7 +10,6 @@ import Layout from '../../../Components/Layout/Layout';
 import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import AuthContext from '../../../context/AuthContext/AuthContext';
-import examResultSchema from '../../../formSchema/ExamsResult/ExamsResult';
 import { baseUrl } from '../../../helpers/baseUrl';
 import {
   ButtonContainer,
@@ -75,6 +72,7 @@ const AddExamResult = () => {
     };
     getAllExams();
   }, [auth]);
+
   const initialValues = students.reduce((acc, student) => {
     acc[student._id] = { examScore: 0, classScore: 0 };
     return acc;
@@ -128,6 +126,9 @@ const AddExamResult = () => {
         classScore: payLoad.classScore,
         studentRecordId: payLoad.studentId,
         examPaperId: examPaperId,
+        examId: examId,
+        classSchoolId: classSchoolId,
+        sectionId: sectionId,
         uploadedBy: auth?.userId,
         termId: auth?.currentTermId?._id,
       })
@@ -187,9 +188,7 @@ const AddExamResult = () => {
     if (examId) {
       const arr = [];
       const getAllClassSchoolsForSchool = async () => {
-        const res = await axios.post(`${baseUrl}/exams_paper/${examId}`, {
-          teacherId: auth?.userId,
-        });
+        const res = await axios.get(`${baseUrl}/exams_paper/admin/${examId}`);
         res.data.forEach((examPaper) => {
           arr.push({
             label: examPaper.label,

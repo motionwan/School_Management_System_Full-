@@ -169,9 +169,7 @@ const ClassSections = () => {
                       <div style={{ fontWeight: 'bold' }}>
                         {classSchool.count}
                       </div>
-                      <Link
-                        to={`/client_academic/${auth.schoolId._id}/add_class_sections`}
-                      >
+                      <Link to={`/client_academic/add_class_sections`}>
                         <TertiaryButton
                           onClick={() => {
                             setCurrentData(classSchool);

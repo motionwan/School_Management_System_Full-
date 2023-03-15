@@ -75,6 +75,8 @@ import AssignTeacher from './pages/Academic/Subjects/AssignTeacher';
 import UpdateExamResult from './pages/Examinamtion/ExamResult/UpdateExamResult';
 import AddExamResult from './pages/Examinamtion/ExamResult/AddExamResult';
 import ExamsResult from './pages/Examinamtion/ExamResult/ExamsResult';
+import BulkPrint from './pages/Examinamtion/BulkPrint/PrintResult';
+import Promotion from './pages/Students/Promotion/Promotion';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -564,6 +566,19 @@ const App = () => {
 
             {/* Another route */}
             <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'teacher']}
+                />
+              }
+            >
+              <Route path='/client_student/promotion' element={<Promotion />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
               element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route path='/staff/roles' element={<Roles />} />
@@ -705,6 +720,17 @@ const App = () => {
                 path='/exams/update_exam_result'
                 element={<UpdateExamResult />}
               />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth permissions={['admin', 'super-admin, teacher']} />
+              }
+            >
+              <Route path='/exams/print_result' element={<BulkPrint />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

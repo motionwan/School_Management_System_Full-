@@ -102,7 +102,7 @@ const AddEvent = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/events`);
+        navigate(`/client_academic/events`);
       }
       setPageLoading(false);
     } catch (err) {
@@ -142,7 +142,7 @@ const AddEvent = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/events `}>
+          <Link to={`/client_academic/events `}>
             <PrimaryButton label='View Events' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

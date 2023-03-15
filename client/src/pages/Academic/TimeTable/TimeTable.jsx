@@ -99,7 +99,7 @@ const Timetable = () => {
     try {
       setCurrentData(subject);
       if (currentData) {
-        navigate(`/client_academic/${auth.schoolId._id}/view_timetable`);
+        navigate(`/client_academic/view_timetable`);
       }
     } catch (err) {
       console.error(err);
@@ -127,7 +127,7 @@ const Timetable = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/client_academic/${auth.schoolId._id}/add_timetable `}>
+            <Link to={`/client_academic/add_timetable `}>
               <PrimaryButton
                 label='Add New Timetable Routine'
                 icon={<FaPlusCircle />}

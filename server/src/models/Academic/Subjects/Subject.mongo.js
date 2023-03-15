@@ -11,6 +11,7 @@ const subjectSchema = new Schema({
   },
   code: { type: String, required: true },
   type: { type: String, required: true },
+  category: { type: String, required: true },
   classSchoolId: { type: toId, ref: 'ClassSchool' },
   sectionId: { type: toId, ref: 'ClassSection', required: true },
   teacherId: { type: toId, ref: 'Staff' },

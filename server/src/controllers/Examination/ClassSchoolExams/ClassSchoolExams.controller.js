@@ -55,6 +55,7 @@ const getAllExamsDetails = async (req, res) => {
           examCenter: '$exams.examCenter',
           startDate: '$exams.startDate',
           endDate: '$exams.endDate',
+          examLabel: '$exams.title',
         },
       },
     ]);

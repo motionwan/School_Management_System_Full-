@@ -98,7 +98,7 @@ const Subjects = () => {
     try {
       setCurrentData(subject);
       if (currentData) {
-        navigate(`/client_academic/${auth.schoolId._id}/update_subject`);
+        navigate(`/client_academic/update_subject`);
       }
     } catch (err) {
       console.error(err);
@@ -126,7 +126,7 @@ const Subjects = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/client_school/${auth.schoolId._id}/add_subjects `}>
+            <Link to={`/client_school/add_subjects `}>
               <PrimaryButton label='Add Subject' icon={<FaPlusCircle />} />
             </Link>
           </AddView>

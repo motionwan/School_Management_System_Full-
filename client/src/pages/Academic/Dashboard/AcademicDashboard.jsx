@@ -29,9 +29,7 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Class Section</CardHeader>
               <ButtonContainer>
-                <Link
-                  to={`/client_academic/${auth.schoolId._id}/class_sections`}
-                >
+                <Link to={`/client_academic/class_sections`}>
                   <PrimaryButton label='Class Sections' />
                 </Link>
               </ButtonContainer>
@@ -41,13 +39,11 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Subjects</CardHeader>
               <ButtonContainer>
-                <Link
-                  to={`/client_academic/${auth.schoolId._id}/class_sections`}
-                >
-                  <PrimaryButton label='Class Sections' />
+                <Link to={`/client_academic/subjects`}>
+                  <PrimaryButton label='View Subjects' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
-                  <PrimaryOutlineButton label='Class Sections' />
+                <Link to='/client_school/add_subjects'>
+                  <PrimaryOutlineButton label='Add Subjects' />
                 </Link>
               </ButtonContainer>
             </Card>
@@ -56,10 +52,10 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Attendance</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/attendance'>
                   <PrimaryButton label='View Attendance' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/add_attendance'>
                   <PrimaryOutlineButton label='Take Attendance' />
                 </Link>
               </ButtonContainer>
@@ -67,13 +63,13 @@ const AcademicDashboard = () => {
           </CardContainer>
           <CardContainer>
             <Card>
-              <CardHeader>Study Materials</CardHeader>
+              <CardHeader>Learning Materials</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
-                  <PrimaryButton label='Study Materials' />
+                <Link to='/client_academic/study_materials'>
+                  <PrimaryButton label='Learning Materials' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
-                  <PrimaryOutlineButton label='Add Study Materials' />
+                <Link to='/client_academic/add_study_materials'>
+                  <PrimaryOutlineButton label='Add Learning Materials' />
                 </Link>
               </ButtonContainer>
             </Card>
@@ -82,10 +78,10 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Homework</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/homework'>
                   <PrimaryButton label='Homework' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/add_homework'>
                   <PrimaryOutlineButton label='Assign Homework' />
                 </Link>
               </ButtonContainer>
@@ -95,10 +91,10 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Noticeboard</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/noticeboard'>
                   <PrimaryButton label='Noticeboard' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/add_notice'>
                   <PrimaryOutlineButton label='Add New Notice' />
                 </Link>
               </ButtonContainer>
@@ -108,10 +104,10 @@ const AcademicDashboard = () => {
             <Card>
               <CardHeader>Events</CardHeader>
               <ButtonContainer>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/events'>
                   <PrimaryButton label='View Events' />
                 </Link>
-                <Link to='/client_academic/id/class_sections'>
+                <Link to='/client_academic/add_event'>
                   <PrimaryOutlineButton label='Add Events' />
                 </Link>
               </ButtonContainer>

@@ -117,7 +117,7 @@ const UpdateNotice = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/noticeboard `}>
+          <Link to={`/client_academic/noticeboard `}>
             <PrimaryButton label='View Notices' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

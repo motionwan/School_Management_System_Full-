@@ -200,7 +200,7 @@ const UpdateHomework = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/add_attendance `}>
+          <Link to={`/client_academic/add_attendance `}>
             <PrimaryButton
               label='View Learning Materials'
               icon={<FaPlusCircle />}

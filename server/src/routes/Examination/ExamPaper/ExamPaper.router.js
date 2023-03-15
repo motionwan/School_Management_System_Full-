@@ -6,12 +6,14 @@ const {
   updateExamPaper,
   deleteExamPaper,
   getExamPapersByExamId,
+  adminGetExamPapersByExamId,
 } = require('../../../controllers/Examination/ExamPaper/ExamPaper.controller');
 
 router.post('/', createExamPaper);
 router.get('/', getAllExamPapers);
 router.put('/:id', updateExamPaper);
 router.delete('/:id', deleteExamPaper);
-router.post('/:id', getExamPapersByExamId);
+router.get('/staff/:id', getExamPapersByExamId);
+router.get('/admin/:id', adminGetExamPapersByExamId);
 
 module.exports = router;

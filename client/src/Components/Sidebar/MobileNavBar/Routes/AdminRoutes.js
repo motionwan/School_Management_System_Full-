@@ -182,9 +182,9 @@ export const AdminExamArray = [
     path: `/exams/exam_results`,
   },
   {
-    label: 'Bulk print result',
+    label: 'Print result',
     icon: <AiOutlineTable />,
-    path: `/exams/bulk_print`,
+    path: `/exams/print_result`,
   },
   {
     label: 'Result Assessment',

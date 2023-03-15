@@ -53,20 +53,26 @@ const Icon = styled.span`
   }
 `;
 
-export const TertiaryButton = ({ label, icon, type, onClick }) => {
+export const TertiaryButton = ({ label, icon, type, onClick, ...rest }) => {
   return (
     <div>
-      <Button onClick={onClick} type={type}>
+      <Button onClick={onClick} {...rest} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </Button>
     </div>
   );
 };
-export const TertiaryOutlineButton = ({ label, icon, onClick, type }) => {
+export const TertiaryOutlineButton = ({
+  label,
+  icon,
+  onClick,
+  type,
+  ...rest
+}) => {
   return (
     <div>
-      <ButtonOutline onClick={onClick} type={type}>
+      <ButtonOutline onClick={onClick} {...rest} type={type}>
         <Icon>{icon}</Icon>
         {label}
       </ButtonOutline>

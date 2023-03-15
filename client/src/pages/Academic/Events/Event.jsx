@@ -104,7 +104,7 @@ const Events = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/add_event `}>
+          <Link to={`/client_academic/add_event `}>
             <PrimaryButton label='Add New Event' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

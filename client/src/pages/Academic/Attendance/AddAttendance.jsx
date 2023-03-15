@@ -98,7 +98,7 @@ const AddAttendance = () => {
 
         // return success message if all data is sent to the database
       });
-      navigate(`/client_student/${auth?.currentTermId?._id}/students`);
+      navigate(`/client_student/students`);
     } catch (err) {
       handleError(err.response.data.error);
     }
@@ -199,7 +199,7 @@ const AddAttendance = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/client_academic/${auth.schoolId._id}/add_attendance `}>
+            <Link to={`/client_academic/add_attendance `}>
               <PrimaryButton label='View Attendance' icon={<FaPlusCircle />} />
             </Link>
           </AddView>

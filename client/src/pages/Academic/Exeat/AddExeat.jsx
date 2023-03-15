@@ -115,7 +115,7 @@ const AddPermission = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/exeat`);
+        navigate(`/client_academic/exeat`);
       }
 
       setPageLoading(false);
@@ -168,22 +168,25 @@ const AddPermission = () => {
 
   useEffect(() => {
     if (values.sectionId) {
-      const arr = [];
-      const getStudentForSection = async () => {
-        const res = await axios.get(
-          `${baseUrl}/student_record/section/${values.sectionId}`
+      const getStudentsForSection = async () => {
+        const arr = [];
+        const res = await axios.post(
+          `${baseUrl}/student_record/section/${auth?.currentTermId?._id}`,
+          {
+            sectionId: values.sectionId,
+          }
         );
         res.data.forEach((student) => {
           arr.push({
-            label: student.fullName,
             value: student._id,
+            label: student.fullName,
           });
         });
         setStudents(arr);
       };
-      getStudentForSection();
+      getStudentsForSection();
     }
-  }, [values.sectionId]);
+  }, [values.sectionId, auth]);
 
   return (
     <div>
@@ -200,7 +203,7 @@ const AddPermission = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/client_academic/${auth?.schoolId?._id}/exeat`}>
+            <Link to={`/client_academic/exeat`}>
               <PrimaryButton
                 label='View Issued Exeat'
                 icon={<FaPlusCircle />}

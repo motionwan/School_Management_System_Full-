@@ -38,6 +38,11 @@ const AddSubjects = () => {
     { label: 'Subjective', value: 'subjective' },
   ];
 
+  const coreElective = [
+    { label: 'Core', value: 'core' },
+    { label: 'Elective', value: 'elective' },
+  ];
+
   useEffect(() => {
     const arr = [];
     const getAllClassSchoolsForSchool = async () => {
@@ -61,6 +66,7 @@ const AddSubjects = () => {
       const res = await axios.post(`${baseUrl}/subject`, {
         label: values.label,
         type: values.type,
+        category: values.category,
         code: values.code,
         classSchoolId: values.classSchoolId,
         sectionId: values.sectionId,
@@ -78,7 +84,7 @@ const AddSubjects = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/subjects`);
+        // navigate(`/client_academic/${auth?.schoolId?._id}/subjects`);
       }
       setLoading(false);
     } catch (err) {
@@ -100,6 +106,7 @@ const AddSubjects = () => {
       label: '',
       code: '',
       type: '',
+      category: '',
       classSchoolId: '',
       sectionId: '',
     },
@@ -168,6 +175,7 @@ const AddSubjects = () => {
               <CustomSelect
                 placeholder='Subject Type'
                 name='type'
+                label='Subject Type'
                 options={subjectTypes}
                 isSearchable={false}
                 onBlur={handleBlur}
@@ -180,10 +188,29 @@ const AddSubjects = () => {
               ) : null}
             </div>
           </div>
+
+          <div style={{ width: '100%', marginTop: '50px' }}>
+            <CustomSelect
+              label='Subject Category'
+              placeholder='Subject Category'
+              name='category'
+              options={coreElective}
+              isSearchable={false}
+              onBlur={handleBlur}
+              onChange={(e) => setFieldValue('category', e.value)}
+            />
+            {touched.category && errors.category ? (
+              <ErrorContainer>
+                <ErrorMessage>{errors.category}</ErrorMessage>
+              </ErrorContainer>
+            ) : null}
+          </div>
+
           <div style={{ width: '100%' }}>
             <CustomSelect
               placeholder='Class'
               name='classSchoolId'
+              label='Class'
               options={classSchools}
               isSearchable={false}
               onBlur={handleBlur}

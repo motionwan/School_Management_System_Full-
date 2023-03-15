@@ -119,7 +119,7 @@ const AddHomeWork = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/homework`);
+        navigate(`/client_academic/homework`);
       }
       setPageLoading(false);
     } catch (err) {
@@ -200,7 +200,7 @@ const AddHomeWork = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/homework `}>
+          <Link to={`/client_academic/homework `}>
             <PrimaryButton label='View Homework' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

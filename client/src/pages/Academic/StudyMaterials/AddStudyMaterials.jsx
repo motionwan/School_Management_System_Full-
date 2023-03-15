@@ -120,7 +120,7 @@ const AddStudyMaterials = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/study_materials`);
+        navigate(`/client_academic/study_materials`);
       }
       setPageLoading(false);
     } catch (err) {
@@ -201,7 +201,7 @@ const AddStudyMaterials = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/add_attendance `}>
+          <Link to={`/client_academic/add_attendance `}>
             <PrimaryButton
               label='View Learning Materials'
               icon={<FaPlusCircle />}

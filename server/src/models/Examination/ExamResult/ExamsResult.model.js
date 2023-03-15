@@ -29,6 +29,15 @@ const examResultSchema = new Schema({
     required: true,
     ref: 'Staff',
   },
+  classSchoolId: {
+    type: toId,
+    ref: 'ClassSchool',
+  },
+  sectionId: {
+    type: toId,
+    ref: 'ClassSection',
+  },
+  examId: { type: toId, ref: 'Exams' },
   termId: {
     type: toId,
     ref: 'Term',

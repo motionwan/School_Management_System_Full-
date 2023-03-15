@@ -70,7 +70,7 @@ const Exeat = () => {
     try {
       setCurrentData(exeat);
       if (currentData) {
-        navigate(`/client_academic/${auth.schoolId._id}/update_exeat`);
+        navigate(`/client_academic/update_exeat`);
       }
     } catch (err) {
       console.error(err);
@@ -125,7 +125,7 @@ const Exeat = () => {
             <TermSelector />
           </LocationLabel>
           <AddView>
-            <Link to={`/client_academic/${auth.schoolId._id}/add_exeat`}>
+            <Link to={`/client_academic/add_exeat`}>
               <PrimaryButton label='Issue Exeat' icon={<FaPlusCircle />} />
             </Link>
           </AddView>

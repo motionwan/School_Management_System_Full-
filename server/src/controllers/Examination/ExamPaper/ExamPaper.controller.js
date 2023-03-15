@@ -85,7 +85,7 @@ const deleteExamPaper = async (req, res) => {
 const getExamPapersByExamId = async (req, res) => {
   try {
     const { id } = req.params; //exams id;
-    const { teacherId } = req.body;
+    //const { teacherId } = req.body;
     const examPaper = await ExamPaper.aggregate([
       { $match: { examId: ObjectId(id) } },
       {
@@ -97,7 +97,32 @@ const getExamPapersByExamId = async (req, res) => {
         },
       },
       // match subject id with teacher id
-      { $match: { 'subject.teacherId': ObjectId(teacherId) } }, // only return the teachers subjects
+      // { $match: { 'subject.teacherId': ObjectId(teacherId) } }, // only return the teachers subjects
+      { $unwind: '$subject' },
+      { $project: { _id: 1, label: '$subject.label' } },
+    ]);
+    return res.json(examPaper);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+const adminGetExamPapersByExamId = async (req, res) => {
+  try {
+    const { id } = req.params; //exams id;
+    //const { teacherId } = req.body;
+    const examPaper = await ExamPaper.aggregate([
+      { $match: { examId: ObjectId(id) } },
+      {
+        $lookup: {
+          from: 'subjects',
+          localField: 'subjectId',
+          foreignField: '_id',
+          as: 'subject',
+        },
+      },
+      // match subject id with teacher id
+      //{ $match: { 'subject.teacherId': ObjectId(teacherId) } }, // only return the teachers subjects
       { $unwind: '$subject' },
       { $project: { _id: 1, label: '$subject.label' } },
     ]);
@@ -113,4 +138,5 @@ module.exports = {
   updateExamPaper,
   deleteExamPaper,
   getExamPapersByExamId,
+  adminGetExamPapersByExamId,
 };

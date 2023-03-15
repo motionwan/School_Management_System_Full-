@@ -79,7 +79,7 @@ const AddNotice = () => {
             duration: 5000,
           },
         });
-        navigate(`/client_academic/${auth?.schoolId?._id}/noticeboard`);
+        navigate(`/client_academic/noticeboard`);
       }
       setPageLoading(false);
     } catch (err) {
@@ -117,7 +117,7 @@ const AddNotice = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_academic/${auth.schoolId._id}/noticeboard `}>
+          <Link to={`/client_academic/noticeboard `}>
             <PrimaryButton label='View Notices' icon={<FaPlusCircle />} />
           </Link>
         </AddView>

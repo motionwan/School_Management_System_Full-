@@ -112,9 +112,7 @@ const StudyMaterials = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link
-            to={`/client_academic/${auth.schoolId._id}/add_study_materials `}
-          >
+          <Link to={`/client_academic/add_study_materials `}>
             <PrimaryButton label='Add Study Material' icon={<FaPlusCircle />} />
           </Link>
         </AddView>
