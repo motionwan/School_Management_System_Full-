@@ -6,4 +6,14 @@ export const houseMasterArray = [
     icon: <FaHandPaper />,
     path: `/client_academic/exeat`,
   },
+  {
+    label: 'Hostels',
+    icon: <FaHandPaper />,
+    path: `/client_academic/exeat`,
+  },
+  {
+    label: 'Manage Hostels',
+    icon: <FaHandPaper />,
+    path: `/client_academic/exeat`,
+  },
 ];

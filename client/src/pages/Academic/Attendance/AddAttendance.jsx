@@ -98,7 +98,7 @@ const AddAttendance = () => {
 
         // return success message if all data is sent to the database
       });
-      navigate(`/client_student/students`);
+      navigate(`/client_academic/attendance`);
     } catch (err) {
       handleError(err.response.data.error);
     }
@@ -168,8 +168,9 @@ const AddAttendance = () => {
       const getAllStudents = async () => {
         setPageLoading(true);
         try {
-          const res = await axios.get(
-            `${baseUrl}/student_record/section/${values.sectionId}`
+          const res = await axios.post(
+            `${baseUrl}/student_record/section/${auth?.currentTermId._id}`,
+            { sectionId: values.sectionId }
           );
           setStudents(res.data);
           setPageLoading(false);

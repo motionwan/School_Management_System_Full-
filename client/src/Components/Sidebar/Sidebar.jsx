@@ -23,6 +23,7 @@ import {
   AdminAdminArray,
   AdminExamArray,
   AdminAcademicArray,
+  houseMasterArray,
 } from './MobileNavBar/Routes/AdminRoutes';
 import { ThemeContext } from '../../App';
 import { useLocation } from 'react-router-dom';
@@ -155,6 +156,27 @@ const Sidebar = () => {
               <SidebarDivider />
               {/* // end of  school management array */}
               {AdminExamArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {houseMasterArray.map((links, index) => {
                 return (
                   <SidebarLinkContainer
                     isActive={pathname === links.path}
@@ -352,6 +374,34 @@ const Sidebar = () => {
           <SidebarDivider />
           {/* mobile navbar ends here */}
           {AdminExamArray.map((links, index) => {
+            return (
+              <MobileNavLinksContainer
+                isActive={pathname === links.path}
+                key={index}
+              >
+                <MobileNavBarLinks
+                  style={!sidebarOpen ? { width: `fit-content` } : {}}
+                  to={links.path}
+                >
+                  {openMobileNav && (
+                    <>
+                      <MobileNavBarLabel
+                        onClick={() => {
+                          setOpenMobileNav((p) => !p);
+                        }}
+                      >
+                        {links.label}
+                      </MobileNavBarLabel>
+                    </>
+                  )}
+                </MobileNavBarLinks>
+              </MobileNavLinksContainer>
+            );
+          })}
+          <SidebarDivider />
+          {/* mobile navbar ends here */}
+          {/* mobile navbar ends here */}
+          {houseMasterArray.map((links, index) => {
             return (
               <MobileNavLinksContainer
                 isActive={pathname === links.path}

@@ -20,6 +20,7 @@ const useRefreshToken = () => {
         userId: res.data.userId,
         schoolId: res?.data?.schoolId,
         currentTermId: res.data?.currentTermId,
+        photoId: res?.data?.photoId,
       };
     });
     console.log('refresh token', res?.data?.accessToken);
@@ -29,6 +30,7 @@ const useRefreshToken = () => {
     console.log('schoolId', res?.data?.schoolId);
     console.log('currentTermId', res?.data?.currentTermId);
     console.log('role', res?.data?.role);
+    console.log('photoId', res?.data?.photoId);
     return res?.data?.accessToken;
   };
   return refresh;

@@ -77,6 +77,10 @@ import AddExamResult from './pages/Examinamtion/ExamResult/AddExamResult';
 import ExamsResult from './pages/Examinamtion/ExamResult/ExamsResult';
 import BulkPrint from './pages/Examinamtion/BulkPrint/PrintResult';
 import Promotion from './pages/Students/Promotion/Promotion';
+import LiveClasses from './pages/Academic/LiveClasses/LiveClasses';
+import UpdateHostel from './pages/Hostels/Hostel/UpdateHostel';
+import AddHostel from './pages/Hostels/Hostel/AddHostel';
+import Hostel from './pages/Hostels/Hostel/Hostel';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -295,6 +299,22 @@ const App = () => {
               <Route
                 path='/client_academic/timetable'
                 element={<TimeTable />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'teacher']}
+                />
+              }
+            >
+              <Route
+                path='/client_academic/online_classes'
+                element={<LiveClasses />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
@@ -720,6 +740,45 @@ const App = () => {
                 path='/exams/update_exam_result'
                 element={<UpdateExamResult />}
               />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin, house-master']}
+                />
+              }
+            >
+              <Route path='/hostel/manage-hostels' element={<Hostel />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin, house-master']}
+                />
+              }
+            >
+              <Route path='/hostel/add-hostels' element={<AddHostel />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin, house-master']}
+                />
+              }
+            >
+              <Route path='/hostel/update-hostel' element={<UpdateHostel />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

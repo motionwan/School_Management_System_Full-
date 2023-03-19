@@ -245,7 +245,7 @@ const ViewAttendance = () => {
           </form>
           <div>
             {attendanceData.length < 1 ? (
-              <h1>No student Data to display</h1>
+              <h1>No Attendance Data to display</h1>
             ) : (
               <TableContainer>
                 <Table>

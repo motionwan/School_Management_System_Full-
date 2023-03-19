@@ -75,7 +75,7 @@ const Subjects = () => {
 
           <div>
             {subjects.length < 1 ? (
-              <h1>No Subject Data to display</h1>
+              <h1>No Student Data to display</h1>
             ) : (
               <TableContainer>
                 <Table>

@@ -197,3 +197,21 @@ export const AdminExamArray = [
   //   path: `/staff/exeat`,
   // },
 ];
+
+export const houseMasterArray = [
+  {
+    label: 'Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: `/hostels`,
+  },
+  {
+    label: 'Manage Hostel/House',
+    icon: <BiIntersect />,
+    path: `/hostel/manage-hostels`,
+  },
+  {
+    label: 'Rooms/Dormitories',
+    icon: <MdSubject />,
+    path: `/hostel/manage-rooms`,
+  },
+];
