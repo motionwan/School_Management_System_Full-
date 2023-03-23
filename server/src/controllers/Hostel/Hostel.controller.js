@@ -2,10 +2,8 @@ const Hostel = require('../../models/Hostel/Hostel.mongo');
 
 const createHostel = async (req, res) => {
   try {
-    const { hostelName, type, address, intake, schoolId } = req.body;
-    return res.json(
-      await Hostel.create({ hostelName, type, address, intake, schoolId })
-    );
+    const { hostelName, address, schoolId } = req.body;
+    return res.json(await Hostel.create({ hostelName, address, schoolId }));
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

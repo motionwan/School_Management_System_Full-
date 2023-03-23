@@ -209,9 +209,4 @@ export const houseMasterArray = [
     icon: <BiIntersect />,
     path: `/hostel/manage-hostels`,
   },
-  {
-    label: 'Rooms/Dormitories',
-    icon: <MdSubject />,
-    path: `/hostel/manage-rooms`,
-  },
 ];

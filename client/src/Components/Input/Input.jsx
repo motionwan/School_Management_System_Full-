@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const InputContainer = styled.div`
   position: flex;
-  width: 100%;
+  width: 90%;
   justify-content: center;
   align-items: center;
 `;

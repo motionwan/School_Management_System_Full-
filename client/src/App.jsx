@@ -81,6 +81,7 @@ import LiveClasses from './pages/Academic/LiveClasses/LiveClasses';
 import UpdateHostel from './pages/Hostels/Hostel/UpdateHostel';
 import AddHostel from './pages/Hostels/Hostel/AddHostel';
 import Hostel from './pages/Hostels/Hostel/Hostel';
+import Settings from './pages/UserSettings/Settings';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -779,6 +780,23 @@ const App = () => {
               }
             >
               <Route path='/hostel/update-hostel' element={<UpdateHostel />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={[
+                    'admin',
+                    'super-admin, house-master',
+                    'teacher',
+                  ]}
+                />
+              }
+            >
+              <Route path='/settings' element={<Settings />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

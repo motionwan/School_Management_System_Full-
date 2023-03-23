@@ -60,6 +60,7 @@ const studentSchema = new Schema({
   },
   sectionId: { type: toId, ref: 'ClassSection' },
   termId: { type: toId, ref: 'Term' },
+  hostelId: { type: toId, ref: 'Hostel' },
   username: {
     type: String,
     required: true,
@@ -78,16 +79,24 @@ const studentSchema = new Schema({
   hometown: { type: String },
   religion: { type: String },
   allergies: String,
-  // motherPhoneNumber: {
-
-  // motherName: {
-  //   type: String,
-  // },
-  //   type: String,
-  // },
-  // motherOccupation: {
-  //   type: String,
-  // },
+  motherPhoneNumber: {
+    motherName: {
+      type: String,
+    },
+    type: String,
+  },
+  motherOccupation: {
+    type: String,
+  },
+  fatherPhoneNumber: {
+    fatherName: {
+      type: String,
+    },
+    type: String,
+  },
+  fatherOccupation: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('StudentRecord', studentSchema);

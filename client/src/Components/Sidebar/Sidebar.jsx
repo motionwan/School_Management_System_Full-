@@ -437,12 +437,12 @@ const Sidebar = () => {
 const secondaryLinkArray = [
   {
     label: 'Settings',
-    path: '/#settings',
+    path: '/settings',
     icon: <AiOutlineSetting />,
   },
   {
     label: 'Logout',
-    path: '#/staff/logout',
+    path: '/logout',
     icon: <MdLogout />,
   },
 ];

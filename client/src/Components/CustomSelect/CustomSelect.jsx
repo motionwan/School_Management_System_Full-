@@ -21,7 +21,7 @@ const Label = styled.label`
 `;
 
 const SelectContainer = styled(ReactSelect)`
-  width: 100%;
+  width: 90%;
   background: transparent;
   border-radius: 5px;
   color: ${({ theme }) => theme.text};

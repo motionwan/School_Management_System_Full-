@@ -23,10 +23,9 @@ import {
 } from '../../../Components/Table/Table.styles';
 import DeleteEdit from '../../../Components/DeleteAndEdit/DeleteEdit';
 import DialogModal from '../../../Components/Dialog/Dialog';
-import { TertiaryButton } from '../../../Components/Buttons/TertiaryButton';
 
 const Subjects = () => {
-  const [subjects, setSubjects] = useState([]);
+  const [hostel, setHostel] = useState([]);
   const [pageLoading, setPageLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [notification, setNotification] = useState('');
@@ -45,11 +44,11 @@ const Subjects = () => {
   };
 
   useEffect(() => {
-    const getAllSubjects = async () => {
+    const getAllHostels = async () => {
       setPageLoading(true);
       try {
-        const res = await axios.get(`${baseUrl}/subject`);
-        setSubjects(res.data);
+        const res = await axios.get(`${baseUrl}/hostel`);
+        setHostel(res.data);
         setPageLoading(false);
       } catch (err) {
         console.log(err);
@@ -58,7 +57,7 @@ const Subjects = () => {
         setPageLoading(false);
       }
     };
-    getAllSubjects();
+    getAllHostels();
   }, []);
 
   const handleDelete = async (subject) => {
@@ -77,7 +76,7 @@ const Subjects = () => {
         const res = await axios.delete(
           `${baseUrl}/subject/${currentData?._id}`
         );
-        setSubjects(subjects.filter((c) => c._id !== currentData?._id));
+        setHostel(hostel.filter((c) => c._id !== currentData?._id));
         setPageLoading(false);
         if (res) {
           setDialog({ loading: false, message: '' });
@@ -137,7 +136,7 @@ const Subjects = () => {
             <Notification message={notification} type='success' />
           ) : null}
           <div>
-            {subjects.length < 1 ? (
+            {hostel.length < 1 ? (
               <h1>No Subject Data to display</h1>
             ) : (
               <TableContainer>
@@ -145,52 +144,35 @@ const Subjects = () => {
                   <thead>
                     <TableRow>
                       <TableHeader>Actions</TableHeader>
-                      <TableHeader>Label</TableHeader>
-                      <TableHeader>Type</TableHeader>
-                      <TableHeader>Code</TableHeader>
-                      <TableHeader>Class</TableHeader>
-                      <TableHeader>Course</TableHeader>
-                      <TableHeader>Teacher</TableHeader>
+                      <TableHeader>Hostel/House Name</TableHeader>
+                      <TableHeader>Address</TableHeader>
+                      {/* <TableHeader>Type</TableHeader>
+                      <TableHeader>Capacity</TableHeader> */}
                     </TableRow>
                   </thead>
                   <tbody>
-                    {subjects.map((subject) => (
-                      <React.Fragment key={subject._id}>
+                    {hostel.map((h) => (
+                      <React.Fragment key={h._id}>
                         <TableRow data-label='Actions'>
                           <TableCell data-label='Actions'>
-                            <Action onClick={() => handleExpand(subject._id)}>
+                            <Action onClick={() => handleExpand(h._id)}>
                               Actions
                             </Action>
                           </TableCell>
                           <TableCell data-label='Label'>
-                            {subject.label}
+                            {h.hostelName}
                           </TableCell>
-                          <TableCell data-label='Type'>
-                            {subject.type}
-                          </TableCell>
-                          <TableCell data-label='Code'>
-                            {subject.code}
-                          </TableCell>
-                          <TableCell data-label='Class'>
-                            {subject.classSchoolId?.classId?.label}
-                          </TableCell>
-                          <TableCell data-label='Class'>to be..</TableCell>
-                          <TableCell data-label='Teacher'>
-                            <Link to='/client_academic/subject/assign_teacher'>
-                              <TertiaryButton
-                                onClick={() => setCurrentData(subject)}
-                                label='Assign Teacher'
-                              />
-                            </Link>
-                          </TableCell>
+                          <TableCell data-label='Code'>{h.address}</TableCell>
+                          {/* <TableCell data-label='Type'>{h.type}</TableCell> */}
+                          {/* <TableCell data-label='Class'>{h.intake}</TableCell> */}
                         </TableRow>
                         <TableExpandableRow
-                          showExpandedRow={expandedRowId === subject._id}
+                          showExpandedRow={expandedRowId === h._id}
                         >
                           <TableExpandableCell colSpan={6}>
                             <DeleteEdit
-                              deleteRecord={() => handleDelete(subject)}
-                              editRecord={() => handleEdit(subject)}
+                              deleteRecord={() => handleDelete(h)}
+                              editRecord={() => handleEdit(h)}
                             />
                           </TableExpandableCell>
                         </TableExpandableRow>

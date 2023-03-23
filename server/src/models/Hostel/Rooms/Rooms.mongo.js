@@ -3,20 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const toId = mongoose.Types.ObjectId;
 
-const hostelSchema = new Schema({
-  hostelName: {
+const roomSchema = new Schema({
+  roomName: {
     type: String,
     required: true,
   },
 
-  address: {
-    type: String,
+  numberOfBeds: {
+    type: Number,
   },
-
-  schoolId: {
+  hostelId: {
     type: toId,
-    ref: 'School',
+    ref: 'Hostel',
   },
 });
 
-module.exports = mongoose.model('Hostel', hostelSchema);
+module.exports = mongoose.model('Room', roomSchema);

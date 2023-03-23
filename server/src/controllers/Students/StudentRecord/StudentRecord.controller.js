@@ -12,6 +12,32 @@ const ClassSchool = require('../../../models/Academic/ClassSchool/ClassSchool.mo
 const Schools = require('../../../models/SchoolManagment/Schools/schools.mongo');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const Hostel = require('../../../models/Hostel/Hostel.mongo');
+
+// Function to get an array of all hostel ids
+const getAllHostelIds = async () => {
+  try {
+    const hostels = await Hostel.find().lean();
+    return hostels.map((hostel) => hostel._id.toString());
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+// Function to assign a hostel to a student
+const assignHostelToStudent = async (student) => {
+  try {
+    const allHostelIds = await getAllHostelIds();
+    const index = (await StudentRecord.countDocuments()) % allHostelIds.length;
+    student.assignedHostel = allHostelIds[index];
+    await student.save();
+    console.log('Student assigned to hostel');
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
+};
 
 const admitStudent = async (req, res) => {
   try {
@@ -41,9 +67,12 @@ const admitStudent = async (req, res) => {
       hometown,
       religion,
       allergies,
-      // fatherOccupation,
-      // fatherPhoneNumber,
-      // motherName,
+      fatherOccupation,
+      fatherPhoneNumber,
+      fatherName,
+      motherOccupation,
+      motherPhoneNumber,
+      motherName,
     } = req.body;
 
     const newStudent = await StudentRecord.create({
@@ -69,13 +98,15 @@ const admitStudent = async (req, res) => {
       hometown,
       religion,
       allergies,
-      // fatherName,
-      // motherName,
-      // fatherPhoneNumber,
-      // motherPhoneNumber,
-      // fatherOccupation,
-      // motherOccupation,
+      fatherName,
+      motherName,
+      fatherPhoneNumber,
+      motherPhoneNumber,
+      fatherOccupation,
+      motherOccupation,
     });
+
+    await assignHostelToStudent(newStudent);
 
     if (newStudent) {
       const token = await Token.create({

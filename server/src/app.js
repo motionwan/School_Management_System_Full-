@@ -60,6 +60,7 @@ const ExamRouter = require('./routes/Examination/Exams/Examination.router');
 const ClassSchoolExamRouter = require('./routes/Examination/ClassSchoolExams/ClassSchoolExams.router');
 const ExamResultRouter = require('./routes/Examination/ExamResult/ExamsResult.router');
 const HostelRouter = require('./routes/Hostel/Hostel.router');
+const RoomRouter = require('./routes/Hostel/Rooms/Rooms.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -89,5 +90,6 @@ app.use('/exams', ExamRouter);
 app.use('/class_school_exams', ClassSchoolExamRouter);
 app.use('/exams_result', ExamResultRouter);
 app.use('/hostel', HostelRouter);
+app.use('/room', RoomRouter);
 
 module.exports = app;
