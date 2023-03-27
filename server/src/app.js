@@ -42,6 +42,7 @@ const HomeworkSectionRouter = require('./routes/Academics/HomeworkSection/Homewo
 const StudyMaterialRouter = require('./routes/Academics/StudyMaterials/StudyMaterials.router');
 const ClassSchoolStudyMaterialRouter = require('./routes/Academics/ClassSchoolStudyMaterials/ClassSchoolStudyMaterial.router');
 const StudentAttendanceRouter = require('./routes/Academics/StudentAttendance/StudentAttendance.router');
+const OnlineClassRouter = require('./routes/Academics/OnlineClasses/OnlineClasses.router');
 const SubjectRouter = require('./routes/Academics/Subjects/Subjects.router');
 const StudentRecordRouter = require('./routes/Student/StudentRecord/StudentRecord.router');
 const StaffRouter = require('./routes/Staff/Staff/Staff.router');
@@ -91,5 +92,6 @@ app.use('/class_school_exams', ClassSchoolExamRouter);
 app.use('/exams_result', ExamResultRouter);
 app.use('/hostel', HostelRouter);
 app.use('/room', RoomRouter);
+app.use('/online-class', OnlineClassRouter);
 
 module.exports = app;

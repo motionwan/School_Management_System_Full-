@@ -75,6 +75,12 @@ const StaffSchema = new Schema({
   address: {
     type: String,
   },
+  zoomApiKey: {
+    type: String,
+  },
+  zoomApiSecret: {
+    type: String,
+  },
   sectionId: {
     type: [toId],
     ref: 'ClassSection',

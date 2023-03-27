@@ -166,7 +166,7 @@ const signInStaff = async (req, res) => {
         secure: false,
         maxAge: 24 * 60 * 60 * 1000,
       });
-      console.log(currentTermId);
+      // console.log(currentTermId);
       //console.log(staff.role);
       // send data via json
       return res.status(200).json({
@@ -177,6 +177,8 @@ const signInStaff = async (req, res) => {
         role: staff?.role,
         userId: staff?._id,
         schoolId: staff?.schoolId,
+        zoomApiKey: staff?.zoomApiKey,
+        zoomApiSecret: staff?.zoomApiSecret,
         // we want the current term id
         currentTermId: currentTermId[0]?.currentTermId,
       });
@@ -283,9 +285,11 @@ const updateStaff = async (req, res) => {
       photoId,
       city,
       healthInsurance,
-      subjectId,
+      // subjectId,
       sectionId,
       //classSchoolId,
+      zoomApiKey,
+      zoomApiSecret,
       hometown,
       religion,
       username,
@@ -304,9 +308,11 @@ const updateStaff = async (req, res) => {
         address,
         bloodGroup,
         photoId,
-        subjectId: [...subjectId],
+        // subjectId: [...subjectId],
         //classSchoolId: [...classSchoolId],
         sectionId,
+        zoomApiKey,
+        zoomApiSecret,
         city,
         healthInsurance,
         hometown,

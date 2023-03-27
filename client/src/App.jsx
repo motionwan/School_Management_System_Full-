@@ -82,6 +82,7 @@ import UpdateHostel from './pages/Hostels/Hostel/UpdateHostel';
 import AddHostel from './pages/Hostels/Hostel/AddHostel';
 import Hostel from './pages/Hostels/Hostel/Hostel';
 import Settings from './pages/UserSettings/Settings';
+import AddOnlineClasses from './pages/Academic/LiveClasses/AddOnlineClasses';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -316,6 +317,22 @@ const App = () => {
               <Route
                 path='/client_academic/online_classes'
                 element={<LiveClasses />}
+              />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'teacher']}
+                />
+              }
+            >
+              <Route
+                path='/client_academic/add-online-classes'
+                element={<AddOnlineClasses />}
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>

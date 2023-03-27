@@ -21,6 +21,8 @@ const useRefreshToken = () => {
         schoolId: res?.data?.schoolId,
         currentTermId: res.data?.currentTermId,
         photoId: res?.data?.photoId,
+        zoomApiKey: res?.data?.zoomApiKey,
+        zoomApiSecret: res?.data?.zoomApiSecret,
       };
     });
     console.log('refresh token', res?.data?.accessToken);
@@ -31,6 +33,8 @@ const useRefreshToken = () => {
     console.log('currentTermId', res?.data?.currentTermId);
     console.log('role', res?.data?.role);
     console.log('photoId', res?.data?.photoId);
+    console.log('zoomApiKey', res?.data?.zoomApiKey);
+    console.log('zoomApiSecret', res?.data?.zoomApiSecret);
     return res?.data?.accessToken;
   };
   return refresh;

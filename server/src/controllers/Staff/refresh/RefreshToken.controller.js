@@ -37,6 +37,8 @@ const handleRefreshToken = async (req, res) => {
       role: staff?.role,
       userId: staff?._id,
       schoolId: staff?.schoolId,
+      zoomApiKey: staff?.zoomApiKey,
+      zoomApiSecret: staff?.zoomApiSecret,
       currentTermId: currentTermId[0]?.currentTermId,
     });
   });

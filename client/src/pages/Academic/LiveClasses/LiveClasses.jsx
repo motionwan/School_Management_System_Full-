@@ -10,6 +10,7 @@ import AuthContext from '../../../context/AuthContext/AuthContext';
 
 const LiveClasses = () => {
   const { auth } = useContext(AuthContext);
+
   return (
     <div>
       <Layout>
@@ -20,7 +21,7 @@ const LiveClasses = () => {
           <TermSelector />
         </LocationLabel>
         <AddView>
-          <Link to={`/client_school/add_subjects `}>
+          <Link to={`/client_academic/add-online-classes`}>
             <PrimaryButton
               label='Create An Online Class'
               icon={<FaPlusCircle />}
