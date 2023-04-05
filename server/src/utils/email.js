@@ -20,7 +20,7 @@ const sendEmail = async (email, subject, text) => {
       text: text,
     });
     console.log('email sent successfully');
-    return { message: 'Email sent check your email for activation' };
+    return { message: 'Email sent.' };
   } catch (e) {
     console.log('email not sent');
     console.log(e);

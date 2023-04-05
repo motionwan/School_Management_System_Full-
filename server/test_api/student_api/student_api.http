@@ -28,15 +28,15 @@ Content-Type: application/json
 
 
 ###
-put {{hostname}}/student_record/63d3ec322ca6dd2e2835fb51
+put {{hostname}}/student_record/63f20c0cb8488dcf130ccb9e
 Content-Type: application/json
 
 {
-    "fullName":"Benjamin Mathematics"
-   
+    "classSchoolId":"63d9db1adc2cae33cf245b17"   
 
 }
 
+//get students record with term id
 ###
 get {{hostname}}/student_record/63d966edcbdcf350e3fdefd4
 
@@ -60,4 +60,13 @@ Content-Type: application/json
 
 {
     "sectionId":"63d9dbb6b1255479e13c0aff"
+}
+
+###
+// get student record by class id and term
+get {{hostname}}/student_record/class-school/63d966edcbdcf350e3fdefd4
+Content-Type: application/json
+
+{
+    "classSchoolId":"63d9db1adc2cae33cf245b17"
 }

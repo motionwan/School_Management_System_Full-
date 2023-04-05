@@ -18,6 +18,12 @@ const StudentRecord = yup.object().shape({
     .string()
     .required('Guardian phone number is required'),
   guardianOccupation: yup.string(),
+  fatherName: yup.string().required('Father name is required'),
+  fatherPhoneNumber: yup.string().required('Father phone number is required'),
+  fatherOccupation: yup.string(),
+  motherName: yup.string().required('Mother name is required'),
+  motherPhoneNumber: yup.string().required('Mother phone number is required'),
+  motherOccupation: yup.string(),
   photoId: yup
     .mixed()
     .test(

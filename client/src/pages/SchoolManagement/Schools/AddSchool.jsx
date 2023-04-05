@@ -42,19 +42,20 @@ const AddSchool = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
+    const data = new FormData();
+    data.append('label', values.label);
+    data.append('phone', values.phone);
+    data.append('address', values.address);
+    data.append('email', values.email);
+    data.append('status', values.status);
+    data.append('enrollmentBaseNumber', values.enrollmentBaseNumber);
+    data.append('enrollmentPrefix', values.enrollmentPrefix);
+    data.append('enrollmentPaddingNumber', values.enrollmentPadding);
+    data.append('description', values.description);
+
     setLoading(true);
     try {
-      const res = await axios.post(`${baseUrl}/schools`, {
-        label: values.label,
-        phone: values.phone,
-        address: values.address,
-        email: values.email,
-        status: values.status,
-        enrollmentBaseNumber: values.enrollmentBaseNumber,
-        enrollmentPrefix: values.enrollmentPrefix,
-        enrollmentPaddingNumber: values.enrollmentPadding,
-        description: values.description,
-      });
+      const res = await axios.post(`${baseUrl}/schools`, data);
       if (res.status === 200) {
         Store.addNotification({
           title: 'Success!',

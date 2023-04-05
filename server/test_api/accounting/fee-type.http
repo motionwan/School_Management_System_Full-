@@ -1,0 +1,29 @@
+   @hostname = http://localhost:3001
+
+
+   post {{hostname}}/fee-types
+   Content-Type: application/json
+
+   {
+    
+   "name": "Graduation Fee",
+  "description": "A one-time fee for graduating students",
+  "amount": 200
+
+}
+
+###
+   // get all fee types
+get {{hostname}}/fee-types
+
+####
+// edit fee types
+put {{hostname}}/fee-types/6428184e31cc8a50dbecaf04
+Content-Type: application/json
+
+{
+    "name":"Tuition fee"
+}
+
+###
+delete {{hostname}}/fee-types/6428186d31cc8a50dbecaf08

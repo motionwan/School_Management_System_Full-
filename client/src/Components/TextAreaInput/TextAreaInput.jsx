@@ -9,7 +9,7 @@ const TextAreaContainer = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 150px;
+    min-height: 150px;
     font-size: 20px;
     margin: 15px;
     padding: 10px;
@@ -25,7 +25,7 @@ const Label = styled.label`
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   background: transparent;
   border-radius: 5px;
   color: ${({ theme }) => theme.text};
@@ -38,7 +38,7 @@ const TextArea = styled.textarea`
   }
   @media (max-width: 768px) {
     width: 100%;
-    height: 150px;
+    min-height: 150px;
     font-size: 20px;
   }
 `;

@@ -1,4 +1,5 @@
 const express = require('express');
+const upload = require('../../../middleware/uploads.multer');
 const router = express.Router();
 const {
   getAllSchool,
@@ -8,8 +9,8 @@ const {
 } = require('../../../controllers/SchoolManagement/Schools/Schools.controller');
 
 router.get('/', getAllSchool);
-router.post('/', createNewSchool);
+router.post('/', upload.single('schoolCrest'), createNewSchool);
 router.delete('/:id', deleteSchool);
-router.put('/:id', updateSchool);
+router.put('/:id', upload.single('schoolCrest'), updateSchool);
 
 module.exports = router;

@@ -24,6 +24,7 @@ import {
   AdminExamArray,
   AdminAcademicArray,
   houseMasterArray,
+  AccountantArray,
 } from './MobileNavBar/Routes/AdminRoutes';
 import { ThemeContext } from '../../App';
 import { useLocation } from 'react-router-dom';
@@ -176,6 +177,29 @@ const Sidebar = () => {
                 );
               })}
               <SidebarDivider />
+              {/* end of exam array */}
+              {AccountantArray.map((links, index) => {
+                return (
+                  <SidebarLinkContainer
+                    isActive={pathname === links.path}
+                    key={index}
+                  >
+                    <SidebarLink
+                      style={!sidebarOpen ? { width: `fit-content` } : {}}
+                      to={links.path}
+                    >
+                      <SidebarLinkIcon>{links.icon}</SidebarLinkIcon>
+                      {sidebarOpen && (
+                        <>
+                          <SidebarLinkLabel>{links.label}</SidebarLinkLabel>
+                        </>
+                      )}
+                    </SidebarLink>
+                  </SidebarLinkContainer>
+                );
+              })}
+              <SidebarDivider />
+              {/* end of accounting array */}
               {houseMasterArray.map((links, index) => {
                 return (
                   <SidebarLinkContainer

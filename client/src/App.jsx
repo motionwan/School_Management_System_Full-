@@ -83,6 +83,13 @@ import AddHostel from './pages/Hostels/Hostel/AddHostel';
 import Hostel from './pages/Hostels/Hostel/Hostel';
 import Settings from './pages/UserSettings/Settings';
 import AddOnlineClasses from './pages/Academic/LiveClasses/AddOnlineClasses';
+//import Notification from './Components/Notification/Notification';
+import AddNotifications from './pages/Students/Notifications/AddNotifications';
+import SchoolSettings from './pages/School/Settings/SchoolSettings';
+import PaymentHistory from './pages/Accounting/Invoice/PaymentHistory';
+import CreateInvoice from './pages/Accounting/Invoice/CreateInvoice';
+import Invoices from './pages/Accounting/Invoice/Invoices';
+import PayFees from './pages/Accounting/Invoice/PayFees';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -181,6 +188,7 @@ const App = () => {
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
+
             <Route element={<RequireAuth permissions='admin' />}>
               <Route
                 path='/school_management/schools/update'
@@ -188,11 +196,30 @@ const App = () => {
               />
               {/* routes to browse if permission is included in user permission */}
             </Route>
+
             {/* Another route */}
             <Route
               element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route path='/client_school' element={<SchoolDashboard />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route path='/client_academic' element={<AcademicDashboard />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_school/settings'
+                element={<SchoolSettings />}
+              />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
@@ -466,6 +493,18 @@ const App = () => {
               element={<RequireAuth permissions={['admin', 'super-admin']} />}
             >
               <Route path='/client_academic/noticeboard' element={<Notice />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route
+                path='/client_student/notifications'
+                element={<AddNotifications />}
+              />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}
@@ -814,6 +853,61 @@ const App = () => {
               }
             >
               <Route path='/settings' element={<Settings />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'accountant']}
+                />
+              }
+            >
+              <Route path='/account/invoice' element={<Invoices />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'accountant']}
+                />
+              }
+            >
+              <Route path='/account/pay-invoice' element={<PayFees />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'accountant']}
+                />
+              }
+            >
+              <Route path='/account/add-invoice' element={<CreateInvoice />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'accountant']}
+                />
+              }
+            >
+              <Route
+                path='/account/payment-history'
+                element={<PaymentHistory />}
+              />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

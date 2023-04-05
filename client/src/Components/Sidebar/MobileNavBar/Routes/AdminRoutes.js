@@ -126,9 +126,9 @@ export const AdminStudentArray = [
     path: `/client_student/transfer`,
   },
   {
-    label: 'Certifications',
+    label: 'Notifications',
     icon: <BiBook />,
-    path: `/client_student/certificate`,
+    path: `/client_student/notifications`,
   },
 ];
 
@@ -190,6 +190,39 @@ export const AdminExamArray = [
     label: 'Result Assessment',
     icon: <AiOutlineCheck />,
     path: `/staff/result_assessment`,
+  },
+  // {
+  //   label: 'Staff Exeats',
+  //   icon: <FaHandPaper />,
+  //   path: `/staff/exeat`,
+  // },
+];
+
+export const AccountantArray = [
+  {
+    label: 'Accounting Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: `/account`,
+  },
+  {
+    label: 'Income',
+    icon: <BiIntersect />,
+    path: `/account/income`,
+  },
+  {
+    label: 'Expenses',
+    icon: <MdSubject />,
+    path: `/income/expenses`,
+  },
+  {
+    label: 'Invoice',
+    icon: <AiOutlineTable />,
+    path: `/account/invoice`,
+  },
+  {
+    label: 'Print Invoice',
+    icon: <AiOutlineCheck />,
+    path: `/account/invoice/print`,
   },
   // {
   //   label: 'Staff Exeats',

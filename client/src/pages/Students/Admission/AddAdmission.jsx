@@ -114,7 +114,7 @@ const AddStudent = () => {
 
   const onSubmit = async (values) => {
     const data = new FormData();
-    console.log(values);
+    //console.log(values);
     data.append('fullName', values.fullName);
     data.append('gender', values.gender);
     data.append('dateOfBirth', values.dateOfBirth);
@@ -126,6 +126,12 @@ const AddStudent = () => {
     data.append('guardianName', values.guardianName);
     data.append('guardianPhoneNumber', values.guardianPhoneNumber);
     data.append('guardianOccupation', values.guardianOccupation);
+    data.append('fatherName', values.fatherName);
+    data.append('fatherPhoneNumber', values.fatherPhoneNumber);
+    data.append('fatherOccupation', values.fatherOccupation);
+    data.append('motherName', values.motherName);
+    data.append('motherPhoneNumber', values.motherPhoneNumber);
+    data.append('motherOccupation', values.motherOccupation);
     data.append('photoId', values.photoId);
     data.append('sectionId', values.sectionId);
     data.append('sessionId', values.sessionId);
@@ -171,15 +177,19 @@ const AddStudent = () => {
       email: '',
       address: '',
       admissionDate: '',
+      fatherName: '',
+      fatherPhoneNumber: '',
+      fatherOccupation: '',
+      motherName: '',
+      motherPhoneNumber: '',
+      motherOccupation: '',
       bloodGroup: '',
       guardianName: '',
       guardianPhoneNumber: '',
-      status: '',
       guardianOccupation: '',
       photoId: null,
       sectionId: '',
       classSchoolId: '',
-      termId: '',
       city: '',
       healthInsurance: '',
       hometown: '',
@@ -211,7 +221,7 @@ const AddStudent = () => {
     }
   }, [values.classSchoolId]);
 
-  console.log(values);
+  //console.log(values);
 
   return (
     <div>
@@ -479,6 +489,96 @@ const AddStudent = () => {
             <InputContainer>
               <InputWrapper>
                 <TextInput
+                  label={`Father's Full Name`}
+                  name='fatherName'
+                  value={values.fatherName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.fatherName && errors.fatherName ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.fatherName}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+              <InputWrapper>
+                <TextInput
+                  label={`Father's Phone Number`}
+                  name='fatherPhoneNumber'
+                  value={values.fatherPhoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.fatherPhoneNumber && errors.fatherPhoneNumber ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.fatherPhoneNumber}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+
+              <InputWrapper>
+                <TextInput
+                  label={`Father's Occupation`}
+                  name='fatherOccupation'
+                  value={values.fatherOccupation}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.fatherOccupation && errors.fatherOccupation ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.fatherOccupation}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+            </InputContainer>
+            <InputContainer>
+              <InputWrapper>
+                <TextInput
+                  label={`Mother's Full Name`}
+                  name='motherName'
+                  value={values.motherName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.motherName && errors.motherName ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.motherName}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+              <InputWrapper>
+                <TextInput
+                  label={`Mother's Number`}
+                  name='motherPhoneNumber'
+                  value={values.motherPhoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.motherPhoneNumber && errors.motherPhoneNumber ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.motherPhoneNumber}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+              <InputWrapper>
+                <TextInput
+                  label={`Mother's Occupation`}
+                  name='motherOccupation'
+                  value={values.motherOccupation}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {touched.motherOccupation && errors.motherOccupation ? (
+                  <ErrorContainer>
+                    <ErrorMessage>{errors.motherOccupation}</ErrorMessage>
+                  </ErrorContainer>
+                ) : null}
+              </InputWrapper>
+            </InputContainer>
+
+            <InputContainer>
+              <InputWrapper>
+                <TextInput
                   label={`Guardian's Full Name`}
                   name='guardianName'
                   value={values.guardianName}
@@ -493,7 +593,7 @@ const AddStudent = () => {
               </InputWrapper>
               <InputWrapper>
                 <TextInput
-                  label={`Guardian's Phone Number`}
+                  label={`Guardian's Number`}
                   name='guardianPhoneNumber'
                   value={values.guardianPhoneNumber}
                   onChange={handleChange}

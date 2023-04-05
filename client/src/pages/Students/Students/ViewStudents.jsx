@@ -71,7 +71,7 @@ const ViewStudents = () => {
   };
 
   useEffect(() => {
-    const getAllSubjects = async () => {
+    const getAllStudents = async () => {
       setPageLoading(true);
       try {
         const res = await axios.get(
@@ -86,7 +86,7 @@ const ViewStudents = () => {
         setPageLoading(false);
       }
     };
-    getAllSubjects();
+    getAllStudents();
   }, [auth]);
 
   const handleDelete = async (subject) => {
@@ -155,7 +155,7 @@ const ViewStudents = () => {
       },
       onSubmit,
     });
-  console.log(values);
+  //console.log(values);
 
   return (
     <div>

@@ -62,6 +62,9 @@ const ClassSchoolExamRouter = require('./routes/Examination/ClassSchoolExams/Cla
 const ExamResultRouter = require('./routes/Examination/ExamResult/ExamsResult.router');
 const HostelRouter = require('./routes/Hostel/Hostel.router');
 const RoomRouter = require('./routes/Hostel/Rooms/Rooms.router');
+const FeeTypesRouter = require('./routes/Accounting/FeeTypes/FeeTypes.router');
+const FeesRouter = require('./routes/Accounting/Fees/Fees.router');
+const PaymentRouter = require('./routes/Accounting/Payments/Payments.router');
 
 //call routes
 app.use('/schools', SchoolsRouter);
@@ -93,5 +96,8 @@ app.use('/exams_result', ExamResultRouter);
 app.use('/hostel', HostelRouter);
 app.use('/room', RoomRouter);
 app.use('/online-class', OnlineClassRouter);
+app.use('/fee-types', FeeTypesRouter);
+app.use('/fees', FeesRouter);
+app.use('/payments', PaymentRouter);
 
 module.exports = app;

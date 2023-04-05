@@ -8,6 +8,7 @@ const settingsSchema = new Schema({
     ref: 'Terms',
     required: true,
   },
+
   bmb: { type: Number, required: true },
 });
 module.exports = mongoose.model('Setting', settingsSchema);

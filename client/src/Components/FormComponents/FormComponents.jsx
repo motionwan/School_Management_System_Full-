@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const MajorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 10rem;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+`;
 export const MainContainer = styled.div`
   display: flex;
   gap: 50px;

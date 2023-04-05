@@ -1,0 +1,12 @@
+  @hostname = http://localhost:3001
+
+###
+get {{hostname}}/payments
+
+
+###
+get {{hostname}}/payments/SMP000019
+
+//get payment history by admission number
+###
+get {{hostname}}/payments/history/SMP000019

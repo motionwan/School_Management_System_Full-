@@ -60,6 +60,7 @@ const studentSchema = new Schema({
   },
   sectionId: { type: toId, ref: 'ClassSection' },
   termId: { type: toId, ref: 'Term' },
+  classSchoolId: { type: String },
   hostelId: { type: toId, ref: 'Hostel' },
   username: {
     type: String,

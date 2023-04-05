@@ -2,11 +2,15 @@ const Settings = require('../../../models/School/Settings/settings.mongo');
 
 const createSettings = async (req, res) => {
   try {
-    const { currentTermId, bmb } = req.body;
+    let schoolCrest = '';
+    if (req.file) {
+      schoolCrest = req.file.path;
+    }
+    const { currentTermId, bmb, hubtelClientSecret, hubtelClientId } = req.body;
 
     const setting = await Settings.updateOne(
       { bmb: bmb },
-      { currentTermId },
+      { currentTermId, hubtelClientId, hubtelClientSecret, schoolCrest },
       { upsert: true }
     );
     return res.json(setting);

@@ -9,6 +9,10 @@ const getAllSchool = async (req, res) => {
 };
 
 const createNewSchool = async (req, res) => {
+  let schoolCrest = '';
+  if (req.file) {
+    schoolCrest = req.file.path;
+  }
   try {
     const {
       label,
@@ -23,6 +27,9 @@ const createNewSchool = async (req, res) => {
       enrollmentBaseNumber,
       lastEnrollmentCount,
       lastInvoiceCount,
+      hubtelClientSecret,
+      hubtelClientId,
+      currency,
     } = req.body;
     const createdSchool = await Schools.create({
       label,
@@ -37,6 +44,10 @@ const createNewSchool = async (req, res) => {
       enrollmentPrefix,
       lastEnrollmentCount,
       lastInvoiceCount,
+      hubtelClientSecret,
+      hubtelClientId,
+      schoolCrest,
+      currency,
     });
     return res.status(200).json(createdSchool);
   } catch (err) {
@@ -57,9 +68,22 @@ const deleteSchool = async (req, res) => {
 };
 
 const updateSchool = async (req, res) => {
+  let schoolCrest = '';
+  if (req.file) {
+    schoolCrest = req.file.path;
+  }
   try {
-    const { id } = req.params;
-    const { label, phone, address, email, status } = req.body;
+    const { id } = req.params; // school id;
+    const {
+      label,
+      phone,
+      address,
+      email,
+      status,
+      hubtelClientSecret,
+      hubtelClientId,
+      currency,
+    } = req.body;
     return res.json(
       await Schools.findByIdAndUpdate(id, {
         label,
@@ -67,6 +91,10 @@ const updateSchool = async (req, res) => {
         address,
         email,
         status,
+        hubtelClientSecret,
+        hubtelClientId,
+        schoolCrest,
+        currency,
       })
     );
   } catch (err) {

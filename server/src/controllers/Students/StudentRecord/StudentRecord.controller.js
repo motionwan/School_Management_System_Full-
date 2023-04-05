@@ -57,6 +57,7 @@ const admitStudent = async (req, res) => {
       bloodGroup,
       guardianName,
       guardianPhoneNumber,
+      classSchoolId,
       guardianOccupation,
       status,
       sectionId,
@@ -91,6 +92,7 @@ const admitStudent = async (req, res) => {
       termId,
       username,
       guardianName,
+      classSchoolId,
       guardianPhoneNumber,
       guardianOccupation,
       city,
@@ -459,17 +461,33 @@ const getStudentBySectionAndTermId = async (req, res) => {
   try {
     const { id } = req.params; // termId ;
     const { sectionId } = req.body;
-    const students = await StudentRecord.aggregate([
-      {
-        $match: {
-          termId: ObjectId(id),
-          sectionId: ObjectId(sectionId),
-        },
-      },
-    ]);
+    const students = await StudentRecord.find({
+      sectionId: sectionId,
+      termId: id,
+    }).populate({
+      path: 'sectionId',
+      populate: { path: 'classSchoolId', populate: { path: 'classId' } },
+    });
     return res.json(students);
   } catch (err) {
     return res.status(500).json({ error: err.message });
+  }
+};
+
+const getStudentByClassSchoolIdAndTermId = async (req, res) => {
+  try {
+    const { id } = req.params; // termId ;
+    const { classSchoolId } = req.body;
+    const students = await StudentRecord.find({
+      termId: id,
+      classSchoolId: classSchoolId,
+    }).populate({
+      path: 'sectionId',
+      populate: { path: 'classSchoolId', populate: { path: 'classId' } },
+    });
+    return res.json(students);
+  } catch (err) {
+    return res.status(500).json({ error: err });
   }
 };
 
@@ -491,4 +509,5 @@ module.exports = {
   logoutStudent,
   searchStudents,
   getStudentBySectionAndTermId,
+  getStudentByClassSchoolIdAndTermId,
 };

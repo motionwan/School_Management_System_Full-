@@ -62,6 +62,18 @@ const schoolSchema = new Schema({
     type: String,
     default: null,
   },
+  schoolCrest: {
+    type: String,
+  },
+  currency: {
+    type: String,
+  },
+  hubtelClientSecret: {
+    type: String,
+  },
+  hubtelClientId: {
+    type: String,
+  },
   settings: {
     type: mongoose.Types.ObjectId,
     ref: 'Settings',

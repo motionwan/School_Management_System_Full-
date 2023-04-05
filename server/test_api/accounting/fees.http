@@ -1,0 +1,53 @@
+@hostname = http://localhost:3001
+
+post {{hostname}}/fees
+Content-Type: application/json
+
+{
+   
+    "admissionNumber": "SMP000020",
+    "sectionId": "63d9dbb6b1255479e13c0aff",
+    "classSchoolId":"63d9db1adc2cae33cf245b17",
+    "termId": "63d966edcbdcf350e3fdefd4",
+    "fees": ["6428184e31cc8a50dbecaf04", "6428188531cc8a50dbecaf0c"]
+
+}
+
+###
+// get all fees
+get {{hostname}}/fees
+
+###
+// get all fees with term id
+get {{hostname}}/fees/detailed/6412fe8a479ed7825da30abf
+
+###
+// get all fees with term and section id
+get {{hostname}}/fees/detailed-section/6412fe8a479ed7825da30abf
+Content-Type: application/json
+
+{
+    "sectionId":"63d9dbb6b1255479e13c0aff"
+}
+
+// get fees by id
+### 
+get {{hostname}}/fees/6428312126168962d0cc1a18
+
+// get lates fees.
+### 
+get {{hostname}}/fees/latest-fees
+
+// delete fees by id
+###
+delete {{hostname}}/fees/642910c4fea921215b3b17e2
+
+####
+// pay school fees with studentRecordId and amount
+post {{hostname}}/fees/pay
+Content-Type: application/json
+
+{
+    "admissionNumber":"SMP000020",
+    "amount":3000
+    }
