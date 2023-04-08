@@ -50,7 +50,7 @@ const StudentDashboard = () => {
               </ButtonContainer>
             </Card>
           </CardContainer>
-          <CardContainer>
+          {/* <CardContainer>
             <Card>
               <CardHeader>I.D Cards</CardHeader>
               <ButtonContainer>
@@ -59,7 +59,7 @@ const StudentDashboard = () => {
                 </Link>
               </ButtonContainer>
             </Card>
-          </CardContainer>
+          </CardContainer> */}
           <CardContainer>
             <Card>
               <CardHeader>Promotions</CardHeader>
@@ -70,7 +70,7 @@ const StudentDashboard = () => {
               </ButtonContainer>
             </Card>
           </CardContainer>
-          <CardContainer>
+          {/* <CardContainer>
             <Card>
               <CardHeader>Transfers</CardHeader>
               <ButtonContainer>
@@ -82,7 +82,7 @@ const StudentDashboard = () => {
                 </Link>
               </ButtonContainer>
             </Card>
-          </CardContainer>
+          </CardContainer> */}
           <CardContainer>
             <Card>
               <CardHeader>Certifications</CardHeader>

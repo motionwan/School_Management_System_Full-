@@ -90,6 +90,10 @@ import PaymentHistory from './pages/Accounting/Invoice/PaymentHistory';
 import CreateInvoice from './pages/Accounting/Invoice/CreateInvoice';
 import Invoices from './pages/Accounting/Invoice/Invoices';
 import PayFees from './pages/Accounting/Invoice/PayFees';
+import StaffDashboard from './pages/Administration/Dashboard/StaffDashboard';
+import ExamsDashboard from './pages/Examinamtion/Dashboard/ExamsDashboard';
+import AccountingDashboard from './pages/Accounting/Dashboard/AccountingDashboard';
+import HostelDashboard from './pages/Hostels/Dashboard/HostelDashboard';
 export const ThemeContext = React.createContext(null);
 
 const App = () => {
@@ -106,7 +110,9 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/staff/signup/:token/:id' element={<StaffSignUp />} />
           <Route path='/unauthorized' element={<Unauthorized />} />
+
           <Route element={<PersistLogin />}>
+            {/* Route implementation starts here */}
             <Route
               element={
                 <RequireAuth
@@ -915,10 +921,48 @@ const App = () => {
             {/* Another route */}
             <Route
               element={
-                <RequireAuth permissions={['admin', 'super-admin, teacher']} />
+                <RequireAuth
+                  permissions={['admin', 'super-admin', 'teacher']}
+                />
               }
             >
               <Route path='/exams/print_result' element={<BulkPrint />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route path='/exams' element={<ExamsDashboard />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route path='/hostels' element={<HostelDashboard />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route path='/account' element={<AccountingDashboard />} />
+              {/* routes to browse if permission is included in user permission */}
+            </Route>
+            {/* Another route */}
+
+            {/* Another route */}
+            <Route
+              element={<RequireAuth permissions={['admin', 'super-admin']} />}
+            >
+              <Route path='/staff' element={<StaffDashboard />} />
               {/* routes to browse if permission is included in user permission */}
             </Route>
             {/* Another route */}

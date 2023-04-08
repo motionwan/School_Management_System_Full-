@@ -25,6 +25,7 @@ import {
 import { TertiaryButton } from '../../../Components/Buttons/TertiaryButton';
 import axios from 'axios';
 import { baseUrl } from '../../../helpers/baseUrl';
+import searchInvoiceSchema from '../../../formSchema/searchInvoiceSchema/SearchInvoiceSchema';
 
 const MainContainer = styled.div`
   display: flex;
@@ -48,9 +49,7 @@ const Invoices = () => {
   // get fees by termId
   useEffect(() => {
     const getFeeTypes = async () => {
-      const res = await axios.get(
-        `${baseUrl}/fees/detailed/${auth?.currentTermId?._id}`
-      );
+      const res = await axios.get(`${baseUrl}/fees/latest-fees`);
 
       setFees(res.data);
     };
@@ -78,21 +77,24 @@ const Invoices = () => {
   // filter the invoices on display further
   const onSubmit = async (values) => {
     try {
-      const res = await axios.get(`${baseUrl}/fees/latest-fees`);
+      const res = await axios.get(
+        `${baseUrl}/fees/detailed-fees/${values.sectionId}`
+      );
       //use filter instead of submit
       setFees(res.data);
     } catch (err) {}
   };
+
   const { values, touched, errors, handleSubmit, setFieldValue } = useFormik({
     initialValues: {
       classSchoolId: '',
       sectionId: '',
     },
-    // validationSchema: invoiceSchema,
+    validationSchema: searchInvoiceSchema,
     onSubmit,
   });
 
-  console.log(values);
+  //console.log(values);
 
   // get sections with classSchoolId
   useEffect(() => {

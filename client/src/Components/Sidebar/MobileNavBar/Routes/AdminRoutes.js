@@ -30,11 +30,6 @@ export const AdminSchoolArray = [
     icon: <IoMdSettings />,
     path: `/client_school/settings`,
   },
-  {
-    label: 'Logs',
-    icon: <FaSuitcase />,
-    path: `/client_school/logs`,
-  },
 ];
 
 export const AdminAcademicArray = [
@@ -110,21 +105,21 @@ export const AdminStudentArray = [
     icon: <MdSubject />,
     path: `/client_student/students`,
   },
-  {
-    label: 'I.D Cards',
-    icon: <AiOutlineTable />,
-    path: `/client_student/id`,
-  },
-  {
-    label: 'Promotion',
-    icon: <AiOutlineCheck />,
-    path: `/client_student/promotion`,
-  },
-  {
-    label: 'Student Transfers',
-    icon: <FaHandPaper />,
-    path: `/client_student/transfer`,
-  },
+  // {
+  //   label: 'I.D Cards',
+  //   icon: <AiOutlineTable />,
+  //   path: `/client_student/id`,
+  // },
+  // {
+  //   label: 'Promotion',
+  //   icon: <AiOutlineCheck />,
+  //   path: `/client_student/promotion`,
+  // },
+  // {
+  //   label: 'Student Transfers',
+  //   icon: <FaHandPaper />,
+  //   path: `/client_student/transfer`,
+  // },
   {
     label: 'Notifications',
     icon: <BiBook />,
@@ -143,11 +138,11 @@ export const AdminAdminArray = [
   //   icon: <BiIntersect />,
   //   path: `/staff/admin`,
   // },
-  {
-    label: 'Roles',
-    icon: <MdSubject />,
-    path: `/staff/roles`,
-  },
+  // {
+  //   label: 'Roles',
+  //   icon: <MdSubject />,
+  //   path: `/staff/roles`,
+  // },
   {
     label: 'Staff List',
     icon: <AiOutlineTable />,
@@ -186,11 +181,11 @@ export const AdminExamArray = [
     icon: <AiOutlineTable />,
     path: `/exams/print_result`,
   },
-  {
-    label: 'Result Assessment',
-    icon: <AiOutlineCheck />,
-    path: `/staff/result_assessment`,
-  },
+  // {
+  //   label: 'Result Assessment',
+  //   icon: <AiOutlineCheck />,
+  //   path: `/staff/result_assessment`,
+  // },
   // {
   //   label: 'Staff Exeats',
   //   icon: <FaHandPaper />,
@@ -204,16 +199,16 @@ export const AccountantArray = [
     icon: <AiOutlineDashboard />,
     path: `/account`,
   },
-  {
-    label: 'Income',
-    icon: <BiIntersect />,
-    path: `/account/income`,
-  },
-  {
-    label: 'Expenses',
-    icon: <MdSubject />,
-    path: `/income/expenses`,
-  },
+  // {
+  //   label: 'Income',
+  //   icon: <BiIntersect />,
+  //   path: `/account/income`,
+  // },
+  // {
+  //   label: 'Expenses',
+  //   icon: <MdSubject />,
+  //   path: `/income/expenses`,
+  // },
   {
     label: 'Invoice',
     icon: <AiOutlineTable />,
@@ -224,11 +219,6 @@ export const AccountantArray = [
     icon: <AiOutlineCheck />,
     path: `/account/invoice/print`,
   },
-  // {
-  //   label: 'Staff Exeats',
-  //   icon: <FaHandPaper />,
-  //   path: `/staff/exeat`,
-  // },
 ];
 
 export const houseMasterArray = [

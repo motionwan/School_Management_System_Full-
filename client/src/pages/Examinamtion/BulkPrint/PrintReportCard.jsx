@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import ReportCard from './BulkPrintStyles/StudentResultTable';
+import ReportCard from './BulkPrintStyles/ReportCard';
 
 const PrintableReportCard = (data) => {
   const componentRef = useRef();

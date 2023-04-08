@@ -24,7 +24,7 @@ import {
   TwoByTwoContainer,
 } from './BulkPrintStyles/BulkPrint.styles';
 import { ModalContainer } from './BulkPrintStyles/StudentReportCardStyles';
-import ReportCard from './BulkPrintStyles/StudentResultTable';
+import ReportCard from './BulkPrintStyles/ReportCard';
 
 const PrintResult = () => {
   const [classes, setClasses] = useState('[]');

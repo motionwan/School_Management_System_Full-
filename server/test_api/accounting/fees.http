@@ -30,6 +30,17 @@ Content-Type: application/json
     "sectionId":"63d9dbb6b1255479e13c0aff"
 }
 
+
+###
+// get PAYMENT HISTORY
+get {{hostname}}/fees/payment-history/SMP000019/6412fe8a479ed7825da30abf
+
+// get fees by searching for classSchoolId and SectionId
+###
+
+get {{hostname}}/fees/detailed-fees/63d9dbb6b1255479e13c0aff
+
+
 // get fees by id
 ### 
 get {{hostname}}/fees/6428312126168962d0cc1a18

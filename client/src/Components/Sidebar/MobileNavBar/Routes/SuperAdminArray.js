@@ -14,7 +14,7 @@ import {
 import { BiIntersect, BiBook, BiBookAdd } from 'react-icons/bi';
 import { HiOutlineStatusOnline } from 'react-icons/hi';
 
-export const schoolArray = [
+export const AdminSchoolArray = [
   {
     label: 'School Dashboard',
     icon: <FaSchool />,
@@ -30,14 +30,9 @@ export const schoolArray = [
     icon: <IoMdSettings />,
     path: `/client_school/settings`,
   },
-  {
-    label: 'Logs',
-    icon: <FaSuitcase />,
-    path: `/client_school/logs`,
-  },
 ];
 
-export const academicArray = [
+export const AdminAcademicArray = [
   {
     label: 'Academic Dashboard',
     icon: <AiOutlineDashboard />,
@@ -94,7 +89,7 @@ export const academicArray = [
     path: `/client_academic/online_classes`,
   },
 ];
-export const studentArray = [
+export const AdminStudentArray = [
   {
     label: 'Student Dashboard',
     icon: <AiOutlineDashboard />,
@@ -110,29 +105,29 @@ export const studentArray = [
     icon: <MdSubject />,
     path: `/client_student/students`,
   },
+  // {
+  //   label: 'I.D Cards',
+  //   icon: <AiOutlineTable />,
+  //   path: `/client_student/id`,
+  // },
+  // {
+  //   label: 'Promotion',
+  //   icon: <AiOutlineCheck />,
+  //   path: `/client_student/promotion`,
+  // },
+  // {
+  //   label: 'Student Transfers',
+  //   icon: <FaHandPaper />,
+  //   path: `/client_student/transfer`,
+  // },
   {
-    label: 'I.D Cards',
-    icon: <AiOutlineTable />,
-    path: `/client_student/id`,
-  },
-  {
-    label: 'Promotion',
-    icon: <AiOutlineCheck />,
-    path: `/client_student/promotion`,
-  },
-  {
-    label: 'Student Transfers',
-    icon: <FaHandPaper />,
-    path: `/client_student/transfer`,
-  },
-  {
-    label: 'Certifications',
+    label: 'Notifications',
     icon: <BiBook />,
-    path: `/client_student/certificate`,
+    path: `/client_student/notifications`,
   },
 ];
 
-export const adminArray = [
+export const AdminAdminArray = [
   {
     label: 'Admin Dashboard',
     icon: <AiOutlineDashboard />,
@@ -143,11 +138,11 @@ export const adminArray = [
   //   icon: <BiIntersect />,
   //   path: `/staff/admin`,
   // },
-  {
-    label: 'Roles',
-    icon: <MdSubject />,
-    path: `/staff/roles`,
-  },
+  // {
+  //   label: 'Roles',
+  //   icon: <MdSubject />,
+  //   path: `/staff/roles`,
+  // },
   {
     label: 'Staff List',
     icon: <AiOutlineTable />,
@@ -165,7 +160,7 @@ export const adminArray = [
   },
 ];
 
-export const examArray = [
+export const AdminExamArray = [
   {
     label: 'Exams Dashboard',
     icon: <AiOutlineDashboard />,
@@ -179,23 +174,64 @@ export const examArray = [
   {
     label: 'Exams Results',
     icon: <MdSubject />,
-    path: `/exam/exam_results`,
+    path: `/exams/exam_results`,
   },
   {
     label: 'Print result',
     icon: <AiOutlineTable />,
     path: `/exams/print_result`,
   },
-  {
-    label: 'Result Assessment',
-    icon: <AiOutlineCheck />,
-    path: `/staff/result_assessment`,
-  },
+  // {
+  //   label: 'Result Assessment',
+  //   icon: <AiOutlineCheck />,
+  //   path: `/staff/result_assessment`,
+  // },
   // {
   //   label: 'Staff Exeats',
   //   icon: <FaHandPaper />,
   //   path: `/staff/exeat`,
   // },
+];
+
+export const AccountantArray = [
+  {
+    label: 'Accounting Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: `/account`,
+  },
+  // {
+  //   label: 'Income',
+  //   icon: <BiIntersect />,
+  //   path: `/account/income`,
+  // },
+  // {
+  //   label: 'Expenses',
+  //   icon: <MdSubject />,
+  //   path: `/income/expenses`,
+  // },
+  {
+    label: 'Invoice',
+    icon: <AiOutlineTable />,
+    path: `/account/invoice`,
+  },
+  {
+    label: 'Print Invoice',
+    icon: <AiOutlineCheck />,
+    path: `/account/invoice/print`,
+  },
+];
+
+export const houseMasterArray = [
+  {
+    label: 'Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: `/hostels`,
+  },
+  {
+    label: 'Manage Hostel/House',
+    icon: <BiIntersect />,
+    path: `/hostel/manage-hostels`,
+  },
 ];
 
 export const schoolManagementArray = [

@@ -121,7 +121,7 @@ export const ModalContainer = styled.div`
   border-radius: 4px;
   padding: 20px;
   min-width: 600px;
-  min-height: 100vh;
+  max-height: 80vh;
   overflow-y: scroll;
   //box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   transition: all 0.3s ease-in;

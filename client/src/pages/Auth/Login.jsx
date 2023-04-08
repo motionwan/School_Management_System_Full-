@@ -47,7 +47,7 @@ const Login = () => {
         schoolId: res?.data?.schoolId,
         currentTermId: res?.data?.currentTermId,
       });
-      console.log(res.data.role);
+      // console.log(res.data.role);
       //console.log(res?.data);
       if (res.status === 401) {
         setPageLoading(false);

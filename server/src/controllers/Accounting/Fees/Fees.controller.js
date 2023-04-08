@@ -224,69 +224,35 @@ const getLatestFee = async (req, res) => {
 };
 
 // GET /detailed-fees/:searchBy/:searchValue
+
+// GET /detailed-fees/:searchBy/:searchValue
 const getDetailedFeesBySearch = async (req, res) => {
+  const sectionId = req.params.sectionId;
   try {
-    const { id } = req.params; // termId
-    const { classSchoolId, sectionId } = req.body;
-
-    let query = {};
-
-    if (sectionId === 'all') {
-      query = { classSchoolId: ObjectId(classSchoolId) };
-    } else {
-      query = { sectionId: ObjectId(sectionId) };
-    }
-
-    const detailedFees = await Fees.aggregate([
+    const latestFees = await Fees.aggregate([
+      { $match: { sectionId: ObjectId(sectionId) } },
+      { $sort: { createdAt: -1 } }, // sort by createdAt in descending order
       {
-        $match: {
-          termId: ObjectId(id),
-          $or: [{ classSchoolId: classSchoolId }, { sectionId: sectionId }],
+        $group: {
+          _id: '$admissionNumber',
+          latestFee: { $first: '$$ROOT' }, // select the first document for each admissionNumber
         },
       },
-      {
-        $lookup: {
-          from: 'studentrecords',
-          localField: 'admissionNumber',
-          foreignField: 'admissionNumber',
-          as: 'student',
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          admissionNumber: 1,
-          sectionId: 1,
-          classSchoolId: 1,
-          fees: 1,
-          termFees: 1,
-          totalFeePayable: 1,
-          arrears: 1,
-          isPaid: 1,
-          partiallyPaid: 1,
-          termId: 1,
-          amountPaid: 1,
-          balance: 1,
-          dueDate: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          'student.fullName': 1,
-          'student.gender': 1,
-          'student.dateOfBirth': 1,
-          'student.email': 1,
-          'student.address': 1,
-          'student.phone': 1,
-          'student.guardianName': 1,
-          'student.guardianEmail': 1,
-          'student.guardianPhoneNumber': 1,
-        },
-      },
-      {
-        $unwind: '$student',
-      },
+      { $replaceRoot: { newRoot: '$latestFee' } }, // replace the root with the latestFee documents
     ]);
+    const admissionNumbers = latestFees.map((fee) => fee.admissionNumber);
 
-    res.status(200).json(detailedFees);
+    const students = await StudentRecord.find({
+      admissionNumber: { $in: admissionNumbers },
+    });
+
+    const latestFeesWithStudents = latestFees.map((fee) => {
+      const student = students.find(
+        (s) => s.admissionNumber === fee.admissionNumber
+      );
+      return { ...fee, student };
+    });
+    return res.json(latestFeesWithStudents);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -367,13 +333,16 @@ const payFees = async (req, res) => {
     if (amount < totalFeePayable) {
       fee.arrears = totalFeePayable - amount;
       fee.totalFeePayable -= amount;
+      fee.partiallyPaid = true;
+      fee.isPaid = false;
     }
     const newPaymentId = await Payment.create({
       admissionNumber,
       amount,
       date: Date.now(),
     });
-    fee.paymentId = newPaymentId?._id;
+    fee.paymentHistory.push(newPaymentId);
+    fee.lastPayment = newPaymentId?._id;
     await fee.save();
     res
       .status(200)
@@ -383,6 +352,132 @@ const payFees = async (req, res) => {
   } catch (error) {
     console.log(error);
     console.error(error.message);
+  }
+};
+
+const printPaymentHistory = async (req, res) => {
+  try {
+    const { admissionNumber, termId } = req.params; // admissionNumber;
+
+    console.log(termId);
+    console.log(admissionNumber);
+    const paymentHistory = await Fees.aggregate([
+      {
+        $match: { admissionNumber: admissionNumber, termId: ObjectId(termId) },
+      },
+
+      // Lookup the student details by admission number
+      {
+        $lookup: {
+          from: 'studentrecords',
+          localField: 'admissionNumber',
+          foreignField: 'admissionNumber',
+          as: 'student',
+        },
+      },
+
+      // Lookup the section details
+      {
+        $lookup: {
+          from: 'classsections',
+          localField: 'sectionId',
+          foreignField: '_id',
+          as: 'section',
+        },
+      },
+
+      // Lookup the class details
+      {
+        $lookup: {
+          from: 'classschools',
+          localField: 'classSchoolId',
+          foreignField: '_id',
+          as: 'classSchool',
+        },
+      },
+      // look up term
+      {
+        $lookup: {
+          from: 'terms',
+          localField: 'termId',
+          foreignField: '_id',
+          as: 'term',
+        },
+      },
+
+      // look up school
+      {
+        $lookup: {
+          from: 'schools',
+          localField: 'classSchool.schoolId',
+          foreignField: '_id',
+          as: 'school',
+        },
+      },
+
+      // look up school
+      {
+        $lookup: {
+          from: 'classes',
+          localField: 'classSchool.classId',
+          foreignField: '_id',
+          as: 'class',
+        },
+      },
+
+      // Lookup the fee details
+      {
+        $lookup: {
+          from: 'feetypes',
+          localField: 'fees',
+          foreignField: '_id',
+          as: 'fees',
+        },
+      },
+
+      // Lookup the last payment
+      {
+        $lookup: {
+          from: 'payments',
+          localField: 'lastPayment',
+          foreignField: '_id',
+          as: 'lastPayment',
+        },
+      },
+
+      // Lookup the payment history
+      {
+        $lookup: {
+          from: 'payments',
+          localField: 'paymentHistory',
+          foreignField: '_id',
+          as: 'paymentHistory',
+        },
+      },
+      { $unwind: '$term' },
+      { $unwind: '$school' },
+      { $unwind: '$class' },
+
+      // Project only the required fields
+      {
+        $project: {
+          student: { $arrayElemAt: ['$student', 0] },
+          section: { $arrayElemAt: ['$section', 0] },
+          classSchool: { $arrayElemAt: ['$classSchool', 0] },
+          fees: 1,
+          term: 1,
+          class: 1,
+          school: 1,
+          balance: 1,
+          arrears: 1,
+          lastPayment: { $arrayElemAt: ['$lastPayment', 0] },
+          paymentHistory: 1,
+        },
+      },
+    ]);
+    res.json(paymentHistory);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };
 
@@ -397,4 +492,5 @@ module.exports = {
   updateFees,
   deleteFees,
   payFees,
+  printPaymentHistory,
 };

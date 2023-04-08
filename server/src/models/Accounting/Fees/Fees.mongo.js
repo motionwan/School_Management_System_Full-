@@ -50,7 +50,13 @@ const FeeSchema = new mongoose.Schema(
       ref: 'Term',
       required: true,
     },
-    paymentId: {
+    paymentHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Payment',
+      },
+    ],
+    lastPayment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Payment',
     },

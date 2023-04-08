@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../context/AuthContext/AuthContext';
 import Layout from '../../../Components/Layout/Layout';
 import LocationLabel from '../../../Components/LocationLabel/LocationLabel';
 import { FaSchool } from 'react-icons/fa';
 import TermSelector from '../../../Components/TermSelector/TermSelector';
 import AddView from '../../../Components/AddViewComponent/AddView';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PrimaryButton } from '../../../Components/Buttons/PrimaryButton';
 import styled from 'styled-components';
 import { ButtonContainer } from '../../Students/Promotion/Promotion.styles';
@@ -20,7 +20,6 @@ import axios from 'axios';
 import { baseUrl } from '../../../helpers/baseUrl';
 import { Store } from 'react-notifications-component';
 import Spinner from '../../../Components/Spinner/Spinner';
-import DialogModal from '../../../Components/Dialog/Dialog';
 import {
   Label,
   MajorContainer,
@@ -32,9 +31,13 @@ import {
   TableHeader,
   TableRow,
 } from '../../../Components/Table/Table.styles';
-import { useReactToPrint } from 'react-to-print';
 import { format } from 'date-fns';
 import { TertiaryButton } from '../../../Components/Buttons/TertiaryButton';
+import {
+  ModalContainer,
+  ModalOverlay,
+} from '../../Examinamtion/BulkPrint/BulkPrintStyles/BulkPrint.styles';
+import Receipt from './Reciept/Receipt';
 
 const MainContainer = styled.div`
   display: flex;
@@ -48,15 +51,13 @@ const MainContainer = styled.div`
 const PayFees = () => {
   const { auth, currentData } = useContext(AuthContext);
   const [pageLoading, setPageLoading] = useState(false);
-  const [dialog, setDialog] = useState({ loading: false, message: '' });
+  const [modal, setModal] = useState(false);
   const [paymentHistory, setPaymentHistory] = useState([]);
-  const componentRef = useRef();
+  const [data, setData] = useState([]);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
-  const navigate = useNavigate();
+  const handleCancel = () => {
+    setModal(false);
+  };
 
   // get payment history of the current student
   useEffect(() => {
@@ -69,13 +70,6 @@ const PayFees = () => {
     };
     getPaymentHistory();
   }, [currentData]);
-
-  const handlePay = () => {
-    setDialog({
-      loading: true,
-      message: `Are you sure you want to pay fees for ${currentData.admissionNumber}?`,
-    });
-  };
 
   const onSubmit = async (choice) => {
     try {
@@ -97,16 +91,29 @@ const PayFees = () => {
               duration: 7000,
             },
           });
-          setDialog({ loading: false, message: '' });
+
           setPageLoading(false);
-          navigate('/account/invoice');
+
+          onSubmitPrint(values.admissionNumber);
         }
       } else {
-        setDialog({ loading: false, message: '' });
       }
     } catch (err) {
       console.log(err);
       setPageLoading(false);
+    }
+  };
+  // handle print
+  const onSubmitPrint = async (admissionNumber) => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/fees/payment-history/${admissionNumber}/${auth?.currentTermId?._id}`
+      );
+      setData(res.data);
+      console.log(res.data);
+      setModal(true);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -166,7 +173,7 @@ const PayFees = () => {
             </div>
           </MainContainer>
           <ButtonContainer style={{ marginTop: '-20px' }}>
-            <PrimaryButton label='Pay Fees' type='submit' onClick={handlePay} />
+            <PrimaryButton label='Pay Fees' type='submit' />
           </ButtonContainer>
         </form>
         <MajorContainer style={{ margin: '30px 0' }}>
@@ -190,7 +197,12 @@ const PayFees = () => {
                         </TableCell>
                         <TableCell>{history.amount}</TableCell>
                         <TableCell>
-                          <TertiaryButton label='print'></TertiaryButton>
+                          <TertiaryButton
+                            label='print'
+                            onClick={() => {
+                              onSubmitPrint(history.admissionNumber);
+                            }}
+                          />
                         </TableCell>
                       </TableRow>
                     </React.Fragment>
@@ -202,9 +214,13 @@ const PayFees = () => {
         </MajorContainer>
       </Layout>
       {pageLoading && <Spinner />}
-      {/* {dialog.loading && (
-        <DialogModal onDialog={onSubmit} message={dialog.message} />
-      )} */}
+      {modal && (
+        <ModalOverlay>
+          <ModalContainer>
+            <Receipt data={data} onCancel={handleCancel} />
+          </ModalContainer>
+        </ModalOverlay>
+      )}
     </div>
   );
 };

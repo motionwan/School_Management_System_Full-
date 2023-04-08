@@ -11,6 +11,7 @@ const {
   updateFees,
   deleteFees,
   payFees,
+  printPaymentHistory,
 } = require('../../../controllers/Accounting/Fees/Fees.controller');
 
 // Route to create a new fee record
@@ -28,8 +29,11 @@ router.get('/detailed/:id', getDetailedFees);
 // Route to get a list of detailed fees with section
 router.get('/detailed-section/:id', getDetailedFeesWithSectionId);
 
+// print fee payment history
+router.get('/payment-history/:admissionNumber/:termId', printPaymentHistory);
+
 // Route to get a list of detailed fees by searching
-router.get('/detailed-fees/:id', getDetailedFeesBySearch);
+router.get('/detailed-fees/:sectionId', getDetailedFeesBySearch);
 
 // Route to get a list of latest fee for each student
 router.get('/latest-fees', getLatestFee);
