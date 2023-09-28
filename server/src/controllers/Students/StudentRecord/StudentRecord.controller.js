@@ -39,6 +39,7 @@ const assignHostelToStudent = async (student) => {
   }
 };
 
+// Function to register or admit student to a school
 const admitStudent = async (req, res) => {
   try {
     let photoId = '';
